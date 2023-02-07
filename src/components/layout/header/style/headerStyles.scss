@@ -19,7 +19,8 @@
     color: $primary-color;
 
       span{
-        font-size: 2rem
+        font-size: 2rem;
+        color: #323232
       }
       .logo {
         @include header-logo;
