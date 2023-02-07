@@ -1,5 +1,6 @@
 /* eslint-disable */
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import HomePageContainer from '../container/homePageContainer';
 import { Button } from '../../../components';
 import Hand from '../../../assets/images/hand.png';
@@ -8,6 +9,8 @@ import Deprem from '../../../assets/images/deprem.png';
 import '../style/homePageStyles.scss'
 
 const HomePage = () => {
+    const navigate = useNavigate();
+
 return(
     <HomePageContainer>
     {({}) => {
@@ -21,11 +24,13 @@ return(
                 Deprem felaketinden etkilenen insanlarımıza yardım edebiliriz.
             </div>
             <div className='button-container'>
-                <Button 
+                <Button
+                    onClick={() => navigate('guest')}
                     text="Konaklama İhtiyacım Var" 
                     styleProps={{border: "2px solid #d63215",borderRadius: 48,padding: "10px 50px",backgroundColor: "#D42E13",color: "#fff", boxShadow: "0px 0px 16px rgba(0, 0, 0, 0.25)"}}
                 />
                 <Button 
+                    onClick={() => navigate('house')}
                     text="İnsanları Misafir Edebilirim" 
                     styleProps={{border: "2px solid #d63215",borderRadius: 48,padding: "10px 50px",backgroundColor: "#D42E13",color: "#fff", boxShadow: "0px 0px 16px rgba(0, 0, 0, 0.25)"}}
                 />

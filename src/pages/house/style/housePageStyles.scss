@@ -1,0 +1,74 @@
+@import "../../../_base"; 
+
+.home-container {
+    @include flex(flex, center, center, column);
+    padding-top: 4rem;
+    padding-bottom: 20rem;
+    position: relative;
+    flex-wrap: wrap;
+    background-color: #D9D9D9;
+    .text1 {
+        font-size: 70px; 
+        color: #D42E13E5;
+    }
+    .text2 {
+        font-size: 20px; 
+        color: #323232;
+    }
+    .button-container{
+        @include flex(flex, center, space-evenly);
+        padding: pad(50px);
+        width: 80%;
+    }
+    .logo-hand {
+        position: absolute;
+        right: 0px;
+        top: 45%;
+        /* width: 300px; */
+        max-width: 600px;
+        width: 100%;
+    }
+}
+
+::-webkit-scrollbar {
+    width: 0;  
+    background: transparent;
+}
+
+
+.divider {
+    border: 2px solid $button-border-color;
+    @include width-hight(100%, 1px);
+}
+
+.home-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 50px;
+    .deprem-img {
+        max-width: 900px;
+    }
+}
+
+@media (max-width: $breakpoint-mobile) {
+.home-container {
+    flex-direction: column;
+    .text1 {
+        text-align: center;
+    }
+    .text2 {
+        text-align: center;
+    }
+    .button-container{
+        @include flex(flex, center, center, column);
+        padding: pad(10px);
+        width: 100%;
+        //margin: 30px 0px
+    }
+    .logo-hand {
+        top: 60%;
+    }
+  }
+
+}
