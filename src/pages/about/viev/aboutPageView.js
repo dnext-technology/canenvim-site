@@ -14,7 +14,7 @@ return(
     return(
         <>
         <div className='home-container'>
-            about page
+            Hakkımızda
         </div>
         </>
       )}}

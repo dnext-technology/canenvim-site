@@ -17,6 +17,7 @@
     @include flex(flex, center);
     width: $header-general-width;
     color: $primary-color;
+    cursor: pointer;
 
       span{
         font-size: 2rem;
