@@ -1,35 +1,78 @@
 /* eslint-disable */
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import HousePageContainer from '../container/housePageContainer';
 import { Button } from '../../../components';
+import axios from 'axios';
 import DataTable from 'react-data-table-component';
 
 import '../style/housePageStyles.scss'
 
 const HousePage = () => {
+    const [data, setData] = useState([])
+	const [perPage, setPerPage] = useState(10);
+    const [totalRow, setTotalRow] = useState(0);
+    const [page, setPage] = useState(0);
+
     const columns = [
         {
-            name: 'Title',
-            selector: row => row.title,
+            name: 'Tarih',
+            selector: row => row.createdDate,
         },
         {
-            name: 'Year',
-            selector: row => row.year,
+            name: 'Ad Soyad',
+            selector: row => row.name,
+        },
+        {
+            name: 'Konaklama Süresi',
+            selector: row => row.time,
+        },
+        {
+            name: 'Kişi Sayısı',
+            selector: row => row.person,
+        },
+        {
+            name: 'Konaklama Yeri',
+            selector: row => row.address,
+        },
+        {
+            name: 'İl',
+            selector: row => row.city,
+        },
+        {
+            name: 'İlçe',
+            selector: row => row.district,
         },
     ];
-
-    const data = [
-        {
-            id: 1,
-            title: 'Beetlejuice',
-            year: '1988',
-        },
-        {
-            id: 2,
-            title: 'Ghostbusters',
-            year: '1984',
-        },
-    ]
+    useEffect(() => {
+        async function fetchData() {
+            await axios({
+              method: 'GET', url: `https://zorgundostu.com/api/mp-booking/v1/bookings/offerers?page=${page}&size=${perPage}`
+            })
+              .then(async response => {
+               setTotalRow(response.data?.totalElements)
+               setData(response.data?.content.map((is,index) => {
+                return (
+                    {
+                        id: is.id,
+                        createdDate: is.createdDate,
+                        name: is.firstName,
+                        time: is.accommodationPeriod,
+                        person: is.guestCapacity,
+                        address: is.addressDetail,
+                        city: is.city,
+                        district: is.district
+                    }
+                )
+            }))
+               
+              })
+              .catch(error => {
+                return error
+              });
+            
+          }
+        fetchData();
+      }, [page]);
 
     const customStyles = {
         rows: {
@@ -63,6 +106,37 @@ const HousePage = () => {
             },
         },
     };
+
+    const handlePageChange = page => {
+		setPage(page - 1 );
+	};
+
+	const handlePerRowsChange = async (newPerPage, page) => {
+		const response = await axios.get(`https://zorgundostu.com/api/mp-booking/v1/bookings/offerers?page=${page -1}&size=${newPerPage}`);
+
+		setData(response.data?.content.map((is,index) => {
+            return (
+                {
+                    id: is.id,
+                    createdDate: is.createdDate,
+                    name: is.firstName,
+                    time: is.accommodationPeriod,
+                    person: is.guestCapacity,
+                    address: is.addressDetail,
+                    city: is.city,
+                    district: is.district
+                }
+            )
+        }))
+		setPerPage(newPerPage);
+	};
+
+    const paginationOptions = {
+        rowsPerPageText: '',
+        rangeSeparatorText: '',
+        selectAllRowsItem: false,
+        selectAllRowsItemText: null,
+    };
 return(
     <HousePageContainer>
     {({}) => {
@@ -89,8 +163,14 @@ return(
                     columns={columns}
                     data={data}
                     pagination
+                    paginationRowsPerPageOptions={[10, 25, 50, 100]}
                     responsive
                     customStyles={customStyles}
+                    paginationServer
+                    onChangeRowsPerPage={handlePerRowsChange}
+                    paginationTotalRows={totalRow}
+                    onChangePage={handlePageChange}
+                    paginationComponentOptions={paginationOptions}
                 />
             </div>
         </div>
