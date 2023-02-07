@@ -1,0 +1,41 @@
+@import "../../_base"; 
+
+.loading-container {
+  @include position(fixed);
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  @include flex(flex, center, center);
+  z-index: 1;
+  background-color: $blue-active-color;
+  .loader {
+    display: none(inline-block);
+    width: 100px;
+    height: 100px;
+    outline: none;
+    border-radius: 50%;
+    border: none;
+    border-right: solid 5px #FFF;
+    border-bottom: solid 5px transparent;
+    animation: loader 2s linear infinite;
+    -webkit-animation: loader 1s linear infinite;
+  }
+}
+
+@keyframes loader {
+  to {
+    transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+  }
+}
+
+@-webkit-keyframes loader {
+  to {
+    transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+  }
+}

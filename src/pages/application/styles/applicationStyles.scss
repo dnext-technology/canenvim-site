@@ -1,0 +1,33 @@
+@import "../../../_base"; 
+
+
+.body-title-container {
+  @include position(relative);
+    .body-title {
+      @include position(absolute);
+      top: 15px;
+      color: $primary-color;
+      left: 200px;
+      margin: margin(0px);
+      font-weight: $font-weight-700;
+  }
+  .body-image {
+    @include width-hight(100%, 74px);
+  }
+}
+
+.body {
+    padding: $padding;
+    min-height: 90vh;
+}
+
+@media (max-width: $breakpoint-mobile) {
+  .body {
+    padding: pad(10px);
+  }
+  .body-title-container {
+    .body-title {
+      left: 10px
+    }
+  }
+}
