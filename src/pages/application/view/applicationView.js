@@ -27,7 +27,7 @@ const ApplicationView = () => (
             })}
           </Routes>
         </div>
-        {/* <Footer /> */}
+        <Footer/>
       </div>
     )}
   </ApplicationContainer>
