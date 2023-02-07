@@ -1,0 +1,10 @@
+npm-debug.log
+.dockerignore
+.git
+.DS_Store
+node_modules
+.idea
+.gitlab-ci.yml
+.gitignore
+README.md
+arm64.sh
