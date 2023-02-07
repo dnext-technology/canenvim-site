@@ -28,6 +28,7 @@
     "prettier": "^2.5.1",
     "prop-types": "^15.8.1",
     "react": "^17.0.2",
+    "react-data-table-component": "^7.5.3",
     "react-dom": "^17.0.2",
     "react-favicon": "0.0.26",
     "react-helmet": "^6.1.0",
@@ -50,7 +51,6 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint .eslintrc.js '**/*.js' --ignore-pattern node_modules/"
-
   },
   "eslintConfig": {
     "extends": [
