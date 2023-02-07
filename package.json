@@ -50,6 +50,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint .eslintrc.js '**/*.js' --ignore-pattern node_modules/"
+
   },
   "eslintConfig": {
     "extends": [

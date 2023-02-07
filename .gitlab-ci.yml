@@ -1,6 +1,6 @@
 variables:
   TAG_NAME: "arm64"
-  REGISTRY_IMAGE_NAME: "$CI_REGISTRY/misafirperver/$CI_PROJECT_NAME:$TAG_NAME"
+  REGISTRY_IMAGE_NAME: "$CI_REGISTRY/zorgundostu/$CI_PROJECT_NAME:$TAG_NAME"
 
 docker-build:
   image: docker:20
