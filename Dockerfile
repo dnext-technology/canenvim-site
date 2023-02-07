@@ -1,5 +1,5 @@
 # Stage 1
-FROM node:14-alpine as node
+FROM node:18-alpine as node
 WORKDIR /app
 COPY . .
 RUN npm ci --silent
