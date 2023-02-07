@@ -17,13 +17,12 @@
 }
 
 .body {
-    padding: $padding;
+    //padding: $padding;
     min-height: 90vh;
 }
 
 @media (max-width: $breakpoint-mobile) {
   .body {
-    padding: pad(10px);
   }
   .body-title-container {
     .body-title {

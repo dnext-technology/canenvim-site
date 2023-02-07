@@ -2,6 +2,7 @@
 import React from 'react';
 import HomePageContainer from '../container/homePageContainer';
 import { Button } from '../../../components';
+import Hand from '../../../assets/images/hand.png';
 
 import '../style/homePageStyles.scss'
 
@@ -20,12 +21,15 @@ return(
             <div className='button-container'>
                 <Button 
                     text="Konaklama İhtiyacım Var" 
-                    styleProps={{border: "2px solid #d63215",borderRadius: 15,padding: "10px 50px",backgroundColor: "#d63215",color: "#fff"}}
+                    styleProps={{border: "2px solid #d63215",borderRadius: 48,padding: "10px 50px",backgroundColor: "#D42E13",color: "#fff", boxShadow: "0px 0px 16px rgba(0, 0, 0, 0.25)"}}
                 />
                 <Button 
                     text="İnsanları Misafir Edebilirim" 
-                    styleProps={{border: "2px solid #d63215",borderRadius: 15,padding: "10px 50px",backgroundColor: "#d63215",color: "#fff"}}
+                    styleProps={{border: "2px solid #d63215",borderRadius: 48,padding: "10px 50px",backgroundColor: "#D42E13",color: "#fff", boxShadow: "0px 0px 16px rgba(0, 0, 0, 0.25)"}}
                 />
+            </div>
+            <div>
+                <img alt="logo" className="logo-hand" src={Hand} />
             </div>
 
         </div>

@@ -2,20 +2,31 @@
 
 .home-container {
     @include flex(flex, center, center, column);
-    margin: margin(5px 0px);
+    padding-top: 4rem;
+    padding-bottom: 20rem;
+    position: relative;
     flex-wrap: wrap;
+    background-color: #D9D9D9;
     .text1 {
         font-size: 70px; 
-        color: #d63215;
+        color: #D42E13E5;
     }
     .text2 {
         font-size: 20px; 
-        color: #000;
+        color: #323232;
     }
     .button-container{
         @include flex(flex, center, space-evenly);
         padding: pad(50px);
         width: 80%;
+    }
+    .logo-hand {
+        position: absolute;
+        right: 0px;
+        top: 45%;
+        /* width: 300px; */
+        max-width: 600px;
+        width: 100%;
     }
 }
 
@@ -43,7 +54,10 @@
         @include flex(flex, center, center, column);
         padding: pad(10px);
         width: 100%;
-        margin: 30px 0px
+        //margin: 30px 0px
+    }
+    .logo-hand {
+        top: 60%;
     }
   }
 
