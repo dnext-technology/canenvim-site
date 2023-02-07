@@ -1,0 +1,43 @@
+@import "../../../../_base"; 
+
+.header {
+  padding: $padding;
+  background: $header-bg-color;
+  color: $primary-color;
+  border-bottom: 1px solid $header-border-color;
+  @include flex(flex, center, space-between);
+
+  .header-nav {
+    @include flex(flex, center, space-around);
+    width: 30%;
+    cursor: pointer
+  }
+
+  .header-right {
+    @include flex(flex, center);
+    width: $header-general-width;
+    color: $primary-color;
+
+      span{
+        font-size: 2rem
+      }
+      .logo {
+        @include header-logo;
+        margin: margin(10px)
+      }
+  }
+}
+
+@media (max-width: $breakpoint-mobile) {
+  .header {
+    padding: pad(10px);
+    @include flex(flex, center,center, column);
+    .header-right  {
+      @include flex(flex, center,center);
+    }
+    .header-nav {
+      @include flex(flex, center,space-evenly);
+      width: 100%;
+    }
+  }
+}

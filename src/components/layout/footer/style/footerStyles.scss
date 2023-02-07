@@ -1,0 +1,23 @@
+@import "../../../../_base"; 
+
+.footer {
+  background: $footer-bg-color;
+  position: relative;
+  bottom: 0px;
+  width: 100%;
+  
+  .footer-detail-copyright {
+    background-color: $footer-copywrite-color;
+    padding: pad(10px);
+    text-align: $align-center;
+    font-style: $font-style-normal; 
+  }
+}
+
+@media (max-width: $breakpoint-mobile) {
+
+  .footer {
+   
+  }
+  
+}

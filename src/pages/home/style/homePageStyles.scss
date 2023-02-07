@@ -1,0 +1,50 @@
+@import "../../../_base"; 
+
+.home-container {
+    @include flex(flex, center, center, column);
+    margin: margin(5px 0px);
+    flex-wrap: wrap;
+    .text1 {
+        font-size: 70px; 
+        color: #d63215;
+    }
+    .text2 {
+        font-size: 20px; 
+        color: #000;
+    }
+    .button-container{
+        @include flex(flex, center, space-evenly);
+        padding: pad(50px);
+        width: 80%;
+    }
+}
+
+::-webkit-scrollbar {
+    width: 0;  
+    background: transparent;
+}
+
+
+.divider {
+    border: 2px solid $button-border-color;
+    @include width-hight(100%, 1px);
+}
+
+@media (max-width: $breakpoint-mobile) {
+.home-container {
+    flex-direction: column;
+    .text1 {
+        text-align: center;
+    }
+    .text2 {
+        text-align: center;
+    }
+    .button-container{
+        @include flex(flex, center, center, column);
+        padding: pad(10px);
+        width: 100%;
+        margin: 30px 0px
+    }
+  }
+
+}
