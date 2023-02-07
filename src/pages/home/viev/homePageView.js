@@ -3,6 +3,7 @@ import React from 'react';
 import HomePageContainer from '../container/homePageContainer';
 import { Button } from '../../../components';
 import Hand from '../../../assets/images/hand.png';
+import Deprem from '../../../assets/images/deprem.png';
 
 import '../style/homePageStyles.scss'
 
@@ -11,6 +12,7 @@ return(
     <HomePageContainer>
     {({}) => {
     return(
+        <>
         <div className='home-container'>
             <div className='text1'>
                 Birbirimizin Yanındayız
@@ -33,6 +35,11 @@ return(
             </div>
 
         </div>
+        <div className='home-bottom'>
+            <img alt="logo" className="deprem-img" src={Deprem} />
+            <div> hakkımızda</div>
+        </div>
+        </>
       )}}
     </HomePageContainer>
 );
