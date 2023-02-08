@@ -93,7 +93,7 @@
     }
 }
 
-@media (max-width: $breakpoint-mobile) {
+@media (max-width: 480px) {
 .home-container {
     flex-direction: column;
     .text1 {
@@ -112,9 +112,15 @@
         top: 60%;
     }
   }
-.home-bottom{
+.home-bottom1{
     margin: 20px;
-
+}
+.home-bottom-bottom {
+    margin: 0;
+}
+.bottom-left p {
+    font-size: 20px;
+    line-height: 35px;
 }
 
 }

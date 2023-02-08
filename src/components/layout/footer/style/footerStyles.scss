@@ -19,10 +19,14 @@
 
 
 
-    .footer-detaile-top{
+    
+    .footer-detail-bottom{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       .footer-logo {
-        height: 20.746009826660156px;
-        width: 15.385725975036621px;
+        height: 51px;
+        width: 128px;
       }
     }
   }

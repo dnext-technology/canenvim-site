@@ -11,13 +11,28 @@ const Footer = () => (
       <footer className="footer">
         <div className='footer-home'>
         <div className="footer-detail-top">
-        <img alt="footer-logo" className="footer-logo" src={Bw}/>
+
+        
 
         </div>
         <div className='footer-detail-bottom'>
-        There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.
+        <div>
+        <img alt="footer-logo" className="footer-logo" src={Bw}/>
+           There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.
+        </div>
+        <div>
+          <div>Gizlilik</div>
+          <p>Kişisel Verilerin Korunması</p>
+          <p>Aydınlatma Metni</p>
+        </div>
+        <div>
+          <div>İletişim</div>
+          <p>iletisim.zorgundostu@gmail.com</p>
         </div>
         </div>
+       
+        </div>
+        
         
       </footer>
   </FooterContainer>

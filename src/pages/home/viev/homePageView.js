@@ -56,7 +56,7 @@ return(
                  <p>Leadable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed ipsum dot.</p>   
                 </div>
                 <Button 
-                    onClick={() => navigate('')}
+                    onClick={() => navigate('about')}
                     text="Bilgi Alın" 
                     styleProps={{border: "1px solid #323232",borderRadius: 48,padding: "10px 50px",backgroundColor: "#323232",color: "#FFFFFF", boxShadow: "0px 0px 16px rgba(0, 0, 0, 0.25)"}}
                 />
