@@ -24,12 +24,6 @@ const Header = () => {
             />
             <div className="header-nav">
               <span onClick={() => navigate('about')}>Hakkımızda</span>
-              <span>Konaklama</span>
-              {/* <Button
-                className="login-button"
-                onClick={() => null}
-                text="Giriş Yap"
-              /> */}
             </div>
 
             <img
@@ -42,12 +36,6 @@ const Header = () => {
           {isVisibleMobileMenu && (
             <div className="header-mobile">
               <span onClick={() => navigate('about')}>Hakkımızda</span>
-              <span>Konaklama</span>
-              {/* <Button
-                className="login-button"
-                onClick={() => null}
-                text="Giriş Yap"
-              /> */}
             </div>
           )}
         </>
