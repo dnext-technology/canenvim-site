@@ -33,7 +33,8 @@ const Footer = () => {
         </div>
         <div className='footer-bottom-center'>
           <div className='gizlilik'><span onClick={() => navigate('privacy')}>Gizlilik</span></div>
-          <div>Kişisel Verilerin Korunması</div>
+          <div><a download="KVKK.pdf"
+                  href="KVKK.pdf" style={{color:"#FFFF",textDecoration:"none"}}>Kişisel Verilerin Korunmasın</a></div>
           <div>Aydınlatma Metni</div>
         </div>
         <div className='footer-bottom-right'>
