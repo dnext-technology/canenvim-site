@@ -47,8 +47,8 @@ return(
             
             <div className='home-bottom-bottom'>
             <div className= "bottom-left">
-                <div> Hakkımızda</div>
-                <p>Felaketlerden etkilenen insanlarımıza ulaşmanız için aracı olmak istiyoruz.</p>
+                <div > Hakkımızda</div>
+                <p> Felaketlerden etkilenen insanlara yönelik ihtiyaçların karşılanmasını hedefliyoruz.</p>
             </div>
 
             <div className='bottom-right'>

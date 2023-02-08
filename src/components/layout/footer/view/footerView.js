@@ -1,41 +1,73 @@
 /* eslint-disable */
 import React from 'react';
 import FooterContainer from '../container/footerContainer';
-import Bw from '../../../../assets/images/bw.png';
+import Logo from '../../../../assets/images/logo-footer.png';
+import { FiMail } from "react-icons/fi";
+import { FaTwitter,FaInstagram } from "react-icons/fa";
+import { useNavigate,Link } from 'react-router-dom';
+
+
 
 
 import '../style/footerStyles.scss';
 
-const Footer = () => (
+const Footer = () => {
+ const navigate = useNavigate();
+  
+  return(
+
   <FooterContainer>
-      <footer className="footer">
+    
+     
         <div className='footer-home'>
-        <div className="footer-detail-top">
-
         
-
-        </div>
         <div className='footer-detail-bottom'>
         <div>
-        <img alt="footer-logo" className="footer-logo" src={Bw}/>
-           There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.
+        
+        <span onClick={() => navigate('/')}><img alt="footer-logo" className="footer-logo" src={Logo}/></span>
+
+
+        <div className='footer-bottom-left'>
+        Zor Gün Dostu, felaketlerden etkilenen insanlara yönelik ihtiyaçların karşılanması hedefiyle kurulan projedir. Desteğinizle bize en çok ihtiyacı olan insanların yanlarında olmamıza yardımcı olabilirsiniz.
+        </div>           
         </div>
-        <div>
-          <div>Gizlilik</div>
-          <p>Kişisel Verilerin Korunması</p>
-          <p>Aydınlatma Metni</p>
+        <div className='footer-bottom-center'>
+          <div className='gizlilik'><span onClick={() => navigate('privacy')}>Gizlilik</span></div>
+          <div><a download="KVKK.pdf"
+                  href="KVKK.pdf" style={{color:"#FFFF",textDecoration:"none"}}>Kişisel Verilerin Korunmasın</a></div>
+          <div>Aydınlatma Metni</div>
         </div>
-        <div>
-          <div>İletişim</div>
-          <p>iletisim.zorgundostu@gmail.com</p>
+        <div className='footer-bottom-right'>
+          <div className='iletisim'>İletişim</div>
+          <p><FiMail/>  iletisim.zorgundostu@gmail.com</p>
         </div>
         </div>
+        <div className='socials'>
+          <div>© 2023 Zorgundostu</div>
+          <div className='social-network'>
+          <div>
+          <Link to={'https://www.instagram.com/zorgundostuyardimlasmaagi/'} target='_blank'>
+          <FaInstagram/>
+          </Link>            
+          </div>
+
+          <div>
+          <Link to={'https://twitter.com/zorgundostuyrdm'} target='_blank'>
+          <FaTwitter/>
+          </Link>
+            
+          </div>
+        </div>
+        </div>
+        
        
         </div>
         
         
-      </footer>
+     
   </FooterContainer>
-);
+  )
+  
+};
 
 export default Footer;
