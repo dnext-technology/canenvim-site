@@ -21,17 +21,17 @@ return(
                 Birbirimizin Yanındayız
             </div>
             <div className='text2'>
-                Deprem felaketinden etkilenen insanlarımıza yardım edebiliriz.
+                Deprem felaketinden etkilenen vatandaşlarımıza yardım edebiliriz.
             </div>
             <div className='button-container'>
                 <Button
                     onClick={() => navigate('guest')}
-                    text="Konaklama İhtiyacım Var" 
+                    text="Konaklamaya İhtiyacım Var" 
                     styleProps={{border: "2px solid #d63215",borderRadius: 48,padding: "10px 50px",backgroundColor: "#D42E13",color: "#fff", boxShadow: "0px 0px 16px rgba(0, 0, 0, 0.25)"}}
                 />
                 <Button 
                     onClick={() => navigate('house')}
-                    text="İnsanları Misafir Edebilirim" 
+                    text="Konaklamaya Uygun Yerim Var" 
                     styleProps={{border: "2px solid #d63215",borderRadius: 48,padding: "10px 50px",backgroundColor: "#D42E13",color: "#fff", boxShadow: "0px 0px 16px rgba(0, 0, 0, 0.25)"}}
                 />
             </div>

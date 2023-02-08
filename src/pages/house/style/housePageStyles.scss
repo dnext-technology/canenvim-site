@@ -8,6 +8,9 @@
 .house-list-container {
     padding: 20px 120px;
 }
+.bannerzor {
+    width: 100%;
+}
 .guest-text{
     color: #D42E13E5;
     font-size: 40px;
@@ -41,6 +44,9 @@
     .text2 {
         font-size: 20px; 
         color: #323232;
+    }
+    .black-background{
+        width: 700px;
     }
     .button-container{
         @include flex(flex, center, space-evenly);
@@ -79,7 +85,14 @@
 }
 
 @media (max-width: $breakpoint-mobile) {
-.home-container {
+    .house-list-container {
+        padding: 5px;
+    }
+    .black-background{
+        width: 100%
+    }
+.house-container {
+    padding: 5px;
     flex-direction: column;
     .text1 {
         text-align: center;

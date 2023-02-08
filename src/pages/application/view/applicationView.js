@@ -12,9 +12,8 @@ const ApplicationView = () => (
   <ApplicationContainer>
     {({ routes, isLoading }) => (
       <div className="main">
-        <Favicon url="https://reactjs.org/favicon.ico" />
         <Helmet htmlAttributes={{ lang: 'en' }}>
-          <title>Misafirperver</title>
+          <title>Zor Gün Dostu</title>
         </Helmet>
         {isLoading && <Loader />}
         <Header />

@@ -1,45 +1,75 @@
-@import "../../../../_base"; 
+@import "../../../../_base";
 
 .header {
   padding: $padding;
   background: $header-bg-color;
   color: $primary-color;
   border-bottom: 1px solid $header-border-color;
+  font-style: $font-style-normal;
   @include flex(flex, center, space-between);
 
   .header-nav {
-    @include flex(flex, center, space-around);
-    width: 30%;
-    cursor: pointer
+    flex: 1 1 100%;
+    @include flex(flex, center, flex-end);
+    cursor: pointer;
+    gap: 5%;
+    font-size: 18px;
+    font-weight: 500;
   }
 
-  .header-right {
-    @include flex(flex, center);
-    width: $header-general-width;
-    color: $primary-color;
+  .logo {
+    @include header-logo;
     cursor: pointer;
+  }
 
-      span{
-        font-size: 2rem;
-        color: #323232
-      }
-      .logo {
-        @include header-logo;
-        margin: margin(10px)
-      }
+  .login-button {
+    @include primary-button;
+  }
+
+  .menu-icon {
+    display: none;
   }
 }
 
-@media (max-width: $breakpoint-mobile) {
+.header-mobile {
+  display: none !important;
+  padding: 12px 0;
+  background: $header-bg-color;
+  color: $primary-color;
+  border-bottom: 1px solid $header-border-color;
+  font-style: $font-style-normal;
+  @include flex(flex, center, flex-start, column);
+  gap: 12px;
+  text-align: center;
+
+  &>* {
+    padding: pad(12px);
+  }
+
+  &>*:hover {
+    color: #fff;
+    background-color: $primary-color;
+  }
+  
+
+  .login-button {
+    @include primary-button;
+  }
+}
+
+@media (max-width: $breakpoint-tablet) {
   .header {
-    padding: pad(10px);
-    @include flex(flex, center,center, column);
-    .header-right  {
-      @include flex(flex, center,center);
-    }
+    padding: pad(20px);
+
     .header-nav {
-      @include flex(flex, center,space-evenly);
-      width: 100%;
+      display: none;
     }
+    .menu-icon {
+      display: block;
+    }
+  }
+
+  .header-mobile {
+    display: flex !important;
   }
 }

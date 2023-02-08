@@ -1,25 +1,31 @@
-@import "../../../_base"; 
+@import "../../../_base";
 
-.home-container {
-    @include flex(flex, center, center, column);
+.about-container {
+    @include flex(flex, flex-start, center, column);
     padding-top: 4rem;
     padding-bottom: 20rem;
+    padding-left: 120px;
+    padding-right: 120px;
     position: relative;
     flex-wrap: wrap;
-    background-color: #D9D9D9;
+    background-color: #F5F5F5;
+
     .text1 {
-        font-size: 70px; 
+        font-size: 70px;
         color: #D42E13E5;
     }
+
     .text2 {
-        font-size: 20px; 
+        font-size: 20px;
         color: #323232;
     }
-    .button-container{
+
+    .button-container {
         @include flex(flex, center, space-evenly);
         padding: pad(50px);
         width: 80%;
     }
+
     .logo-hand {
         position: absolute;
         right: 0px;
@@ -31,7 +37,7 @@
 }
 
 ::-webkit-scrollbar {
-    width: 0;  
+    width: 0;
     background: transparent;
 }
 
@@ -46,29 +52,41 @@
     align-items: center;
     justify-content: center;
     margin: 50px;
+
     .deprem-img {
         max-width: 900px;
     }
 }
 
 @media (max-width: $breakpoint-mobile) {
-.home-container {
-    flex-direction: column;
-    .text1 {
-        text-align: center;
-    }
-    .text2 {
-        text-align: center;
-    }
-    .button-container{
-        @include flex(flex, center, center, column);
-        padding: pad(10px);
-        width: 100%;
-        //margin: 30px 0px
-    }
-    .logo-hand {
-        top: 60%;
-    }
-  }
+    .about-container {
+        padding: 10px;
+        flex-direction: column;
 
+        .text1 {
+            text-align: center;
+        }
+
+        .text2 {
+            text-align: center;
+        }
+
+        .button-container {
+            @include flex(flex, center, center, column);
+            padding: pad(10px);
+            width: 100%;
+            //margin: 30px 0px
+        }
+
+        .logo-hand {
+            top: 60%;
+        }
+    }
+
+}
+
+@media (max-width: $breakpoint-tablet) {
+    .about-container {
+        padding: 20px;
+    }
 }
