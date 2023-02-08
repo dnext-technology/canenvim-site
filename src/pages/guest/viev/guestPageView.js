@@ -367,12 +367,12 @@ const GuestPage = () => {
                 </div>
                 {/* Adres Tarifi */}
                 <div style={{display: "flex", flexDirection: "column", fontWeight: 400, width: "100%", margin: 10}}>
-                   Adres Tarifi
+                   Adres Tarifi ( Zorunlu Değil )
                     <TextArea value={addressDetail} onChange={(e) => setAddressDetail(e.target.value)}/>
                 </div>
                 {/* Ekstra Bilgi */}
                 <div style={{display: "flex", flexDirection: "column", fontWeight: 400, width: "100%", margin: 10}}>
-                   Ekstra Bilgi
+                   Ekstra Bilgi ( Zorunlu Değil )
                    <TextArea value={neighborhood} onChange={(e) => setNeighborhood(e.target.value)}/>
                 </div>
                 <div style={{display: "flex", flexDirection: "column", fontWeight: 400, width: 200, margin: "0px 30px 0px 10px"}}>
