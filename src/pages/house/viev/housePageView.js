@@ -1,7 +1,7 @@
 /* eslint-disable */
 import React, { useState, useEffect } from 'react';
 import HousePageContainer from '../container/housePageContainer';
-import { Button, Input } from '../../../components';
+import { Button, Input, TextArea, Select } from '../../../components';
 import axios from 'axios';
 import DataTable from 'react-data-table-component';
 
@@ -12,6 +12,27 @@ const HousePage = () => {
 	const [perPage, setPerPage] = useState(10);
     const [totalRow, setTotalRow] = useState(0);
     const [page, setPage] = useState(0);
+    const [tckn, setTckn] = useState("");
+    const [name, setName] = useState("");
+    const [surname, setSurname] = useState("");
+    const [email, setEmail] = useState("");
+    const [phone, setPhone] = useState("");
+    const [guest, setGuest] = useState("");
+    const [neighborhood, setNeighborhood] = useState("");
+    const [addressDetail, setAddressDetail] = useState("");
+    const [childNumber, setChildNumber] = useState("");
+    const [city, setCity] = useState([]);
+    const [selectedCity, setSelectedCity] = useState("");
+    const [district, setDistrict] = useState([]);
+    const [selectedDistrict, setSelectedDistrict] = useState("");
+    const [town, setTown] = useState([]);
+    const [neighborhoodAddress, setNeighborhoodAddress] = useState([]);
+    const [selectedNeighborhoodAddress, setSelectedNeighborhoodAddress] = useState([]);
+    const [accommodationType, setAccommodationType] = useState("Ayrı Oda");
+    const [accommodationPeriod, setAccommodationPeriod] = useState("1 Haftaya Kadar");
+    const [changed, setChanged] = useState(false);
+
+    const [selectedTown, setSelectedTown] = useState("");
 
     const columns = [
         {
@@ -72,7 +93,86 @@ const HousePage = () => {
             
           }
         fetchData();
-      }, [page]);
+      }, [page, changed]);
+
+      useEffect(() => {
+        async function fetchData() {
+            await axios({
+              method: 'GET', url: `https://zorgundostu.com/api/mp-location/v1/locations`
+            })
+              .then(async response => {
+                console.log(response.data)
+               setCity(response.data)
+               setSelectedCity(response.data[0].name)
+              
+              })
+              .catch(error => {
+                return error
+              });
+            
+          }
+        fetchData();
+      }, []);
+
+      useEffect(() => {
+        async function fetchData() {
+            if(selectedCity !== "") {
+            await axios({
+              method: 'GET', url: `https://zorgundostu.com/api/mp-location/v1/locations?city=${selectedCity}`
+            })
+              .then(async response => {
+                console.log(response.data)
+                setDistrict(response.data)
+                setSelectedDistrict(response.data[0].name)
+              })
+              .catch(error => {
+                return error
+              });
+            }
+            
+          }
+        fetchData();
+      }, [selectedCity]);
+
+      useEffect(() => {
+        async function fetchData() {
+            if(selectedDistrict !== "") {
+            await axios({
+              method: 'GET', url: `https://zorgundostu.com/api/mp-location/v1/locations?city=${selectedCity}&district=${selectedDistrict}`
+            })
+              .then(async response => {
+                console.log(response.data)
+                setTown(response.data)
+                setSelectedTown(response.data[0].name)
+              })
+              .catch(error => {
+                return error
+              });
+            }
+            
+          }
+        fetchData();
+      }, [selectedDistrict]);
+
+      useEffect(() => {
+        async function fetchData() {
+            if(selectedTown !== "") {
+            await axios({
+              method: 'GET', url: `https://zorgundostu.com/api/mp-location/v1/locations?city=${selectedCity}&district=${selectedDistrict}&town=${selectedTown}`
+            })
+              .then(async response => {
+                console.log(response.data)
+                setNeighborhoodAddress(response.data)
+                setSelectedNeighborhoodAddress(response.data[0].name)
+              })
+              .catch(error => {
+                return error
+              });
+            }
+            
+          }
+        fetchData();
+      }, [selectedTown]);
 
     const customStyles = {
         rows: {
@@ -113,7 +213,6 @@ const HousePage = () => {
 
 	const handlePerRowsChange = async (newPerPage, page) => {
 		const response = await axios.get(`https://zorgundostu.com/api/mp-booking/v1/bookings/offerers?page=${page -1}&size=${newPerPage}`);
-
 		setData(response.data?.content.map((is,index) => {
             return (
                 {
@@ -130,14 +229,58 @@ const HousePage = () => {
         }))
 		setPerPage(newPerPage);
 	};
-
     const paginationOptions = {
         rowsPerPageText: '',
         rangeSeparatorText: '',
         selectAllRowsItem: false,
         selectAllRowsItemText: null,
     };
-return(
+
+    const handleSubmit = async () => {
+        console.log("here")
+        const params = {
+            identityNumber: tckn,
+            firstName: name,
+            lastName: surname,
+            email: email,
+            phone: phone,
+            city: selectedCity,
+            district: selectedDistrict,
+            town: selectedTown,
+            neighborhood: selectedNeighborhoodAddress,
+            addressDetail: addressDetail,
+            guestCapacity: guest,
+            accommodationType,
+            accommodationPeriod
+        };
+       await axios({
+        method: 'POST', url: `https://zorgundostu.com/api/mp-booking/v1/bookings/offerers`,  data: {
+            identityNumber: tckn,
+            firstName: name,
+            lastName: surname,
+            email: email,
+            phone: phone,
+            city: selectedCity,
+            district: selectedDistrict,
+            town: selectedTown,
+            neighborhood: selectedNeighborhoodAddress,
+            addressDetail: addressDetail,
+            guestCapacity: guest,
+            accommodationType: accommodationType,
+            accommodationPeriod: accommodationPeriod
+        }
+      })
+        .then(async response => {
+          console.log(response.data)
+          setChanged(!changed)
+        })
+        .catch(error => {
+          return error
+        });
+    };
+
+    console.log(accommodationType, accommodationPeriod, "ll")
+    return(
     <HousePageContainer>
     {({}) => {
     return(
@@ -153,84 +296,107 @@ return(
               
             </div>
             <p style={{ color: "#323232", fontWeight: 700, fontSize: 24, marginTop: 20}}>İlan Bilgi Formu</p>
-            <form style={{ width: "100%"}}>
+            <form style={{ width: "80%"}}>
+                {/* TCKN */}
                 <div style={{display: "flex", flexDirection: "column", fontWeight: 400, width: 420, margin: "0px 30px 0px 10px"}}>
-                    T.C. Kimlik No
-                    <Input />
+                    <span>T.C. Kimlik No <span style={{ color: "#D42E13"}}>*</span></span>
+                    <Input value={tckn} onChange={(e) => setTckn(e.target.value)} />
                 </div>
+                {/* Ad soyad */}
                 <div style={{display: "flex", margin: 10}}>
                     <div style={{display: "flex", flexDirection: "column", fontWeight: 400, width: 420, margin: "0px 20px 0px 0px"}}>
-                        Adınız
-                        <Input />
+                        <span>Adınız <span style={{ color: "#D42E13"}}>*</span></span> 
+                        <Input value={name} onChange={(e) => setName(e.target.value)}/>
                     </div>
                     <div style={{display: "flex", flexDirection: "column", fontWeight: 400,width: 420, margin: "0px 20px 0px 0px"}}>
-                        Soyadınız
-                        <Input />
+                        <span>Soyadınız <span style={{ color: "#D42E13"}}>*</span></span> 
+                        <Input value={surname} onChange={(e) => setSurname(e.target.value)}/>
                     </div>
                 </div>
+                {/* Email Telefon */}
                 <div style={{display: "flex", fontWeight: 400, margin: 10}}>
                     <div style={{display: "flex", flexDirection: "column",width: 420, margin: "0px 20px 0px 0px"}}>
                         E-posta
-                        <Input />
+                        <Input value={email} onChange={(e) => setEmail(e.target.value)} />
                     </div>
                     <div style={{display: "flex", flexDirection: "column",width: 420, margin: "0px 20px 0px 0px"}}>
-                         Telefon
-                        <Input />
+                        <span>Telefon <span style={{ color: "#D42E13"}}>*</span></span> 
+                        <Input value={phone} onChange={(e) => setPhone(e.target.value)}/>
                     </div>
                 </div>
                 <div style={{display: "flex", fontWeight: 400, margin: 10}}>
-                    <div style={{display: "flex", flexDirection: "column", width: 210, margin: "0px 10px 0px 0px"}}>
-                    Kaç Kişi Misafir Edebilirsiniz?
-                        <Input />
+                    {/* Kaç Misafir Kaç Çocuk */}
+                    <div style={{display: "flex"}}>
+                        <div style={{display: "flex", flexDirection: "column", width: 205, margin: "0px 10px 0px 0px"}}>
+                        <span>Kaç Kişi Misafir Edebilirsiniz? <span style={{ color: "#D42E13"}}>*</span></span> 
+                            <Input value={guest} onChange={(e) => setGuest(e.target.value)}/>
+                        </div>
+                        <div style={{display: "flex", flexDirection: "column", width: 205, margin: "0px"}}>
+                            Misafirlerin Kaç Tanesi Çocuk
+                            <Input value={childNumber} onChange={(e) => setChildNumber(e.target.value)}/>
+                        </div>
                     </div>
-                    <div style={{display: "flex", flexDirection: "column", width: 210, margin: "0px"}}>
-                    Misafirlerin Kaç Tanesi Çocuk
-                        <Input />
-                    </div>
-                    <div style={{display: "flex", flexDirection: "column", width: 210, margin: "0px 10px 0px 10px"}}>
-                    Misafirlik Süresi
-                        <Input />
-                    </div>
-                    <div style={{display: "flex", flexDirection: "column", width: 210, margin: "0px"}}>
-                    Konaklama Türü
-                        <Input />
+                    {/* Misafirlik Süresi Konaklama Türü */}
+                    <div style={{display: "flex", marginLeft: 10}}>
+                        <div style={{display: "flex", flexDirection: "column", width: 205, margin: "0px 10px 0px 10px"}}>
+                            Misafirlik Süresi
+                            <Select value={accommodationPeriod} onChange={(e) => setAccommodationPeriod(e.target.value)} data={[{name: "1 Haftaya Kadar"}, {name: "2 Haftaya Kadar"}, {name: "1 Aya Kadar"}, {name: "Belirsiz"}]} />
+                        </div>
+                        <div style={{display: "flex", flexDirection: "column", width: 205, margin: "0px"}}>
+                            Konaklama Türü
+                            <Select value={accommodationType} onChange={(e) => setAccommodationType(e.target.value)}  data={[{name: "Ayrı Oda"}, {name: "Otel Odası"}, {name: "Bağımsız"}]} />
+                        </div>
                     </div>
                 </div>
+                {/* İl İlçe */}
                 <div style={{display: "flex", fontWeight: 400, margin: 10}}>
                     <div style={{display: "flex", flexDirection: "column", width: 420, margin: "0px 20px 0px 0px"}}>
-                        İl
-                        <Input />
+                        <span>İl <span style={{ color: "#D42E13"}}>*</span></span> 
+                        <Select onChange={(e) => setSelectedCity(e.target.value)} data={city} />
                     </div>
                     <div style={{display: "flex", flexDirection: "column", width: 420, margin: "0px 20px 0px 0px"}}>
-                        İlçe
-                        <Input />
+                        <span>İlçe <span style={{ color: "#D42E13"}}>*</span></span> 
+                        <Select disabled={selectedCity === ""} onChange={(e) => setSelectedDistrict(e.target.value)} data={district} />
                     </div>
                 </div>
+                {/* Semt Mahalle */}
                 <div style={{display: "flex", fontWeight: 400, margin: 10}}>
                     <div style={{display: "flex", flexDirection: "column", width: 420, margin: "0px 20px 0px 0px"}}>
                         Semt
-                        <Input />
+                        <Select disabled={selectedDistrict === ""} onChange={(e) => setSelectedTown(e.target.value)} data={town} />
                     </div>
                     <div style={{display: "flex", flexDirection: "column", width: 420, margin: "0px 20px 0px 0px"}}>
                         Mahalle
-                        <Input />
+                        <Select disabled={selectedTown === ""} onChange={(e) => setSelectedNeighborhoodAddress(e.target.value)} data={neighborhoodAddress} />
                     </div>
                 </div>
+                {/* Adres Tarifi */}
                 <div style={{display: "flex", flexDirection: "column", fontWeight: 400, width: "100%", margin: 10}}>
                    Adres Tarifi
-                    <Input />
+                    <TextArea value={addressDetail} onChange={(e) => setAddressDetail(e.target.value)}/>
                 </div>
+                {/* Ekstra Bilgi */}
                 <div style={{display: "flex", flexDirection: "column", fontWeight: 400, width: "100%", margin: 10}}>
                    Ekstra Bilgi
-                   <Input />
+                   <TextArea value={neighborhood} onChange={(e) => setNeighborhood(e.target.value)}/>
                 </div>
                 <div style={{display: "flex", flexDirection: "column", fontWeight: 400, width: 200, margin: "0px 30px 0px 10px"}}>
-                 <input style={{ border: "1px solid #323232", borderRadius: 48, backgroundColor: "#323232", color: "#FFFFFF", padding: "10px 20px"}} type="submit" value="Gönder" />
+                    <Button 
+                        disabled={tckn === "" || name === "" || surname === "" || phone === "" || city === "" || district === "" || guest === ""}
+                        onClick={(e) => {
+                            e.preventDefault()
+                            handleSubmit()}
+                        }
+                        text="Gönder" 
+                        styleProps={{border: "1px solid #323232", borderRadius: 48, backgroundColor: "#323232", color: "#FFFFFF", padding: "10px 20px"}}
+                    />
                 </div>
             </form>
         </div>
         <div className='house-list-container'>
             <div style={{ marginTop: 30}}>
+                <p style={{ fontSize: 40, color: "#323232"}}>Konaklama Listesi</p>
+                <p style={{ fontSize: 18, color: "#323232"}}>Aşağıdaki tabloda konaklama yeri ihtiyacı olan kişilere erişebilirsiniz.</p>
                 <DataTable
                     columns={columns}
                     data={data}
