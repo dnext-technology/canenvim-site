@@ -43,6 +43,10 @@ return(
         <div className='home-bottom'>
             <img alt="logo" className="deprem-img" src={Deprem} />
             <div> hakkımızda</div>
+            <div>
+                <p>
+                <span onClick={() => navigate('privacy')}>Gizlilik Sözleşmesi</span> </p>
+            </div>
         </div>
         </>
       )}}
