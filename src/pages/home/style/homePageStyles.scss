@@ -90,6 +90,15 @@
 }
 
 @media (max-width: 480px) {
+    .home-container {
+    .logo-hand {
+      
+        top: 60%;
+    }
+    .button-container{
+        flex-direction: column;
+    }
+}
 .home-bottom-bottom{
     display: grid;
     .bottom-left{
