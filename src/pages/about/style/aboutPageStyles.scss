@@ -55,6 +55,7 @@
 
 @media (max-width: $breakpoint-mobile) {
 .about-container {
+    padding: 10px;
     flex-direction: column;
     .text1 {
         text-align: center;
