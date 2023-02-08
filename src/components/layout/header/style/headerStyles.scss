@@ -5,28 +5,24 @@
   background: $header-bg-color;
   color: $primary-color;
   border-bottom: 1px solid $header-border-color;
+  font-style: $font-style-normal; 
   @include flex(flex, center, space-between);
 
   .header-nav {
-    @include flex(flex, center, space-around);
-    width: 30%;
-    cursor: pointer
+    @include flex(flex, center);
+    cursor: pointer;
+    gap: 90px;
+    font-size: 18px;
+    font-weight: 500;
   }
 
-  .header-right {
-    @include flex(flex, center);
-    width: $header-general-width;
-    color: $primary-color;
+  .logo {
+    @include header-logo;
     cursor: pointer;
+  }
 
-      span{
-        font-size: 2rem;
-        color: #323232
-      }
-      .logo {
-        @include header-logo;
-        margin: margin(10px)
-      }
+  .login-button {
+    @include primary-button;
   }
 }
 
@@ -34,9 +30,6 @@
   .header {
     padding: pad(10px);
     @include flex(flex, center,center, column);
-    .header-right  {
-      @include flex(flex, center,center);
-    }
     .header-nav {
       @include flex(flex, center,space-evenly);
       width: 100%;

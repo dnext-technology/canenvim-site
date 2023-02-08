@@ -6,7 +6,7 @@ $font-weight-600: 600;
 $font-weight-400: 400;
 $font-weight-300: 300;
 $font-weight: 600;
-$padding: 20px 100px;
+$padding: 20px 120px;
 $breakpoint-mobile: 414px;
 
 //Colors
@@ -56,7 +56,17 @@ $align-center: center;
 }
 
 @mixin header-logo {
-    max-width: 80px;
-    height: 50px;
+    max-width: 128px;
+    height: 64px;
     width: 100%;
  }
+
+ @mixin primary-button {
+   border: 1px solid #323232;
+   border-radius: 48px;
+   height: 48px;
+   padding: 12px 38px;
+   background-color: #323232;
+   color: #fff;
+   @include flex(flex, center, center);
+}
