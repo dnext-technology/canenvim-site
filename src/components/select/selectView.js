@@ -10,7 +10,7 @@ const Select = ({ text, data, styleProps, ...props }) => {
       // eslint-disable-next-line react/jsx-props-no-spreading
       {...props}
     >
-      {data.map((s) => {
+      {data && data.length > 0 && data.map((s) => {
         return <option key={s.name} value={s.name}>{s.name}</option>
       })}
     </select>

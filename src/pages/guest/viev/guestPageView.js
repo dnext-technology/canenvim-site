@@ -31,7 +31,9 @@ const GuestPage = () => {
     const [accommodationType, setAccommodationType] = useState("Ayrı Oda");
     const [accommodationPeriod, setAccommodationPeriod] = useState("1 Haftaya Kadar");
     const [changed, setChanged] = useState(false);
-
+    const [tcknValidasyonError ,setTCKNValidasyonError] = useState({ error: false, message: ""})
+    const [emailValidasyonError ,setEmailValidasyonError] = useState({ error: false, message: ""})
+    const [phoneValidasyonError ,setPhoneValidasyonError] = useState({ error: false, message: ""})
     const [selectedTown, setSelectedTown] = useState("");
 
     const columns = [
@@ -121,7 +123,7 @@ const GuestPage = () => {
               method: 'GET', url: `https://zorgundostu.com/api/mp-location/v1/locations`
             })
               .then(async response => {
-                console.log(response.data)
+              console.log(response.data)
                setCity(response.data)
                setSelectedCity(response.data[0].name)
               })
@@ -278,7 +280,40 @@ const GuestPage = () => {
         });
     };
 
-    console.log(tckn)
+    const checkTCKN = (e) => {
+        setTckn(e)
+        const tcknformat = /^[1-9]{1}[0-9]{9}[02468]{1}$/;
+        if (e.length !== 11 || !e.match(tcknformat)) {
+          setTCKNValidasyonError({error: true, message: "T.C. Kimlik Numarası uygun formatta değildir."})
+          
+        }else{
+            setTCKNValidasyonError({error: false, message: ""})
+        }
+    }
+
+    const checkEmail = (e) => {
+        setEmail(e)
+        const emailformat = /^([A-Za-z]|[0-9])+$/;
+        if (e.match(emailformat)) {
+            setEmailValidasyonError({error: true, message: "Eposta adresi uygun formatta değildir."})
+          
+        }else{
+            setEmailValidasyonError({error: false, message: ""})
+        }
+    }
+
+    const checkPhone = (e) => {
+        setPhone(e)
+        const phoneformat = /^(05)([0-9]{2})\s?([0-9]{3})\s?([0-9]{2})\s?([0-9]{2})$/;
+        if (!e.match(phoneformat)) {
+            setPhoneValidasyonError({error: true, message: "Telefon numarası uygun formatta değildir."})
+          
+        }else{
+            setPhoneValidasyonError({error: false, message: ""})
+        }
+    }
+
+    console.log(city, "cit")
     return(
     <GuestPageContainer>
     {({}) => {
@@ -299,7 +334,8 @@ const GuestPage = () => {
                 {/* TCKN */}
                 <div style={{display: "flex", flexDirection: "column", fontWeight: 400, width: 420, margin: "0px 30px 0px 10px"}}>
                     <span>T.C. Kimlik No <span style={{ color: "#D42E13"}}>*</span></span>
-                    <Input value={tckn} onChange={(e) => setTckn(e.target.value)} />
+                    <Input type="number" value={tckn} onChange={(e) => checkTCKN(e.target.value)} />
+                    {tcknValidasyonError.error && <p style={{ color: "red", marginLeft: 5}}>{tcknValidasyonError.message}</p>}
                 </div>
                 {/* Ad soyad */}
                 <div style={{display: "flex", margin: 10}}>
@@ -316,11 +352,13 @@ const GuestPage = () => {
                 <div style={{display: "flex", fontWeight: 400, margin: 10}}>
                     <div style={{display: "flex", flexDirection: "column",width: 420, margin: "0px 20px 0px 0px"}}>
                         E-posta
-                        <Input value={email} onChange={(e) => setEmail(e.target.value)} />
+                        <Input value={email} onChange={(e) => checkEmail(e.target.value)} />
+                        {emailValidasyonError.error && <p style={{ color: "red", marginLeft: 5}}>{emailValidasyonError.message}</p>}
                     </div>
                     <div style={{display: "flex", flexDirection: "column",width: 420, margin: "0px 20px 0px 0px"}}>
                         <span>Telefon <span style={{ color: "#D42E13"}}>*</span></span> 
-                        <Input value={phone} onChange={(e) => setPhone(e.target.value)}/>
+                        <Input value={phone} onChange={(e) => checkPhone(e.target.value)}/>
+                        {phoneValidasyonError.error && <p style={{ color: "red", marginLeft: 5}}>{phoneValidasyonError.message}</p>}
                     </div>
                 </div>
                 <div style={{display: "flex", fontWeight: 400, margin: 10, justifyContent: "space-between"}}>
@@ -403,6 +441,7 @@ const GuestPage = () => {
                     paginationTotalRows={totalRow}
                     onChangePage={handlePageChange}
                     paginationComponentOptions={paginationOptions}
+                    noDataComponent="Gösterilecek veri bulunmamaktadır" 
                 />
             </div>
         </div>
