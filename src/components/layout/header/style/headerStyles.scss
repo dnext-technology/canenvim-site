@@ -1,17 +1,18 @@
-@import "../../../../_base"; 
+@import "../../../../_base";
 
 .header {
   padding: $padding;
   background: $header-bg-color;
   color: $primary-color;
   border-bottom: 1px solid $header-border-color;
-  font-style: $font-style-normal; 
+  font-style: $font-style-normal;
   @include flex(flex, center, space-between);
 
   .header-nav {
-    @include flex(flex, center);
+    flex: 1 1 100%;
+    @include flex(flex, center, flex-end);
     cursor: pointer;
-    gap: 90px;
+    gap: 5%;
     font-size: 18px;
     font-weight: 500;
   }
@@ -24,17 +25,51 @@
   .login-button {
     @include primary-button;
   }
+
+  .menu-icon {
+    display: none;
+  }
 }
 
-@media (max-width: $breakpoint-mobile) {
+.header-mobile {
+  display: none !important;
+  padding: 12px 0;
+  background: $header-bg-color;
+  color: $primary-color;
+  border-bottom: 1px solid $header-border-color;
+  font-style: $font-style-normal;
+  @include flex(flex, center, flex-start, column);
+  gap: 12px;
+  text-align: center;
+
+  &>* {
+    padding: pad(12px);
+  }
+
+  &>*:hover {
+    color: #fff;
+    background-color: $primary-color;
+  }
+  
+
+  .login-button {
+    @include primary-button;
+  }
+}
+
+@media (max-width: $breakpoint-tablet) {
   .header {
-    padding: pad(10px);
-    @include flex(flex, center,center, column);
+    padding: pad(20px);
+
     .header-nav {
-      @include flex(flex, center,space-evenly, column);
-      width: 100%;
-      gap: 30px;
-      margin-top: 20px
+      display: none;
     }
+    .menu-icon {
+      display: block;
+    }
+  }
+
+  .header-mobile {
+    display: flex !important;
   }
 }

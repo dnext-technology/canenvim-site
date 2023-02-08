@@ -8,26 +8,37 @@ import '../style/headerStyles.scss';
 
 const Header = () => {
   const navigate = useNavigate();
+  const [isVisibleMobileMenu, setIsVisibleMobileMenu] = React.useState(false);
+
+  // TODO: Giriş Yap buttons commented, maybe it will be added later.
   return (
     <HeaderContainer>
-      {({ logo }) => (
-        <header className="header">
-          <img
-            alt="logo"
-            className="logo"
-            src={logo}
-            onClick={() => navigate('/')}
-          />
-          <div className="header-nav">
-            <span onClick={() => navigate('about')}>Hakkımızda</span>
-            <span>Konaklama</span>
-            <Button
-              className="login-button"
-              onClick={() => null}
-              text="Giriş Yap"
+      {({ logo, menuIcon }) => (
+        <>
+          <header className="header">
+            <img
+              alt="logo"
+              className="logo"
+              src={logo}
+              onClick={() => navigate('/')}
             />
-          </div>
-        </header>
+            <div className="header-nav">
+              <span onClick={() => navigate('about')}>Hakkımızda</span>
+            </div>
+
+            <img
+              alt="menu-icon"
+              className="menu-icon"
+              src={menuIcon}
+              onClick={() => setIsVisibleMobileMenu(!isVisibleMobileMenu)}
+            />
+          </header>
+          {isVisibleMobileMenu && (
+            <div className="header-mobile">
+              <span onClick={() => navigate('about')}>Hakkımızda</span>
+            </div>
+          )}
+        </>
       )}
     </HeaderContainer>
   );
