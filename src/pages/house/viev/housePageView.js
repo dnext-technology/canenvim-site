@@ -56,16 +56,12 @@ const HousePage = () => {
             selector: row => row.person,
         },
         {
-            name: 'Konaklama Yeri',
-            selector: row => row.address,
+            name: 'İlçe',
+            selector: row => row.district,
         },
         {
             name: 'İl',
             selector: row => row.city,
-        },
-        {
-            name: 'İlçe',
-            selector: row => row.district,
         },
     ];
     useEffect(() => {
@@ -371,20 +367,15 @@ const HousePage = () => {
                         <span>Kaç Kişi Misafir Edebilirsiniz? <span style={{ color: "#D42E13"}}>*</span></span> 
                             <Input type="number" value={guest} onChange={(e) => setGuest(e.target.value)}/>
                         </div>
-                        <div className='guest-list-number1' >
-                            Misafirlerin Kaç Tanesi Çocuk
-                            <Input type="number" value={childNumber} onChange={(e) => setChildNumber(e.target.value)}/>
-                        </div>
-                    </div>
-                    {/* Misafirlik Süresi Konaklama Türü */}
-                    <div className='name-surname' >
+                        
+                   
                         <div className='guest-list-number' >
                             Misafirlik Süresi
                             <Select value={accommodationPeriod} onChange={(e) => setAccommodationPeriod(e.target.value)} data={[{name: "1 Haftaya Kadar"}, {name: "2 Haftaya Kadar"}, {name: "1 Aya Kadar"}, {name: "Belirsiz"}]} />
                         </div>
-                        <div  className='guest-list-number1' >
+                        <div  className='guest-list-number' >
                             Konaklama Türü
-                            <Select value={accommodationType} onChange={(e) => setAccommodationType(e.target.value)}  data={[{name: "Ayrı Oda"}, {name: "Otel Odası"}, {name: "Bağımsız"}]} />
+                            <Select value={accommodationType} onChange={(e) => setAccommodationType(e.target.value)}  data={[{name: "Ayrı Oda"}, {name: "Otel Odası"}, {name: "Müstakil Ev"}]} />
                         </div>
                     </div>
                 </div>

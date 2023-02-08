@@ -51,21 +51,26 @@ const GuestPage = () => {
             selector: row => row.time,
         },
         {
-            name: 'Kişi Sayısı',
-            selector: row => row.person,
+            name: 'Toplam Misafir Sayısı',
+            selector: row => row.totalGuest,
         },
         {
-            name: 'Konaklama Yeri',
-            selector: row => row.address,
+            name: 'Yetişkin Sayısı',
+            selector: row => row.adult,
         },
         {
-            name: 'İl',
-            selector: row => row.city,
+            name: 'Çocuk Sayısı',
+            selector: row => row.child,
         },
         {
             name: 'İlçe',
             selector: row => row.district,
         },
+        {
+            name: 'İl',
+            selector: row => row.city,
+        },
+        
     ];
     useEffect(() => {
         async function fetchData() {
@@ -81,7 +86,9 @@ const GuestPage = () => {
                         createdDate: is.createdDate,
                         name: is.firstName,
                         time: is.accommodationPeriod,
-                        person: is.guestCapacity,
+                        adult: is.adultNumber,
+                        child: is.childNumber,
+                        totalGuest: is.adultNumber + is.childNumber,
                         address: is.addressDetail,
                         city: is.city,
                         district: is.district
@@ -196,7 +203,6 @@ const GuestPage = () => {
         },
         headCells: {
             style: {
-                
                 paddingLeft: '8px', // override the cell padding for head cells
                 paddingRight: '8px',
             },
@@ -267,8 +273,8 @@ const GuestPage = () => {
             town: selectedTown,
             neighborhood: selectedNeighborhoodAddress,
             addressDetail: addressDetail,
-            guestCapacity: guest,
-            accommodationType: accommodationType,
+            adultNumber: guest,
+            childNumber: childNumber,
             accommodationPeriod: accommodationPeriod
           }
       })
@@ -365,11 +371,11 @@ const GuestPage = () => {
                 <div className='guest-list' >
                     {/* Kaç Misafir Kaç Çocuk */}
                         <div className='guest-list-number'>
-                        <span>Konaklayacak Misafir Sayısı <span style={{ color: "#D42E13"}}>*</span></span> 
+                        <span>Yetişkin Sayısı <span style={{ color: "#D42E13"}}>*</span></span> 
                             <Input type="number" value={guest} onChange={(e) => setGuest(e.target.value)}/>
                         </div>
-                        <div className='guest-list-number1'>
-                            Misafirlerin Kaç Tanesi Çocuk
+                        <div className='guest-list-number'>
+                             Çocuk Sayısı
                             <Input type="number" value={childNumber} onChange={(e) => setChildNumber(e.target.value)}/>
                         </div>
                     {/* Misafirlik Süresi Konaklama Türü */}
@@ -377,10 +383,7 @@ const GuestPage = () => {
                         Ne Kadar Süre Konaklanacak
                             <Select onChange={(e) => setAccommodationPeriod(e.target.value)} data={[{name: "1 Haftaya Kadar"}, {name: "2 Haftaya Kadar"}, {name: "1 Aya Kadar"}, {name: "Belirsiz"}]} />
                         </div>
-                        <div className='guest-list-number1' >
-                            Konaklama Türü
-                            <Select onChange={(e) => setAccommodationType(e.target.value)}  data={[{name: "Ayrı Oda"}, {name: "Otel Odası"}, {name: "Bağımsız"}]} />
-                        </div>
+                       
                 </div>
                 {/* İl İlçe */}
                 <div className='name-surname'>
