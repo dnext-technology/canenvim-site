@@ -18,6 +18,10 @@ module.exports = {
     'max-len': ['error', 120],
     'import/prefer-default-export': 'off',
     'import/no-named-as-default': 'off',
+    'template-curly-spacing': 'off',
+    'indent': ['error', 2, {
+      'ignoredNodes': ['TemplateLiteral']
+    }],
     'no-script-url': 'off',
     'react/forbid-prop-types': 'off',
     'no-nested-ternary': 'off',

@@ -5,7 +5,8 @@ import { Button, Input, TextArea, Select } from '../../../components';
 import axios from 'axios';
 import DataTable from 'react-data-table-component';
 import Banner from '../../../assets/images/bannerzor.png';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import '../style/housePageStyles.scss'
 
 const HousePage = () => {
@@ -76,7 +77,7 @@ const HousePage = () => {
                     {
                         id: is.id,
                         createdDate: is.createdDate,
-                        name: is.firstName,
+                        name: `${is.firstName} ${is.lastName.substring(0, 1)}.`,
                         time: is.accommodationPeriod,
                         person: is.guestCapacity,
                         address: is.addressDetail,
@@ -218,7 +219,7 @@ const HousePage = () => {
                 {
                     id: is.id,
                     createdDate: is.createdDate,
-                    name: is.firstName,
+                    name: `${is.firstName} ${is.lastName.substring(0, 1)}.`,
                     time: is.accommodationPeriod,
                     person: is.guestCapacity,
                     address: is.addressDetail,
@@ -273,11 +274,23 @@ const HousePage = () => {
         .then(async response => {
           console.log(response.data)
           setChanged(!changed)
+          notify()
         })
         .catch(error => {
           return error
         });
     };
+    const notify = () => toast("Bilgileriniz alınmıştır. İmkanlarınıza uygun ihtiyaç sahipleri için sizinle iletişime geçilecektir.", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        type: "success"
+        });
 
     const checkTCKN = (e) => {
         setTckn(e)
@@ -421,12 +434,13 @@ const HousePage = () => {
                         text="Gönder" 
                         styleProps={{border: "1px solid #323232", borderRadius: 48, backgroundColor: "#323232", color: "#FFFFFF", padding: "10px 20px"}}
                     />
+                    <ToastContainer />
                 </div>
             </form>
         </div>
         <div className='house-list-container'>
             <div style={{ marginTop: 30}}>
-                <p style={{ fontSize: 40, color: "#323232"}}>Konaklama Listesi</p>
+                <p style={{ fontSize: 40, color: "#323232"}}>Konaklama İlan Listesi</p>
                 <p style={{ fontSize: 18, color: "#323232"}}>Aşağıdaki tabloda konaklama yeri ihtiyacı olan kişilere erişebilirsiniz.</p>
                 <DataTable
                     columns={columns}
