@@ -2,6 +2,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import HeaderContainer from '../container/headerContainer';
+import Button from '../../../button/buttonView';
 
 import '../style/headerStyles.scss';
 
@@ -11,18 +12,25 @@ const Header = () => {
     <HeaderContainer>
       {({ logo }) => (
         <header className="header">
-          <div onClick={() => navigate('/')} className="header-right">
-            <img alt="logo" className="logo" src={logo} />
-            <span>Misafirperver</span>
-          </div>
-          <div className='header-nav'>
+          <img
+            alt="logo"
+            className="logo"
+            src={logo}
+            onClick={() => navigate('/')}
+          />
+          <div className="header-nav">
             <span onClick={() => navigate('about')}>Hakkımızda</span>
             <span>Konaklama</span>
+            <Button
+              className="login-button"
+              onClick={() => null}
+              text="Giriş Yap"
+            />
           </div>
         </header>
       )}
     </HeaderContainer>
-  )
+  );
 };
 
 export default Header;
