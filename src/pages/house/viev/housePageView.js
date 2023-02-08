@@ -57,6 +57,10 @@ const HousePage = () => {
             selector: row => row.person,
         },
         {
+            name: 'Durum',
+            selector: row => row.status,
+        },
+        {
             name: 'İlçe',
             selector: row => row.district,
         },
@@ -82,7 +86,8 @@ const HousePage = () => {
                         person: is.guestCapacity,
                         address: is.addressDetail,
                         city: is.city,
-                        district: is.district
+                        district: is.district,
+                        status: is.status === "active" ? "Aktif" : is.status === "completed" ? "Tamamlandı" : "Devam Ediyor"
                     }
                 )
             }))
@@ -196,7 +201,7 @@ const HousePage = () => {
         headCells: {
             style: {
                 
-                paddingLeft: '8px', // override the cell padding for head cells
+                paddingLeft: '5px', // override the cell padding for head cells
                 paddingRight: '8px',
             },
         },
@@ -224,7 +229,9 @@ const HousePage = () => {
                     person: is.guestCapacity,
                     address: is.addressDetail,
                     city: is.city,
-                    district: is.district
+                    district: is.district,
+                    status: is.status === "active" ? "Aktif" : is.status === "completed" ? "Tamamlandı" : "Devam Ediyor"
+
                 }
             )
         }))
@@ -274,15 +281,29 @@ const HousePage = () => {
         .then(async response => {
           console.log(response.data)
           setChanged(!changed)
-          notify()
+          notify();
+          setName("")
+          setTckn("")
+          setSurname("")
+          setEmail("") 
+          setPhone("") 
+          setGuest("") 
+          setNeighborhood("") 
+          setAddressDetail("") 
+          setAccommodationType("Ayrı Oda") 
+          setAccommodationPeriod("1 Haftaya Kadar") 
+          setTCKNValidasyonError({ error: false, message: ""}) 
+          setEmailValidasyonError({ error: false, message: ""}) 
+          setPhoneValidasyonError({ error: false, message: ""})
         })
         .catch(error => {
           return error
         });
     };
     const notify = () => toast("Bilgileriniz alınmıştır. İmkanlarınıza uygun ihtiyaç sahipleri için sizinle iletişime geçilecektir.", {
-        position: "top-right",
-        autoClose: 5000,
+        position: "top-center",
+        className: "black-background",
+        autoClose: 10000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -421,8 +442,8 @@ const HousePage = () => {
                 </div>
                 {/* Ekstra Bilgi */}
                 <div style={{display: "flex", flexDirection: "column", fontWeight: 400, width: "100%", margin: 10}}>
-                   Ekstra Bilgi ( Zorunlu Değil )
-                   <TextArea value={neighborhood} onChange={(e) => setNeighborhood(e.target.value)}/>
+                    Özel Not ( Zorunlu Değil )
+                   <TextArea placeholder="Örnek: Engelli birey var" value={neighborhood} onChange={(e) => setNeighborhood(e.target.value)}/>
                 </div>
                 <div style={{display: "flex", flexDirection: "column", fontWeight: 400, width: 200, margin: "0px 30px 0px 10px"}}>
                     <Button 
@@ -434,13 +455,14 @@ const HousePage = () => {
                         text="Gönder" 
                         styleProps={{border: "1px solid #323232", borderRadius: 48, backgroundColor: "#323232", color: "#FFFFFF", padding: "10px 20px"}}
                     />
+                    
                     <ToastContainer />
                 </div>
             </form>
         </div>
         <div className='house-list-container'>
             <div style={{ marginTop: 30}}>
-                <p style={{ fontSize: 40, color: "#323232"}}>Konaklama İlan Listesi</p>
+                <p style={{ fontSize: 40, color: "#323232"}}>Misafir Talepleri</p>
                 <p style={{ fontSize: 18, color: "#323232"}}>Aşağıdaki tabloda konaklama yeri ihtiyacı olan kişilere erişebilirsiniz.</p>
                 <DataTable
                     columns={columns}

@@ -64,6 +64,10 @@ const GuestPage = () => {
             selector: row => row.child,
         },
         {
+            name: 'Durum',
+            selector: row => row.status,
+        },
+        {
             name: 'İlçe',
             selector: row => row.district,
         },
@@ -92,7 +96,8 @@ const GuestPage = () => {
                         totalGuest: is.adultNumber + is.childNumber,
                         address: is.addressDetail,
                         city: is.city,
-                        district: is.district
+                        district: is.district,
+                        status: is.status === "active" ? "Aktif" : is.status === "completed" ? "Tamamlandı" : "Devam Ediyor"
                     }
                 )
             }))
@@ -204,8 +209,8 @@ const GuestPage = () => {
         },
         headCells: {
             style: {
-                paddingLeft: '8px', // override the cell padding for head cells
-                paddingRight: '8px',
+                paddingLeft: '5px', // override the cell padding for head cells
+                paddingRight: '0px',
             },
         },
         cells: {
@@ -234,7 +239,8 @@ const GuestPage = () => {
                     totalGuest: is.adultNumber + is.childNumber,
                     address: is.addressDetail,
                     city: is.city,
-                    district: is.district
+                    district: is.district,
+                    status: is.status === "active" ? "Aktif" : is.status === "completed" ? "Tamamlandı" : "Devam Ediyor"
                 }
             )
         }))
@@ -285,6 +291,20 @@ const GuestPage = () => {
           console.log(response.data)
             setChanged(!changed)
             notify()
+            setName("")
+            setSurname("")
+            setEmail("") 
+            setTckn("")
+            setPhone("") 
+            setGuest("") 
+            setNeighborhood("") 
+            setAddressDetail("") 
+            setChildNumber("")
+            setAccommodationType("Ayrı Oda") 
+            setAccommodationPeriod("1 Haftaya Kadar") 
+            setTCKNValidasyonError({ error: false, message: ""}) 
+            setEmailValidasyonError({ error: false, message: ""}) 
+            setPhoneValidasyonError({ error: false, message: ""})
         })
         .catch(error => {
           return error
@@ -325,8 +345,9 @@ const GuestPage = () => {
     }
 
     const notify = () => toast("Bilgileriniz alınmıştır. Taleplerinize uygun imkan sahipleri için sizinle iletişime geçilecektir.", {
-        position: "top-right",
-        autoClose: 5000,
+        position: "top-center",
+        className: "black-background",
+        autoClose: 10000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -413,7 +434,7 @@ const GuestPage = () => {
                     </div>
                 </div>
                 {/* Semt Mahalle */}
-                <div className='name-surname'>
+                {/* <div className='name-surname'>
                     <div className='name'>
                         Semt
                         <Select disabled={selectedDistrict === ""} onChange={(e) => setSelectedTown(e.target.value)} data={town} />
@@ -422,7 +443,7 @@ const GuestPage = () => {
                         Mahalle
                         <Select disabled={selectedTown === ""} onChange={(e) => setSelectedNeighborhoodAddress(e.target.value)} data={neighborhoodAddress} />
                     </div>
-                </div>
+                </div> */}
                 {/* Adres Tarifi */}
                 <div style={{display: "flex", flexDirection: "column", fontWeight: 400, width: "100%", margin: 10}}>
                    Adres Tarifi ( Zorunlu Değil )
@@ -430,8 +451,8 @@ const GuestPage = () => {
                 </div>
                 {/* Ekstra Bilgi */}
                 <div style={{display: "flex", flexDirection: "column", fontWeight: 400, width: "100%", margin: 10}}>
-                   Ekstra Bilgi ( Zorunlu Değil )
-                   <TextArea value={neighborhood} onChange={(e) => setNeighborhood(e.target.value)}/>
+                   Özel Not ( Zorunlu Değil )
+                   <TextArea placeholder="Örnek: Engelli birey var" value={neighborhood} onChange={(e) => setNeighborhood(e.target.value)}/>
                 </div>
                 <div style={{display: "flex", flexDirection: "column", fontWeight: 400, width: 200, margin: "0px 30px 0px 10px"}}>
                     <Button 
@@ -449,7 +470,7 @@ const GuestPage = () => {
         </div>
         <div className='house-list-container'>
             <div style={{ marginTop: 30}}>
-                <p style={{ fontSize: 40, color: "#323232"}}>Konaklama Talep Listesi </p>
+                <p style={{ fontSize: 40, color: "#323232"}}>Konaklama Talepleri </p>
                 <p style={{ fontSize: 18, color: "#323232"}}>Aşağıdaki tabloda konaklama yeri ihtiyacı olan kişilere erişebilirsiniz.</p>
                 <DataTable
                     columns={columns}

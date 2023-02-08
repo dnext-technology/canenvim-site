@@ -45,6 +45,9 @@
         font-size: 20px; 
         color: #323232;
     }
+    .black-background{
+        width: 700px;
+    }
     .button-container{
         @include flex(flex, center, space-evenly);
         padding: pad(50px);
@@ -84,6 +87,9 @@
 @media (max-width: $breakpoint-mobile) {
     .house-list-container {
         padding: 5px;
+    }
+    .black-background{
+        width: 100%
     }
 .house-container {
     padding: 5px;
