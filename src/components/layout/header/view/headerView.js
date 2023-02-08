@@ -1,7 +1,8 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React from 'react';
-import { useNavigate, Link } from 'react-router-dom';
 import { FaTwitter, FaInstagram } from 'react-icons/fa';
+import { useNavigate, Link } from 'react-router-dom';
 import HeaderContainer from '../container/headerContainer';
 
 import '../style/headerStyles.scss';
