@@ -452,7 +452,17 @@ const GuestPage = () => {
                 {/* Ekstra Bilgi */}
                 <div style={{display: "flex", flexDirection: "column", fontWeight: 400, width: "100%", margin: 10}}>
                    Özel Not ( Zorunlu Değil )
-                   <TextArea placeholder="Örnek: Engelli birey var" value={neighborhood} onChange={(e) => setNeighborhood(e.target.value)}/>
+                   <TextArea placeholder="Ör. Engeli birey var..." value={neighborhood} onChange={(e) => setNeighborhood(e.target.value)}/>
+                </div>
+                <div style={{display: "flex", fontWeight: 400, width: "100%", margin: 10}}>
+                   {/* <TextArea placeholder="Örnek: Engelli birey var" value={neighborhood} onChange={(e) => setNeighborhood(e.target.value)}/> */}
+                   <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike"></input>
+                   <a 
+                        download="KVKK.pdf"
+                        href="KVKK.pdf" 
+                        style={{ marginLeft: 10, color: "#323232"}}>
+                            KVKK Metnini okudum ve kabul ediyorum.
+                    </a>
                 </div>
                 <div style={{display: "flex", flexDirection: "column", fontWeight: 400, width: 200, margin: "0px 30px 0px 10px"}}>
                     <Button 
