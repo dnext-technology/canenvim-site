@@ -143,21 +143,19 @@ return(
     return(
         <>
         <div className='banner'/>
-        <div className='house-list-container'>
+        <div className='house-container'>
             <p className='guest-text'>Misafir Etmek İstiyorum</p>
-            <p className='guest-text2'>İhtiyaç Sahipleri</p>
             <div className='guest-text-container'>
-                <div className='guest-text-container1'>
-                    Aşağıdaki tabloda konaklama yeri ihtiyacı olan kişilere erişebilirsiniz. “Yer Aç” butonu ile isterseniz konaklama yeri ilanı vererek ihtiyaç sahiplerinin sizlere ulaşmasını sağlayabilirsiniz.
+                <div className='guest-text2'>
+                Doldurduğunuz formdaki bilgiler konaklama ihtiyacı sahipleri için listelenecek ve görüntülenebilecektir. Konaklama ihtiyacı sahipleri sizleri arayabilir ve görüşebilir.
+                Yardımcı olduğunuz için teşekkür ederiz.
                 </div>
-                <div>
-                    <Button 
-                     //onClick={() => navigate('house')}
-                     text="Yer Aç" 
-                     styleProps={{border: "2px solid #323232",borderRadius: 48,padding: "10px 50px",backgroundColor: "#323232",color: "#fff"}}
-                    />
-                </div>
+              
             </div>
+            <p style={{ color: "#323232", fontWeight: 700, fontSize: 24, marginTop: 20}}>İlan Bilgi Formu</p>
+
+        </div>
+        <div className='house-list-container'>
             <div style={{ marginTop: 30}}>
                 <DataTable
                     columns={columns}
@@ -174,12 +172,10 @@ return(
                 />
             </div>
         </div>
-        <div className='house-container'>
-            <p style={{ color: "#323232", fontWeight: 700, fontSize: 24}}>İlan Bilgi Formu</p>
-        </div>
         </>
       )}}
     </HousePageContainer>
 );
 }
 export default HousePage;
+

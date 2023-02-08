@@ -9,11 +9,14 @@
     padding: 20px 120px;
 }
 .guest-text{
-    color: #D42E13E5
+    color: #D42E13E5;
+    font-size: 40px;
+    font-weight: 700;
 }
 .guest-text2{
     color: #323232;
-    font-weight: 700
+    font-size: 18px;
+    font-weight: 400
 }
 .guest-text-container {
     @include flex(flex, center, space-between);
