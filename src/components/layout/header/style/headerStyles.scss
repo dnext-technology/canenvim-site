@@ -73,3 +73,16 @@
     display: flex !important;
   }
 }
+
+.social-logos{
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+
+  svg {
+    fill: #1a2328;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+  }
+}
