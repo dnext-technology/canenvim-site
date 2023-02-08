@@ -1,12 +1,14 @@
 @import "../../../_base"; 
 
-.home-container {
-    @include flex(flex, center, center, column);
+.about-container {
+    @include flex(flex, flex-start, center, column);
     padding-top: 4rem;
     padding-bottom: 20rem;
+    padding-left: 120px;
+    padding-right: 120px;
     position: relative;
     flex-wrap: wrap;
-    background-color: #D9D9D9;
+    background-color: #F5F5F5;
     .text1 {
         font-size: 70px; 
         color: #D42E13E5;
