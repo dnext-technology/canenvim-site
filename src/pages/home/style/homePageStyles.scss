@@ -94,33 +94,20 @@
 }
 
 @media (max-width: 480px) {
-.home-container {
-    flex-direction: column;
-    .text1 {
-        text-align: center;
-    }
-    .text2 {
-        text-align: center;
-    }
-    .button-container{
-        @include flex(flex, center, center, column);
-        padding: pad(10px);
+.home-bottom-bottom{
+    display: grid;
+    .bottom-left{
         width: 100%;
-        //margin: 30px 0px
+        font-size: 24px;
+        p{
+            font-size: 20px;
+            line-height: 40px
+          }
     }
-    .logo-hand {
-        top: 60%;
+    .bottom-right{
+        width: 100%;
+        margin-top: 5px;
     }
-  }
-.home-bottom1{
-    margin: 20px;
-}
-.home-bottom-bottom {
-    margin: 0;
-}
-.bottom-left p {
-    font-size: 20px;
-    line-height: 35px;
 }
 
 }

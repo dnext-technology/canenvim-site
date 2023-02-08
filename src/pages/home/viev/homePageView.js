@@ -48,12 +48,12 @@ return(
             <div className='home-bottom-bottom'>
             <div className= "bottom-left">
                 <div > Hakkımızda</div>
-                <p> Felaketlerden etkilenen insanlarımıza ulaşmanız için aracı olmak istiyoruz.</p>
+                <p> Felaketlerden etkilenen insanlara yönelik ihtiyaçların karşılanmasını hedefliyoruz.</p>
             </div>
 
             <div className='bottom-right'>
                 <div >
-                 <p>Leadable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed ipsum dot.</p>   
+                 <p>Deprem felaketinden etkilenen insanlarımız ile evini açıp misafir kabul edeceklerin birbirlerine ulaşabilmelerine aracı olmak istiyoruz.</p>   
                 </div>
                 <Button 
                     onClick={() => navigate('about')}
