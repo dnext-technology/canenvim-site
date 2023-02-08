@@ -295,7 +295,7 @@ const GuestPage = () => {
               
             </div>
             <p style={{ color: "#323232", fontWeight: 700, fontSize: 24, marginTop: 20}}>İlan Bilgi Formu</p>
-            <form style={{ width: "60%"}}>
+            <form style={{ width: "80%"}}>
                 {/* TCKN */}
                 <div style={{display: "flex", flexDirection: "column", fontWeight: 400, width: 420, margin: "0px 30px 0px 10px"}}>
                     <span>T.C. Kimlik No <span style={{ color: "#D42E13"}}>*</span></span>

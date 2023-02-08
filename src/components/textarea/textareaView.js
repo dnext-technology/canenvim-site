@@ -7,6 +7,7 @@ const TextArea = ({ text, styleProps, ...props }) => {
     <textarea
       className='textarea-con'
       style={styleProps}
+      rows="5"
       // eslint-disable-next-line react/jsx-props-no-spreading
       {...props}
     />
