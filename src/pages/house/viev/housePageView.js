@@ -26,6 +26,7 @@ const HousePage = () => {
     const [city, setCity] = useState([]);
     const [selectedCity, setSelectedCity] = useState("");
     const [district, setDistrict] = useState([]);
+    const [checkKVKK, setCheckKVKK] = useState(false);
     const [selectedDistrict, setSelectedDistrict] = useState("");
     const [town, setTown] = useState([]);
     const [neighborhoodAddress, setNeighborhoodAddress] = useState([]);
@@ -288,6 +289,7 @@ const HousePage = () => {
           setEmail("") 
           setPhone("") 
           setGuest("") 
+          setCheckKVKK(false)
           setNeighborhood("") 
           setAddressDetail("") 
           setAccommodationType("Ayrı Oda") 
@@ -390,7 +392,7 @@ const HousePage = () => {
                     </div>
                     <div className='name'>
                         <span>Telefon <span style={{ color: "#D42E13"}}>*</span></span> 
-                        <Input value={phone} onChange={(e) => checkPhone(e.target.value)}/>
+                        <Input placeholder="05xx xxx xx xx" value={phone} onChange={(e) => checkPhone(e.target.value)}/>
                         {phoneValidasyonError.error && <p style={{ color: "red", marginLeft: 5}}>{phoneValidasyonError.message}</p>}
                     </div>
                 </div>
@@ -436,18 +438,18 @@ const HousePage = () => {
                     </div>
                 </div>
                 {/* Adres Tarifi */}
-                <div style={{display: "flex", flexDirection: "column", fontWeight: 400, width: "100%", margin: 10}}>
+                <div style={{display: "flex", flexDirection: "column", fontWeight: 400, width: "100%", marginTop: 10}}>
                 Adres Tarifi ( Zorunlu Değil )
                     <TextArea value={addressDetail} onChange={(e) => setAddressDetail(e.target.value)}/>
                 </div>
                 {/* Ekstra Bilgi */}
-                <div style={{display: "flex", flexDirection: "column", fontWeight: 400, width: "100%", margin: 10}}>
+                <div style={{display: "flex", flexDirection: "column", fontWeight: 400, width: "100%", marginTop: 10}}>
                     Özel Not ( Zorunlu Değil )
                    <TextArea placeholder="Ör. Engeli birey var..." value={neighborhood} onChange={(e) => setNeighborhood(e.target.value)}/>
                 </div>
                 <div style={{display: "flex", fontWeight: 400, width: "100%", margin: 10}}>
                    {/* <TextArea placeholder="Örnek: Engelli birey var" value={neighborhood} onChange={(e) => setNeighborhood(e.target.value)}/> */}
-                   <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike"></input>
+                   <input value={checkKVKK} onChange={(e) => setCheckKVKK(e.target.checked ? true: false)} type="checkbox" id="vehicle1" name="vehicle1" ></input>
                    <a 
                         download="KVKK.pdf"
                         href="KVKK.pdf" 
@@ -457,7 +459,7 @@ const HousePage = () => {
                 </div>
                 <div style={{display: "flex", flexDirection: "column", fontWeight: 400, width: 200, margin: "0px 30px 0px 10px"}}>
                     <Button 
-                        disabled={tckn === "" || name === "" || surname === "" || phone === "" || city === "" || district === "" || guest === "" || tcknValidasyonError.error || emailValidasyonError.error || phoneValidasyonError.error}
+                        disabled={tckn === "" || name === "" || surname === "" || phone === "" || city === "" || district === "" || guest === "" || tcknValidasyonError.error || emailValidasyonError.error || phoneValidasyonError.error || !checkKVKK}
                         onClick={(e) => {
                             e.preventDefault()
                             handleSubmit()}
