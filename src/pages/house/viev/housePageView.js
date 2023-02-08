@@ -1,7 +1,7 @@
 /* eslint-disable */
 import React, { useState, useEffect } from 'react';
 import HousePageContainer from '../container/housePageContainer';
-import { Button } from '../../../components';
+import { Button, Input } from '../../../components';
 import axios from 'axios';
 import DataTable from 'react-data-table-component';
 
@@ -153,7 +153,81 @@ return(
               
             </div>
             <p style={{ color: "#323232", fontWeight: 700, fontSize: 24, marginTop: 20}}>İlan Bilgi Formu</p>
-
+            <form style={{ width: "100%"}}>
+                <div style={{display: "flex", flexDirection: "column", fontWeight: 400, width: 420, margin: "0px 30px 0px 10px"}}>
+                    T.C. Kimlik No
+                    <Input />
+                </div>
+                <div style={{display: "flex", margin: 10}}>
+                    <div style={{display: "flex", flexDirection: "column", fontWeight: 400, width: 420, margin: "0px 20px 0px 0px"}}>
+                        Adınız
+                        <Input />
+                    </div>
+                    <div style={{display: "flex", flexDirection: "column", fontWeight: 400,width: 420, margin: "0px 20px 0px 0px"}}>
+                        Soyadınız
+                        <Input />
+                    </div>
+                </div>
+                <div style={{display: "flex", fontWeight: 400, margin: 10}}>
+                    <div style={{display: "flex", flexDirection: "column",width: 420, margin: "0px 20px 0px 0px"}}>
+                        E-posta
+                        <Input />
+                    </div>
+                    <div style={{display: "flex", flexDirection: "column",width: 420, margin: "0px 20px 0px 0px"}}>
+                         Telefon
+                        <Input />
+                    </div>
+                </div>
+                <div style={{display: "flex", fontWeight: 400, margin: 10}}>
+                    <div style={{display: "flex", flexDirection: "column", width: 210, margin: "0px 10px 0px 0px"}}>
+                    Kaç Kişi Misafir Edebilirsiniz?
+                        <Input />
+                    </div>
+                    <div style={{display: "flex", flexDirection: "column", width: 210, margin: "0px"}}>
+                    Misafirlerin Kaç Tanesi Çocuk
+                        <Input />
+                    </div>
+                    <div style={{display: "flex", flexDirection: "column", width: 210, margin: "0px 10px 0px 10px"}}>
+                    Misafirlik Süresi
+                        <Input />
+                    </div>
+                    <div style={{display: "flex", flexDirection: "column", width: 210, margin: "0px"}}>
+                    Konaklama Türü
+                        <Input />
+                    </div>
+                </div>
+                <div style={{display: "flex", fontWeight: 400, margin: 10}}>
+                    <div style={{display: "flex", flexDirection: "column", width: 420, margin: "0px 20px 0px 0px"}}>
+                        İl
+                        <Input />
+                    </div>
+                    <div style={{display: "flex", flexDirection: "column", width: 420, margin: "0px 20px 0px 0px"}}>
+                        İlçe
+                        <Input />
+                    </div>
+                </div>
+                <div style={{display: "flex", fontWeight: 400, margin: 10}}>
+                    <div style={{display: "flex", flexDirection: "column", width: 420, margin: "0px 20px 0px 0px"}}>
+                        Semt
+                        <Input />
+                    </div>
+                    <div style={{display: "flex", flexDirection: "column", width: 420, margin: "0px 20px 0px 0px"}}>
+                        Mahalle
+                        <Input />
+                    </div>
+                </div>
+                <div style={{display: "flex", flexDirection: "column", fontWeight: 400, width: "100%", margin: 10}}>
+                   Adres Tarifi
+                    <Input />
+                </div>
+                <div style={{display: "flex", flexDirection: "column", fontWeight: 400, width: "100%", margin: 10}}>
+                   Ekstra Bilgi
+                   <Input />
+                </div>
+                <div style={{display: "flex", flexDirection: "column", fontWeight: 400, width: 200, margin: "0px 30px 0px 10px"}}>
+                 <input style={{ border: "1px solid #323232", borderRadius: 48, backgroundColor: "#323232", color: "#FFFFFF", padding: "10px 20px"}} type="submit" value="Gönder" />
+                </div>
+            </form>
         </div>
         <div className='house-list-container'>
             <div style={{ marginTop: 30}}>

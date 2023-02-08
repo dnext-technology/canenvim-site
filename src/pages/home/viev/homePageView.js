@@ -40,9 +40,31 @@ return(
             </div>
 
         </div>
-        <div className='home-bottom'>
-            <img alt="logo" className="deprem-img" src={Deprem} />
-            <div> hakkımızda</div>
+        <div className='home-bottom1'>
+            <div>
+                <img alt="logo" className="deprem-img1" src={Deprem} />
+            </div>
+            
+            <div className='home-bottom-bottom'>
+            <div className= "bottom-left">
+                <div > Hakkımızda</div>
+                <p> Felaketlerden etkilenen insanlarımıza ulaşmanız için aracı olmak istiyoruz.</p>
+            </div>
+
+            <div className='bottom-right'>
+                <div >
+                 <p>Leadable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed ipsum dot.</p>   
+                </div>
+                <Button 
+                    onClick={() => navigate('about')}
+                    text="Bilgi Alın" 
+                    styleProps={{border: "1px solid #323232",borderRadius: 48,padding: "10px 50px",backgroundColor: "#323232",color: "#FFFFFF", boxShadow: "0px 0px 16px rgba(0, 0, 0, 0.25)"}}
+                />
+            </div>
+            
+            
+            </div>
+            
         </div>
         </>
       )}}

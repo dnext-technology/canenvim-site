@@ -1,0 +1,17 @@
+@import "../../_base"; 
+
+.input-con {
+  background-color: #FFF;
+  height: 48px;
+  border: 1px solid #D9D9D9;
+  border-radius: 16px;
+  max-width: 420px;
+ width: 100%;
+}
+
+@media (max-width: $breakpoint-mobile) {
+.button-con {
+    margin-top: 20px;
+  }
+
+}

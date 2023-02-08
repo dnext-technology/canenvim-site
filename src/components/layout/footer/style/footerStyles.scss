@@ -1,23 +1,39 @@
 @import "../../../../_base"; 
 
 .footer {
-  background: $footer-bg-color;
+  background: #323232;
   position: relative;
   bottom: 0px;
   width: 100%;
+  height: 200px;
   
-  .footer-detail-copyright {
-    background-color: $footer-copywrite-color;
-    padding: pad(10px);
-    text-align: $align-center;
-    font-style: $font-style-normal; 
+  .footer-home{
+    margin: 20px 50px;
+    font-family: Inter;
+    height: 446px;
+    width: 1920px;
+    left: 0px;
+    top: 2879px;
+    border-radius: 0px;
+    
+
+
+
+    
+    .footer-detail-bottom{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .footer-logo {
+        height: 51px;
+        width: 128px;
+      }
+    }
   }
 }
 
 @media (max-width: $breakpoint-mobile) {
 
-  .footer {
-   
-  }
+  
   
 }
