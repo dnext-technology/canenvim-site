@@ -1,6 +1,6 @@
 @import "../../../_base"; 
 
-.home-container {
+.guest-container {
     @include flex(flex, center, center, column);
     padding-top: 4rem;
     padding-bottom: 20rem;
@@ -52,7 +52,7 @@
 }
 
 @media (max-width: $breakpoint-mobile) {
-.home-container {
+.guest-container {
     flex-direction: column;
     .text1 {
         text-align: center;

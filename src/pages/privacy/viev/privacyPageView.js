@@ -13,7 +13,7 @@ const PrivacyPage = () => {
       {({}) => {
         return (
           <>
-            <div className="home-container">
+            <div className="privacy-container">
               <h2>Gizlilik Sözleşmesi Ve Gizlilik Politikamız</h2>
 
             </div>
