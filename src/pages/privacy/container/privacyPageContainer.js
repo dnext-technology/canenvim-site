@@ -1,16 +1,16 @@
 /* eslint-disable */
 import PropTypes from 'prop-types';
 
-const AboutPageContainer = ({ children}) => {
+const PrivacyPageContainer = ({ children}) => {
 
   return children && children({ });
 };
 
-AboutPageContainer.propTypes = {
+PrivacyPageContainer.propTypes = {
   children: PropTypes.func.isRequired,
 };
 
 
 
 
-export default AboutPageContainer;
+export default PrivacyPageContainer;

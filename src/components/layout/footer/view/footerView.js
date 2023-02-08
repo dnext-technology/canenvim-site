@@ -8,7 +8,7 @@ const Footer = () => (
   <FooterContainer>
       <footer className="footer">
         <div className="footer-detail-copyright">
-          Copyright © 2023 İbrahim Karagöz
+          Copyright © 2023 ZorGünDostu
         </div>
       </footer>
   </FooterContainer>

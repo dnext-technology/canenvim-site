@@ -49,5 +49,6 @@ module.exports = {
     "import/no-named-as-default-member": 0,
     "semi": 0,
     'react-hooks/exhaustive-deps': 'warn',
+    'linebreak-style': ['error', process.platform === 'win32' ? 'windows' : 'unix'],
   },
 };
