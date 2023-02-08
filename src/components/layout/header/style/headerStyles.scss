@@ -31,8 +31,10 @@
     padding: pad(10px);
     @include flex(flex, center,center, column);
     .header-nav {
-      @include flex(flex, center,space-evenly);
+      @include flex(flex, center,space-evenly, column);
       width: 100%;
+      gap: 30px;
+      margin-top: 20px
     }
   }
 }

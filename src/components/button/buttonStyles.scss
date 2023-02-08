@@ -1,8 +1,14 @@
 @import "../../_base"; 
 
 .button-con {
-   
+   cursor: pointer;
  
+}
+
+.button-con:disabled {
+  background-color: #848181 !important;
+  color: #555;
+  cursor: not-allowed;
 }
 
 @media (max-width: $breakpoint-mobile) {

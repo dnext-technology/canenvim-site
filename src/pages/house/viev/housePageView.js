@@ -4,6 +4,7 @@ import HousePageContainer from '../container/housePageContainer';
 import { Button, Input, TextArea, Select } from '../../../components';
 import axios from 'axios';
 import DataTable from 'react-data-table-component';
+import Banner from '../../../assets/images/bannerzor.png';
 
 import '../style/housePageStyles.scss'
 
@@ -321,7 +322,7 @@ const HousePage = () => {
     {({}) => {
     return(
         <>
-        <div className='banner'/>
+        <img alt="logo" className="bannerzor" src={Banner} />
         <div className='house-container'>
             <p className='guest-text'>Misafir Etmek İstiyorum</p>
             <div className='guest-text-container'>
@@ -334,77 +335,77 @@ const HousePage = () => {
             <p style={{ color: "#323232", fontWeight: 700, fontSize: 24, marginTop: 20}}>İlan Bilgi Formu</p>
             <form style={{ width: "80%"}}>
                 {/* TCKN */}
-                <div style={{display: "flex", flexDirection: "column", fontWeight: 400, width: 420, margin: "0px 30px 0px 10px"}}>
+                <div className='tckn' >
                     <span>T.C. Kimlik No <span style={{ color: "#D42E13"}}>*</span></span>
                     <Input type="number" value={tckn} onChange={(e) => checkTCKN(e.target.value)} />
                     {tcknValidasyonError.error && <p style={{ color: "red", marginLeft: 5}}>{tcknValidasyonError.message}</p>}
                 </div>
                 {/* Ad soyad */}
-                <div style={{display: "flex", margin: 10}}>
-                    <div style={{display: "flex", flexDirection: "column", fontWeight: 400, width: 420, margin: "0px 20px 0px 0px"}}>
+                <div className='name-surname'>
+                    <div className='name' >
                         <span>Adınız <span style={{ color: "#D42E13"}}>*</span></span> 
                         <Input value={name} onChange={(e) => setName(e.target.value)}/>
                     </div>
-                    <div style={{display: "flex", flexDirection: "column", fontWeight: 400,width: 420, margin: "0px 20px 0px 0px"}}>
+                    <div className='name' >
                         <span>Soyadınız <span style={{ color: "#D42E13"}}>*</span></span> 
                         <Input value={surname} onChange={(e) => setSurname(e.target.value)}/>
                     </div>
                 </div>
                 {/* Email Telefon */}
-                <div style={{display: "flex", fontWeight: 400, margin: 10}}>
-                    <div style={{display: "flex", flexDirection: "column",width: 420, margin: "0px 20px 0px 0px"}}>
+                <div className='name-surname'>
+                    <div className='name' >
                         E-posta
                         <Input value={email} onChange={(e) => checkEmail(e.target.value)}/>
                         {emailValidasyonError.error && <p style={{ color: "red", marginLeft: 5}}>{emailValidasyonError.message}</p>}
                     </div>
-                    <div style={{display: "flex", flexDirection: "column",width: 420, margin: "0px 20px 0px 0px"}}>
+                    <div className='name'>
                         <span>Telefon <span style={{ color: "#D42E13"}}>*</span></span> 
                         <Input value={phone} onChange={(e) => checkPhone(e.target.value)}/>
                         {phoneValidasyonError.error && <p style={{ color: "red", marginLeft: 5}}>{phoneValidasyonError.message}</p>}
                     </div>
                 </div>
-                <div style={{display: "flex", fontWeight: 400, margin: 10}}>
+                <div  className='guest-list-house' >
                     {/* Kaç Misafir Kaç Çocuk */}
-                    <div style={{display: "flex"}}>
-                        <div style={{display: "flex", flexDirection: "column", width: 205, margin: "0px 10px 0px 0px"}}>
+                    <div className='name-surname'>
+                        <div className='guest-list-number'>
                         <span>Kaç Kişi Misafir Edebilirsiniz? <span style={{ color: "#D42E13"}}>*</span></span> 
-                            <Input value={guest} onChange={(e) => setGuest(e.target.value)}/>
+                            <Input type="number" value={guest} onChange={(e) => setGuest(e.target.value)}/>
                         </div>
-                        <div style={{display: "flex", flexDirection: "column", width: 205, margin: "0px"}}>
+                        <div className='guest-list-number1' >
                             Misafirlerin Kaç Tanesi Çocuk
-                            <Input value={childNumber} onChange={(e) => setChildNumber(e.target.value)}/>
+                            <Input type="number" value={childNumber} onChange={(e) => setChildNumber(e.target.value)}/>
                         </div>
                     </div>
                     {/* Misafirlik Süresi Konaklama Türü */}
-                    <div style={{display: "flex", marginLeft: 10}}>
-                        <div style={{display: "flex", flexDirection: "column", width: 205, margin: "0px 10px 0px 10px"}}>
+                    <div className='name-surname' >
+                        <div className='guest-list-number' >
                             Misafirlik Süresi
                             <Select value={accommodationPeriod} onChange={(e) => setAccommodationPeriod(e.target.value)} data={[{name: "1 Haftaya Kadar"}, {name: "2 Haftaya Kadar"}, {name: "1 Aya Kadar"}, {name: "Belirsiz"}]} />
                         </div>
-                        <div style={{display: "flex", flexDirection: "column", width: 205, margin: "0px"}}>
+                        <div  className='guest-list-number1' >
                             Konaklama Türü
                             <Select value={accommodationType} onChange={(e) => setAccommodationType(e.target.value)}  data={[{name: "Ayrı Oda"}, {name: "Otel Odası"}, {name: "Bağımsız"}]} />
                         </div>
                     </div>
                 </div>
                 {/* İl İlçe */}
-                <div style={{display: "flex", fontWeight: 400, margin: 10}}>
-                    <div style={{display: "flex", flexDirection: "column", width: 420, margin: "0px 20px 0px 0px"}}>
+                <div  className='name-surname' >
+                    <div  className='name'>
                         <span>İl <span style={{ color: "#D42E13"}}>*</span></span> 
                         <Select onChange={(e) => setSelectedCity(e.target.value)} data={city} />
                     </div>
-                    <div style={{display: "flex", flexDirection: "column", width: 420, margin: "0px 20px 0px 0px"}}>
+                    <div   className='name'>
                         <span>İlçe <span style={{ color: "#D42E13"}}>*</span></span> 
                         <Select disabled={selectedCity === ""} onChange={(e) => setSelectedDistrict(e.target.value)} data={district} />
                     </div>
                 </div>
                 {/* Semt Mahalle */}
-                <div style={{display: "flex", fontWeight: 400, margin: 10}}>
-                    <div style={{display: "flex", flexDirection: "column", width: 420, margin: "0px 20px 0px 0px"}}>
+                <div  className='name-surname' >
+                    <div  className='name'>
                         Semt
                         <Select disabled={selectedDistrict === ""} onChange={(e) => setSelectedTown(e.target.value)} data={town} />
                     </div>
-                    <div style={{display: "flex", flexDirection: "column", width: 420, margin: "0px 20px 0px 0px"}}>
+                    <div  className='name'>
                         Mahalle
                         <Select disabled={selectedTown === ""} onChange={(e) => setSelectedNeighborhoodAddress(e.target.value)} data={neighborhoodAddress} />
                     </div>
@@ -421,7 +422,7 @@ const HousePage = () => {
                 </div>
                 <div style={{display: "flex", flexDirection: "column", fontWeight: 400, width: 200, margin: "0px 30px 0px 10px"}}>
                     <Button 
-                        disabled={tckn === "" || name === "" || surname === "" || phone === "" || city === "" || district === "" || guest === ""}
+                        disabled={tckn === "" || name === "" || surname === "" || phone === "" || city === "" || district === "" || guest === "" || tcknValidasyonError.error || emailValidasyonError.error || phoneValidasyonError.error}
                         onClick={(e) => {
                             e.preventDefault()
                             handleSubmit()}

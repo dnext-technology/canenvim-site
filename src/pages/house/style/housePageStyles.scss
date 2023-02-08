@@ -8,6 +8,9 @@
 .house-list-container {
     padding: 20px 120px;
 }
+.bannerzor {
+    width: 100%;
+}
 .guest-text{
     color: #D42E13E5;
     font-size: 40px;
@@ -79,7 +82,11 @@
 }
 
 @media (max-width: $breakpoint-mobile) {
+    .house-list-container {
+        padding: 5px;
+    }
 .house-container {
+    padding: 5px;
     flex-direction: column;
     .text1 {
         text-align: center;

@@ -1,5 +1,48 @@
 @import "../../../_base"; 
 
+.tckn {
+    display: flex;
+    flex-direction: column;
+    font-weight: 400;
+    width: 420px;
+    margin: 0px 30px 0px 10px
+}
+
+.name {
+    display: flex;
+    flex-direction: column;
+    font-weight: 400;
+    width: 420px;
+    margin: 0px 20px 0px 0px
+}
+.name-surname {
+    display: flex;
+
+    margin: 10px;
+}
+.guest-list {
+    display: flex;
+    margin: 10px;
+    font-weight: 400;
+    justify-content: space-between;
+}
+.guest-list-house{
+    display: flex;
+    font-weight: 400;
+    justify-content: flex-start;
+}
+.guest-list-number {
+    display: flex;
+    margin: 0px 10px 0px 0px;
+    font-weight: 400;
+    flex-direction: column;
+}
+.guest-list-number1 {
+    display: flex;
+    margin: 0px;
+    font-weight: 400;
+    flex-direction: column;
+}
 .guest-container {
     @include flex(flex, center, center, column);
     padding-top: 4rem;
@@ -7,6 +50,7 @@
     position: relative;
     flex-wrap: wrap;
     background-color: #D9D9D9;
+   
     .text1 {
         font-size: 70px; 
         color: #D42E13E5;
@@ -52,6 +96,35 @@
 }
 
 @media (max-width: $breakpoint-mobile) {
+    .tckn {
+        width: 100%;
+        margin: 0px 30px 0px 10px
+    }
+    .name {
+        width: 100%;
+        margin: 0px 30px 0px 10px
+    }
+    .guest-list-number {
+        width: 100%;
+        margin: 0px 30px 0px 10px
+    }
+    .guest-list-number1 {
+        width: 100%;
+        margin: 0px 30px 0px 10px
+    }
+    .guest-list-number2 {
+        width: 100%;
+        margin: 0px 30px 20px 10px
+    }
+    .name-surname  {
+        flex-direction: column;
+    }
+    .guest-list {
+        flex-direction: column;
+    }
+    .guest-list-house{
+        flex-direction: column;
+    }
 .guest-container {
     flex-direction: column;
     .text1 {
