@@ -364,7 +364,7 @@ const HousePage = () => {
                 </div>
               
             </div>
-            <p style={{ color: "#323232", fontWeight: 700, fontSize: 24, marginTop: 20}}>İlan Bilgi Formu</p>
+            <p className='ilan'>İlan Bilgi Formu</p>
             <form style={{ width: "80%"}}>
                 {/* TCKN */}
                 <div className='tckn' >
@@ -438,12 +438,12 @@ const HousePage = () => {
                     </div>
                 </div>
                 {/* Adres Tarifi */}
-                <div style={{display: "flex", flexDirection: "column", fontWeight: 400, width: "100%", marginTop: 10}}>
+                <div className='address-style'>
                 Adres Tarifi ( Zorunlu Değil )
                     <TextArea value={addressDetail} onChange={(e) => setAddressDetail(e.target.value)}/>
                 </div>
                 {/* Ekstra Bilgi */}
-                <div style={{display: "flex", flexDirection: "column", fontWeight: 400, width: "100%", marginTop: 10}}>
+                <div className='address-style'>
                     Özel Not ( Zorunlu Değil )
                    <TextArea placeholder="Ör. Engeli birey var..." value={neighborhood} onChange={(e) => setNeighborhood(e.target.value)}/>
                 </div>
