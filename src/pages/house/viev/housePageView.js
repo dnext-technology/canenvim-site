@@ -474,8 +474,8 @@ const HousePage = () => {
         </div>
         <div className='house-list-container'>
             <div style={{ marginTop: 30}}>
-                <p style={{ fontSize: 40, color: "#323232"}}>Misafir Talepleri</p>
-                <p style={{ fontSize: 18, color: "#323232"}}>Aşağıdaki tabloda konaklama yeri ihtiyacı olan kişilere erişebilirsiniz.</p>
+                <p style={{ fontSize: 40, color: "#323232"}}>Misafir Kabul Edebilenler</p>
+                <p style={{ fontSize: 18, color: "#323232"}}>Aşağıdaki tabloda misafir kabul edebilecek olan kişileri görüntüleyebilirsiniz.</p>
                 <DataTable
                     columns={columns}
                     data={data}
