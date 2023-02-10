@@ -108,7 +108,6 @@ const HousePage = () => {
               method: 'GET', url: `https://zorgundostu.com/api/mp-location/v1/locations`
             })
               .then(async response => {
-                console.log(response.data)
                setCity(response.data)
                setSelectedCity(response.data[0].name)
               
@@ -128,7 +127,6 @@ const HousePage = () => {
               method: 'GET', url: `https://zorgundostu.com/api/mp-location/v1/locations?city=${selectedCity}`
             })
               .then(async response => {
-                console.log(response.data)
                 setDistrict(response.data)
                 setSelectedDistrict(response.data[0].name)
               })
@@ -148,7 +146,6 @@ const HousePage = () => {
               method: 'GET', url: `https://zorgundostu.com/api/mp-location/v1/locations?city=${selectedCity}&district=${selectedDistrict}`
             })
               .then(async response => {
-                console.log(response.data)
                 setTown(response.data)
                 setSelectedTown(response.data[0].name)
               })
@@ -168,7 +165,6 @@ const HousePage = () => {
               method: 'GET', url: `https://zorgundostu.com/api/mp-location/v1/locations?city=${selectedCity}&district=${selectedDistrict}&town=${selectedTown}`
             })
               .then(async response => {
-                console.log(response.data)
                 setNeighborhoodAddress(response.data)
                 setSelectedNeighborhoodAddress(response.data[0].name)
               })
@@ -246,7 +242,6 @@ const HousePage = () => {
     };
 
     const handleSubmit = async () => {
-        console.log("here")
         const params = {
             identityNumber: tckn,
             firstName: name,
@@ -280,7 +275,6 @@ const HousePage = () => {
         }
       })
         .then(async response => {
-          console.log(response.data)
           setChanged(!changed)
           notify();
           setName("")
@@ -348,7 +342,6 @@ const HousePage = () => {
         }
     }
 
-    console.log(accommodationType, accommodationPeriod, "ll")
     return(
     <HousePageContainer>
     {({}) => {
