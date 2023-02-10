@@ -51,7 +51,7 @@ return(
                     {data && data.length > 0 &&
                         <div style={{ boxShadow: "0px 0px 16px rgba(0, 0, 0, 0.1)", borderRadius: 24,minWidth: 250, backgroundColor: "#fff", padding: "10px 15px", marginBottom: 20}}>
                             <p style={{ color: "#D42E13", fontWeight: 700}}>Konaklama Talep Eden</p>
-                            <p style={{ color: "#262626", fontWeight: 700, fontSize: 30, margin: 0, padding: 0 }}>{offerer.capacity} <span style={{ color: "#8D8D8D", fontSize: 18}}>Kişi</span></p>
+                            <p style={{ color: "#262626", fontWeight: 700, fontSize: 30, margin: 0, padding: 0 }}>{requester.capacity} <span style={{ color: "#8D8D8D", fontSize: 18}}>Kişi</span></p>
                         </div>
                     }
                     <Button
@@ -63,8 +63,8 @@ return(
                 <div className="requester">
                     {data && data.length > 0 &&
                         <div style={{ boxShadow: "0px 0px 16px rgba(0, 0, 0, 0.1)", borderRadius: 24,minWidth: 250, backgroundColor: "#fff", padding: "10px 15px", marginBottom: 20}}>
-                            <p style={{ color: "#D42E13", fontWeight: 700}}>Misafir Etmek İsteyen</p>
-                            <p style={{ color: "#262626", fontWeight: 700, fontSize: 30, margin: 0, padding: 0 }}>{requester.capacity} <span style={{ color: "#8D8D8D", fontSize: 18}}>Kişi</span></p>
+                            <p style={{ color: "#D42E13", fontWeight: 700}}>Misafir Etmek İsteyen </p>
+                            <p style={{ color: "#262626", fontWeight: 700, fontSize: 30, margin: 0, padding: 0 }}>{offerer.capacity} <span style={{ color: "#8D8D8D", fontSize: 18}}>Kişi</span></p>
                         </div>
                     }
                     <Button 
