@@ -375,7 +375,7 @@ const GuestPage = () => {
                 </div>
               
             </div>
-            <p style={{ color: "#323232", fontWeight: 700, fontSize: 24, marginTop: 20}}>İlan Bilgi Formu</p>
+            <p className='ilan'>İlan Bilgi Formu</p>
             <form style={{ width: "80%"}}>
                 {/* TCKN */}
                 <div className='tckn'>
@@ -447,12 +447,12 @@ const GuestPage = () => {
                     </div>
                 </div> */}
                 {/* Adres Tarifi */}
-                <div style={{display: "flex", flexDirection: "column", fontWeight: 400, width: "100%", marginTop: 10}}>
+                <div className='address-style'>
                    Adres Tarifi ( Zorunlu Değil )
                     <TextArea value={addressDetail} onChange={(e) => setAddressDetail(e.target.value)}/>
                 </div>
                 {/* Ekstra Bilgi */}
-                <div style={{display: "flex", flexDirection: "column", fontWeight: 400, width: "100%", marginTop: 10}}>
+                <div className='address-style'>
                    Özel Not ( Zorunlu Değil )
                    <TextArea placeholder="Ör. Engeli birey var..." value={neighborhood} onChange={(e) => setNeighborhood(e.target.value)}/>
                 </div>
@@ -463,7 +463,7 @@ const GuestPage = () => {
                         download="KVKK.pdf"
                         href="KVKK.pdf" 
                         style={{ marginLeft: 10, color: "#323232"}}>
-                            KVKK Metnini okudum ve kabul ediyorum.
+                            KVKK Metnini okudum ve kabul ediyorum.<span style={{ color: "#D42E13E5"}}>*</span>
                     </a>
                 </div>
                 <div style={{display: "flex", flexDirection: "column", fontWeight: 400, width: 200, margin: "0px 30px 0px 10px"}}>
