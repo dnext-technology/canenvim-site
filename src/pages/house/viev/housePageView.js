@@ -37,7 +37,8 @@ const HousePage = () => {
     const [tcknValidasyonError ,setTCKNValidasyonError] = useState({ error: false, message: ""})
     const [emailValidasyonError ,setEmailValidasyonError] = useState({ error: false, message: ""})
     const [phoneValidasyonError ,setPhoneValidasyonError] = useState({ error: false, message: ""})
-
+    const [nameValidasyonError ,setNameValidasyonError] = useState({ error: false, message: ""})
+    const [surnameValidasyonError ,setSurnameValidasyonError] = useState({ error: false, message: ""})
     const [selectedTown, setSelectedTown] = useState("");
 
     const columns = [
@@ -342,6 +343,28 @@ const HousePage = () => {
         }
     }
 
+    const changeName = (e) => {
+        setName(e)
+        const nameformat = /^[a-zA-Z_ğüşıöçĞÜŞİÖÇ ]*$/;
+        if (!e.match(nameformat)) {
+            setNameValidasyonError({error: true, message: "Adınız uygun formatta değildir."})
+          
+        }else{
+            setNameValidasyonError({error: false, message: ""})
+        }
+    }
+
+    const changeSurName = (e) => {
+        setSurname(e)
+        const nameformat = /^[a-zA-Z_ğüşıöçĞÜŞİÖÇ ]*$/;
+        if (!e.match(nameformat)) {
+            setSurnameValidasyonError({error: true, message: "Adınız uygun formatta değildir."})
+          
+        }else{
+            setSurnameValidasyonError({error: false, message: ""})
+        }
+    }
+
     return(
     <HousePageContainer>
     {({}) => {
@@ -369,11 +392,13 @@ const HousePage = () => {
                 <div className='name-surname'>
                     <div className='name' >
                         <span>Adınız <span style={{ color: "#D42E13"}}>*</span></span> 
-                        <Input value={name} onChange={(e) => setName(e.target.value)}/>
+                        <Input value={name} onChange={(e) => changeName(e.target.value)}/>
+                        {nameValidasyonError.error && <p style={{ color: "red", marginLeft: 5}}>{nameValidasyonError.message}</p>}
                     </div>
                     <div className='name' >
                         <span>Soyadınız <span style={{ color: "#D42E13"}}>*</span></span> 
-                        <Input value={surname} onChange={(e) => setSurname(e.target.value)}/>
+                        <Input value={surname} onChange={(e) => changeSurName(e.target.value)}/>
+                        {surnameValidasyonError.error && <p style={{ color: "red", marginLeft: 5}}>{surnameValidasyonError.message}</p>}
                     </div>
                 </div>
                 {/* Email Telefon */}
@@ -452,7 +477,7 @@ const HousePage = () => {
                 </div>
                 <div style={{display: "flex", flexDirection: "column", fontWeight: 400, width: 200, margin: "0px 30px 0px 10px"}}>
                     <Button 
-                        disabled={tckn === "" || name === "" || surname === "" || phone === "" || city === "" || district === "" || guest === "" || tcknValidasyonError.error || emailValidasyonError.error || phoneValidasyonError.error || !checkKVKK}
+                        disabled={tckn === "" || name === "" || surname === "" || phone === "" || city === "" || district === "" || guest === "" || nameValidasyonError.error || surnameValidasyonError.error ||  tcknValidasyonError.error || emailValidasyonError.error || phoneValidasyonError.error || !checkKVKK}
                         onClick={(e) => {
                             e.preventDefault()
                             handleSubmit()}
