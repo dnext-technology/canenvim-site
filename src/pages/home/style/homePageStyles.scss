@@ -94,6 +94,21 @@
 
 }
 
+.stats {
+    width: 100%;
+    background-color: #D42E13;
+    padding: 20px 120px;
+}
+
+.stats-cont {
+    @include flex(flex, center, center, column);
+
+}
+
+.stats-cont-detail {
+    @include flex(flex, center, center);
+}
+
 @media (max-width: 480px) {
     .home-container {
     .logo-hand {

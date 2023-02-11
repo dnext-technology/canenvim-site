@@ -5,6 +5,8 @@ import HomePageContainer from '../container/homePageContainer';
 import { Button } from '../../../components';
 import Hand from '../../../assets/images/hand.png';
 import Deprem from '../../../assets/images/deprem.png';
+import Heart from '../../../assets/images/heart.png';
+import HeartHand from '../../../assets/images/hearthand.png';
 import axios from 'axios';
 
 import '../style/homePageStyles.scss'
@@ -50,8 +52,8 @@ return(
                 <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center"}}>
                     {data && data.length > 0 &&
                         <div style={{ boxShadow: "0px 0px 16px rgba(0, 0, 0, 0.1)", borderRadius: 24,minWidth: 250, backgroundColor: "#fff", padding: "10px 15px", marginBottom: 20}}>
-                            <p style={{ color: "#D42E13", fontWeight: 700}}>Konaklama Talep Eden</p>
-                            <p style={{ color: "#262626", fontWeight: 700, fontSize: 30, margin: 0, padding: 0 }}>{requester.capacity} <span style={{ color: "#8D8D8D", fontSize: 18}}>Yatak</span></p>
+                            <p style={{ color: "#262626", fontWeight: 700, fontSize: 30, margin: 0, padding: 0 }}>{requester.capacity} <span style={{ color: "#8D8D8D", fontSize: 18}}>Kişi</span></p>
+                            <p style={{ color: "#D42E13", fontWeight: 700}}>Konaklama İhtiyacı Olan</p>
                         </div>
                     }
                     <Button
@@ -63,8 +65,8 @@ return(
                 <div className="requester">
                     {data && data.length > 0 &&
                         <div style={{ boxShadow: "0px 0px 16px rgba(0, 0, 0, 0.1)", borderRadius: 24,minWidth: 250, backgroundColor: "#fff", padding: "10px 15px", marginBottom: 20}}>
-                            <p style={{ color: "#D42E13", fontWeight: 700}}>Misafir Etmek İsteyen </p>
-                            <p style={{ color: "#262626", fontWeight: 700, fontSize: 30, margin: 0, padding: 0 }}>{offerer.capacity} <span style={{ color: "#8D8D8D", fontSize: 18}}>Yatak</span></p>
+                            <p style={{ color: "#262626", fontWeight: 700, fontSize: 30, margin: 0, padding: 0 }}>{offerer.capacity} <span style={{ color: "#8D8D8D", fontSize: 18}}>Kişi</span></p>
+                            <p style={{ color: "#D42E13", fontWeight: 700}}>Kalacak Yer Sağlayan</p>
                         </div>
                     }
                     <Button 
@@ -77,8 +79,22 @@ return(
             <div>
                 <img alt="logo" className="logo-hand" src={Hand} />
             </div>
-
         </div>
+        {/* <div className='stats'>
+           <div className='stats-cont'>
+                <div className='stats-cont-detail'>
+                    <div><img alt="logo" className="deprem-img1" src={Heart} /></div>
+                    <div>{requester.capacity}</div>
+                    <div>{requester.person}</div>
+                </div>
+                <div style={{ backgroundColor: "#D0D0D0CC", width: "100%", height: 1}}/>
+                <div className='stats-cont-detail'>
+                    <div><img alt="logo" className="deprem-img1" src={HeartHand} /></div>
+                    <div>{offerer.capacity}</div>
+                    <div>{offerer.person}</div>
+                </div>
+           </div>
+        </div> */}
         <div className='home-bottom1'>
             <div>
                 <img alt="logo" className="deprem-img1" src={Deprem} />
