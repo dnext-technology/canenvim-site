@@ -419,7 +419,7 @@ const GuestPage = () => {
                 {/* Email Telefon */}
                 <div className='name-surname' >
                     <div className='name'>
-                        E-posta
+                    <span>E-posta</span>
                         <Input placeholder="E-posta" error={emailValidasyonError.error} value={email} onChange={(e) => checkEmail(e.target.value)} />
                         {emailValidasyonError.error && <p style={{ color: "#525252", marginLeft: 5}}>{emailValidasyonError.message}</p>}
                     </div>
@@ -436,12 +436,12 @@ const GuestPage = () => {
                             <Input placeholder="Yetişkin Sayısı" type="number" value={guest} onChange={(e) => setGuest(e.target.value)}/>
                         </div>
                         <div className='guest-list-number'>
-                             Çocuk Sayısı
+                        <span> Çocuk Sayısı</span>
                             <Input placeholder="Çocuk Sayısı" type="number" value={childNumber} onChange={(e) => setChildNumber(e.target.value)}/>
                         </div>
                     {/* Misafirlik Süresi Konaklama Türü */}
                         <div className='guest-list-number' >
-                            Ne Kadar Süre Konaklanacak
+                        <span> Ne Kadar Süre Konaklanacak</span>
                             <Select onChange={(e) => setAccommodationPeriod(e.target.value)} data={[{name: "1 Haftaya Kadar"}, {name: "2 Haftaya Kadar"}, {name: "1 Aya Kadar"}, {name: "Belirsiz"}]} />
                         </div>
                        
@@ -470,12 +470,12 @@ const GuestPage = () => {
                 </div> */}
                 {/* Adres Tarifi */}
                 <div className='address-style'>
-                   Adres Tarifi ( Zorunlu Değil )
+                <span>Adres Tarifi ( Zorunlu Değil ) </span>
                     <TextArea placeholder="Adres Tarifi" value={addressDetail} onChange={(e) => setAddressDetail(e.target.value)}/>
                 </div>
                 {/* Ekstra Bilgi */}
                 <div className='address-style'>
-                   Özel Not ( Zorunlu Değil )
+                   <span>Özel Not ( Zorunlu Değil ) </span>
                    <TextArea placeholder="Ör. Engeli birey var..." value={note} onChange={(e) => setNote(e.target.value)}/>
                 </div>
                 <div style={{display: "flex", fontWeight: 400, width: "100%", margin: 10}}>

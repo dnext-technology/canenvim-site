@@ -407,7 +407,7 @@ const HousePage = () => {
                 {/* Email Telefon */}
                 <div className='name-surname'>
                     <div className='name' >
-                        E-posta
+                    <span>E-posta</span>
                         <Input placeholder="E-posta" error={emailValidasyonError.error} value={email} onChange={(e) => checkEmail(e.target.value)}/>
                         {emailValidasyonError.error && <p style={{ color: "#525252", marginLeft: 5}}>{emailValidasyonError.message}</p>}
                     </div>
@@ -427,11 +427,11 @@ const HousePage = () => {
                         
                    
                         <div className='guest-list-number' >
-                            Misafirlik Süresi
+                        <span> Misafirlik Süresi</span>
                             <Select value={accommodationPeriod} onChange={(e) => setAccommodationPeriod(e.target.value)} data={[{name: "1 Haftaya Kadar"}, {name: "2 Haftaya Kadar"}, {name: "1 Aya Kadar"}, {name: "Belirsiz"}]} />
                         </div>
                         <div  className='guest-list-number' >
-                            Konaklama Türü
+                        <span> Konaklama Türü</span>
                             <Select value={accommodationType} onChange={(e) => setAccommodationType(e.target.value)}  data={[{name: "Ayrı Oda"}, {name: "Otel Odası"}, {name: "Müstakil Ev"}]} />
                         </div>
                     </div>
@@ -450,22 +450,22 @@ const HousePage = () => {
                 {/* Semt Mahalle */}
                 <div  className='name-surname' >
                     <div  className='name'>
-                        Semt
+                        <span>Semt</span>
                         <Select disabled={selectedDistrict === ""} onChange={(e) => setSelectedTown(e.target.value)} data={town} />
                     </div>
                     <div  className='name'>
-                        Mahalle
+                    <span> Mahalle</span>
                         <Select disabled={selectedTown === ""} onChange={(e) => setSelectedNeighborhoodAddress(e.target.value)} data={neighborhoodAddress} />
                     </div>
                 </div>
                 {/* Adres Tarifi */}
                 <div className='address-style'>
-                Adres Tarifi ( Zorunlu Değil )
+                <span> Adres Tarifi ( Zorunlu Değil ) </span>
                     <TextArea placeholder="Adres Tarifi" value={addressDetail} onChange={(e) => setAddressDetail(e.target.value)}/>
                 </div>
                 {/* Ekstra Bilgi */}
                 <div className='address-style'>
-                    Özel Not ( Zorunlu Değil )
+                <span>  Özel Not ( Zorunlu Değil )</span>
                    <TextArea placeholder="Ör. Engeli birey var..." value={note} onChange={(e) => setNote(e.target.value)}/>
                 </div>
                 <div style={{display: "flex", fontWeight: 400, width: "100%", margin: 10}}>
