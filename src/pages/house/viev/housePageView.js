@@ -14,6 +14,7 @@ const HousePage = () => {
 	const [perPage, setPerPage] = useState(10);
     const [totalRow, setTotalRow] = useState(0);
     const [page, setPage] = useState(0);
+    const [note, setNote] = useState("");
     const [tckn, setTckn] = useState("");
     const [name, setName] = useState("");
     const [surname, setSurname] = useState("");
@@ -272,7 +273,8 @@ const HousePage = () => {
             addressDetail: addressDetail,
             guestCapacity: guest,
             accommodationType: accommodationType,
-            accommodationPeriod: accommodationPeriod
+            accommodationPeriod: accommodationPeriod,
+            note: note
         }
       })
         .then(async response => {
@@ -284,6 +286,7 @@ const HousePage = () => {
           setEmail("") 
           setPhone("") 
           setGuest("") 
+          setNote("")
           setCheckKVKK(false)
           setNeighborhood("") 
           setAddressDetail("") 
@@ -463,7 +466,7 @@ const HousePage = () => {
                 {/* Ekstra Bilgi */}
                 <div className='address-style'>
                     Özel Not ( Zorunlu Değil )
-                   <TextArea placeholder="Ör. Engeli birey var..." value={neighborhood} onChange={(e) => setNeighborhood(e.target.value)}/>
+                   <TextArea placeholder="Ör. Engeli birey var..." value={note} onChange={(e) => setNote(e.target.value)}/>
                 </div>
                 <div style={{display: "flex", fontWeight: 400, width: "100%", margin: 10}}>
                    {/* <TextArea placeholder="Örnek: Engelli birey var" value={neighborhood} onChange={(e) => setNeighborhood(e.target.value)}/> */}
