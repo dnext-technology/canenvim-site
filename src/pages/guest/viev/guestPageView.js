@@ -400,48 +400,48 @@ const GuestPage = () => {
                 {/* TCKN */}
                 <div className='tckn'>
                     <span>T.C. Kimlik No <span style={{ color: "#D42E13"}}>*</span></span>
-                    <Input type="number" value={tckn} onChange={(e) => checkTCKN(e.target.value)} />
-                    {tcknValidasyonError.error && <p style={{ color: "red", marginLeft: 5}}>{tcknValidasyonError.message}</p>}
+                    <Input error={tcknValidasyonError.error} placeholder="T.C. Kimlik No" type="number" value={tckn} onChange={(e) => checkTCKN(e.target.value)} />
+                    {tcknValidasyonError.error && <p style={{ color: "#525252", marginLeft: 5}}>{tcknValidasyonError.message}</p>}
                 </div>
                 {/* Ad soyad */}
                 <div className='name-surname'>
                     <div className='name'>
                         <span>Adınız <span style={{ color: "#D42E13"}}>*</span></span> 
-                        <Input value={name} onChange={(e) => changeName(e.target.value)}/>
-                        {nameValidasyonError.error && <p style={{ color: "red", marginLeft: 5}}>{nameValidasyonError.message}</p>}
+                        <Input placeholder="Adınız" error={nameValidasyonError.error} value={name} onChange={(e) => changeName(e.target.value)}/>
+                        {nameValidasyonError.error && <p style={{ color: "#525252", marginLeft: 5}}>{nameValidasyonError.message}</p>}
                     </div>
                     <div className='name'>
                         <span>Soyadınız <span style={{ color: "#D42E13"}}>*</span></span> 
-                        <Input value={surname} onChange={(e) => changeSurName(e.target.value)}/>
-                        {surnameValidasyonError.error && <p style={{ color: "red", marginLeft: 5}}>{surnameValidasyonError.message}</p>}
+                        <Input placeholder="Soyadınız" error={surnameValidasyonError.error} value={surname} onChange={(e) => changeSurName(e.target.value)}/>
+                        {surnameValidasyonError.error && <p style={{ color: "#525252", marginLeft: 5}}>{surnameValidasyonError.message}</p>}
                     </div>
                 </div>
                 {/* Email Telefon */}
                 <div className='name-surname' >
                     <div className='name'>
                         E-posta
-                        <Input value={email} onChange={(e) => checkEmail(e.target.value)} />
-                        {emailValidasyonError.error && <p style={{ color: "red", marginLeft: 5}}>{emailValidasyonError.message}</p>}
+                        <Input placeholder="E-posta" error={emailValidasyonError.error} value={email} onChange={(e) => checkEmail(e.target.value)} />
+                        {emailValidasyonError.error && <p style={{ color: "#525252", marginLeft: 5}}>{emailValidasyonError.message}</p>}
                     </div>
                     <div className='name'>
                         <span>Telefon <span style={{ color: "#D42E13"}}>*</span></span> 
-                        <Input placeholder="05xx xxx xx xx" value={phone} onChange={(e) => checkPhone(e.target.value)}/>
-                        {phoneValidasyonError.error && <p style={{ color: "red", marginLeft: 5}}>{phoneValidasyonError.message}</p>}
+                        <Input  error={phoneValidasyonError.error} placeholder="05xx xxx xx xx" value={phone} onChange={(e) => checkPhone(e.target.value)}/>
+                        {phoneValidasyonError.error && <p style={{ color: "#525252", marginLeft: 5}}>{phoneValidasyonError.message}</p>}
                     </div>
                 </div>
                 <div className='guest-list' >
                     {/* Kaç Misafir Kaç Çocuk */}
                         <div className='guest-list-number'>
                         <span>Yetişkin Sayısı <span style={{ color: "#D42E13"}}>*</span></span> 
-                            <Input type="number" value={guest} onChange={(e) => setGuest(e.target.value)}/>
+                            <Input placeholder="Yetişkin Sayısı" type="number" value={guest} onChange={(e) => setGuest(e.target.value)}/>
                         </div>
                         <div className='guest-list-number'>
                              Çocuk Sayısı
-                            <Input type="number" value={childNumber} onChange={(e) => setChildNumber(e.target.value)}/>
+                            <Input placeholder="Çocuk Sayısı" type="number" value={childNumber} onChange={(e) => setChildNumber(e.target.value)}/>
                         </div>
                     {/* Misafirlik Süresi Konaklama Türü */}
                         <div className='guest-list-number' >
-                        Ne Kadar Süre Konaklanacak
+                            Ne Kadar Süre Konaklanacak
                             <Select onChange={(e) => setAccommodationPeriod(e.target.value)} data={[{name: "1 Haftaya Kadar"}, {name: "2 Haftaya Kadar"}, {name: "1 Aya Kadar"}, {name: "Belirsiz"}]} />
                         </div>
                        
@@ -471,7 +471,7 @@ const GuestPage = () => {
                 {/* Adres Tarifi */}
                 <div className='address-style'>
                    Adres Tarifi ( Zorunlu Değil )
-                    <TextArea value={addressDetail} onChange={(e) => setAddressDetail(e.target.value)}/>
+                    <TextArea placeholder="Adres Tarifi" value={addressDetail} onChange={(e) => setAddressDetail(e.target.value)}/>
                 </div>
                 {/* Ekstra Bilgi */}
                 <div className='address-style'>

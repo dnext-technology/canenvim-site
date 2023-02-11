@@ -3,11 +3,17 @@
 .textarea-con {
   background-color: #FFF;
   //height: 48px;
-  border: 1px solid #D9D9D9;
+  border: 1px solid #8D8D8D;
   border-radius: 16px;
   max-width: 860px;
   width: 100%;
-  padding: 10px
+  padding: 10px;
+  color: #8D8D8D;
+  font-size: 14px;
+  &:focus {
+    outline: none !important;
+    border: 2px solid #525252;
+  }
 }
 
 @media (max-width: $breakpoint-mobile) {
