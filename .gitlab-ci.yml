@@ -1,5 +1,5 @@
 variables:
-  TAG_NAME: "arm64"
+  TAG_NAME: "arm64-dev"
 
 docker-build:
   image: docker:latest
@@ -12,6 +12,6 @@ docker-build:
     - docker build --platform=linux/arm64/v8 --pull -t "$CI_REGISTRY_IMAGE:${TAG_NAME}" .
     - docker push "$CI_REGISTRY_IMAGE:${TAG_NAME}"
   rules:
-    - if: $CI_COMMIT_BRANCH == "main"
+    - if: $CI_COMMIT_BRANCH == "dev"
       exists:
         - Dockerfile
