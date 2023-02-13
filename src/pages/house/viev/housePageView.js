@@ -427,9 +427,9 @@ const HousePage = () => {
               </form>
             </div>
             <div className='house-list-container'>
-              <div style={{ marginTop: 30 }}>
-                <p style={{ fontSize: 40, color: '#323232' }}>Misafir Kabul Edebilenler</p>
-                <p style={{ fontSize: 18, color: '#323232' }}>
+              <div>
+                <p >Misafir Kabul Edebilenler</p>
+                <p>
                   Aşağıdaki tabloda misafir kabul edebilecek olan kişileri görüntüleyebilirsiniz.
                 </p>
                 <DataTable
