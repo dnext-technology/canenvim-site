@@ -32,6 +32,7 @@ const HousePage = () => {
   const [accommodationType, setAccommodationType] = useState('Ayrı Oda');
   const [accommodationPeriod, setAccommodationPeriod] = useState('1 Haftaya Kadar');
   const [tcknValidasyonError, setTCKNValidasyonError] = useState({ error: false, message: '' });
+  const [guestValidasyonError, setGuestValidasyonError] = useState({ error: false, message: '' });
   const [emailValidasyonError, setEmailValidasyonError] = useState({ error: false, message: '' });
   const [phoneValidasyonError, setPhoneValidasyonError] = useState({ error: false, message: '' });
   const [nameValidasyonError, setNameValidasyonError] = useState({ error: false, message: '' });
@@ -201,7 +202,7 @@ const HousePage = () => {
   const checkEmail = (e) => {
     setEmail(e);
     const emailformat = /^([A-Za-z]|[0-9])+$/;
-    if (e.match(emailformat)) {
+    if (!e.length || e.match(emailformat)) {
       setEmailValidasyonError({ error: true, message: 'Eposta adresi uygun formatta değildir.' });
     } else {
       setEmailValidasyonError({ error: false, message: '' });
@@ -218,10 +219,21 @@ const HousePage = () => {
     }
   };
 
+  const checkGuest = (e) => {
+    setGuest(e);
+    const guestFormat = /^[0-9]+$/;
+    if (!e.length || !e.match(guestFormat)) {
+      setGuestValidasyonError({ error: true, message: 'Misafir sayısı uygun formatta değildir.' });
+    } else {
+      setGuestValidasyonError({ error: false, message: '' });
+    }
+  };
+
+
   const changeName = (e) => {
     setName(e);
     const nameformat = /^[a-zA-Z_ğüşıöçĞÜŞİÖÇ ]*$/;
-    if (!e.match(nameformat)) {
+    if (!e.length || !e.match(nameformat)) {
       setNameValidasyonError({ error: true, message: 'Adınız uygun formatta değildir.' });
     } else {
       setNameValidasyonError({ error: false, message: '' });
@@ -231,7 +243,7 @@ const HousePage = () => {
   const changeSurName = (e) => {
     setSurname(e);
     const nameformat = /^[a-zA-Z_ğüşıöçĞÜŞİÖÇ ]*$/;
-    if (!e.match(nameformat)) {
+    if (!e.length || !e.match(nameformat)) {
       setSurnameValidasyonError({ error: true, message: 'Adınız uygun formatta değildir.' });
     } else {
       setSurnameValidasyonError({ error: false, message: '' });
@@ -262,6 +274,7 @@ const HousePage = () => {
                     type='number'
                     value={tckn}
                     onChange={(e) => checkTCKN(e.target.value)}
+                    onBlur={(e) => checkTCKN(e.target.value)}
                   />
                   {tcknValidasyonError.error && <p>{tcknValidasyonError.message}</p>}
                 </div>
@@ -272,6 +285,7 @@ const HousePage = () => {
                     error={nameValidasyonError.error}
                     value={name}
                     onChange={(e) => changeName(e.target.value)}
+                    onBlur={(e) => changeName(e.target.value)}
                   />
                   {nameValidasyonError.error && <p>{nameValidasyonError.message}</p>}
                 </div>
@@ -282,6 +296,7 @@ const HousePage = () => {
                     error={surnameValidasyonError.error}
                     value={surname}
                     onChange={(e) => changeSurName(e.target.value)}
+                    onBlur={(e) => changeSurName(e.target.value)}
                   />
                   {surnameValidasyonError.error && <p>{surnameValidasyonError.message}</p>}
                 </div>
@@ -292,6 +307,7 @@ const HousePage = () => {
                     error={emailValidasyonError.error}
                     value={email}
                     onChange={(e) => checkEmail(e.target.value)}
+                    onBlur={(e) => checkEmail(e.target.value)}
                   />
                   {emailValidasyonError.error && <p>{emailValidasyonError.message}</p>}
                 </div>
@@ -302,6 +318,7 @@ const HousePage = () => {
                     placeholder='05xx xxx xx xx'
                     value={phone}
                     onChange={(e) => checkPhone(e.target.value)}
+                    onBlur={(e) => checkPhone(e.target.value)}
                   />
                   {phoneValidasyonError.error && <p>{phoneValidasyonError.message}</p>}
                 </div>
@@ -311,7 +328,9 @@ const HousePage = () => {
                     text='Kaç Kişi Misafir Edebilirsiniz?'
                     type='number'
                     value={guest}
-                    onChange={(e) => setGuest(e.target.value)}
+                    error={guestValidasyonError.error}
+                    onChange={(e) => checkGuest(e.target.value)}
+                    onBlur={(e) => checkGuest(e.target.value)}
                   />
                 </div>
                 <div>
@@ -338,6 +357,7 @@ const HousePage = () => {
                     text='İlçe'
                     disabled={selectedCity === ''}
                     onChange={(e) => setSelectedDistrict(e.target.value)}
+                    onBlur={(e) => setSelectedDistrict(e.target.value)}
                     data={district}
                   />
                 </div>
