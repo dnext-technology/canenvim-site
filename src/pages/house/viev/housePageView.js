@@ -12,6 +12,7 @@ import '../style/housePageStyles.scss';
 const HousePage = () => {
   const navigate = useNavigate();
   const [note, setNote] = useState('');
+  const [relation, setRelation] = useState('');
   const [tckn, setTckn] = useState('');
   const [name, setName] = useState('');
   const [surname, setSurname] = useState('');
@@ -31,6 +32,7 @@ const HousePage = () => {
   const [selectedNeighborhoodAddress, setSelectedNeighborhoodAddress] = useState([]);
   const [accommodationType, setAccommodationType] = useState('Ayrı Oda');
   const [accommodationPeriod, setAccommodationPeriod] = useState('1 Haftaya Kadar');
+  const [relationValidasyonError, setRelationValidasyonError] = useState({ error: false, message: '' });
   const [tcknValidasyonError, setTCKNValidasyonError] = useState({ error: false, message: '' });
   const [guestValidasyonError, setGuestValidasyonError] = useState({ error: false, message: '' });
   const [emailValidasyonError, setEmailValidasyonError] = useState({ error: false, message: '' });
@@ -189,6 +191,16 @@ const HousePage = () => {
     }, 3000);
   };
 
+  const checkRelation = (e) => {
+    setRelation(e);
+    const relationFormat = /^[a-zA-Z_ğüşıöçĞÜŞİÖÇ]*$/;
+    if (!e.length|| !e.match(relationFormat)) {
+      setRelationValidasyonError({ error: true, message: 'Yakınlık derecesi uygun formatta değildir.' });
+    } else {
+      setRelationValidasyonError({ error: false, message: '' });
+    }
+  };
+
   const checkTCKN = (e) => {
     setTckn(e);
     const tcknformat = /^[1-9]{1}[0-9]{9}[02468]{1}$/;
@@ -266,6 +278,17 @@ const HousePage = () => {
               </div>
               <p className='ilan'>İlan Bilgi Formu</p>
               <form className='grid gap-6 w-100 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2'>
+              <div>
+                  <Input
+                    text='Yakınlık Derecesi'
+                    placeholder='Yakınlık Derecesi'
+                    value={relation}
+                    error={relationValidasyonError.error}
+                    onChange={(e) => checkRelation(e.target.value)}
+                    onBlur={(e) => checkRelation(e.target.value)}
+                  />
+                  {relationValidasyonError.error && <p>{relationValidasyonError.message}</p>}
+                </div>
                 <div>
                   <Input
                     text='T.C. Kimlik No'
