@@ -24,6 +24,9 @@ const Header = () => {
               onClick={() => navigate('/')}
             />
             <div className="header-nav">
+              <span onClick={() => navigate('house/table')}>Konaklamaya İhtiyacım Var</span>
+              <span onClick={() => navigate('house')}>Konaklamaya Uygun Yerim Var</span>
+              <span onClick={() => navigate('about')}>Hakkımızda</span>
               <div className='social-logos'>
                 <Link to="https://twitter.com/zorgundostuyrdm" target="_blank">
                   <FaTwitter />
@@ -35,7 +38,6 @@ const Header = () => {
                   <FaInstagram />
                 </Link>
               </div>
-              <span onClick={() => navigate('about')}>Hakkımızda</span>
             </div>
 
             <img
