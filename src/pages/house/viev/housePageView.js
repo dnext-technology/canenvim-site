@@ -118,61 +118,60 @@ const HousePage = () => {
 
 
     const handleSubmit = async () => {
-    //     const params = {
-    //         identityNumber: tckn,
-    //         firstName: name,
-    //         lastName: surname,
-    //         email: email,
-    //         phone: phone,
-    //         city: selectedCity,
-    //         district: selectedDistrict,
-    //         town: selectedTown,
-    //         neighborhood: selectedNeighborhoodAddress,
-    //         addressDetail: addressDetail,
-    //         guestCapacity: guest,
-    //         accommodationType,
-    //         accommodationPeriod
-    //     };
-    //    await axios({
-    //     method: 'POST', url: `https://zorgundostu.com/api/mp-booking/v1/bookings/offerers`,  data: {
-    //         identityNumber: tckn,
-    //         firstName: name,
-    //         lastName: surname,
-    //         email: email,
-    //         phone: phone,
-    //         city: selectedCity,
-    //         district: selectedDistrict,
-    //         town: selectedTown,
-    //         neighborhood: selectedNeighborhoodAddress,
-    //         addressDetail: addressDetail,
-    //         guestCapacity: guest,
-    //         accommodationType: accommodationType,
-    //         accommodationPeriod: accommodationPeriod,
-    //         note: note
-    //     }
-    //   })
-    //     .then(async response => {
-    //       notify();
-    //       setName("")
-    //       setTckn("")
-    //       setSurname("")
-    //       setEmail("") 
-    //       setPhone("") 
-    //       setGuest("") 
-    //       setNote("")
-    //       setCheckKVKK(false)
-    //       setNeighborhood("") 
-    //       setAddressDetail("") 
-    //       setAccommodationType("Ayrı Oda") 
-    //       setAccommodationPeriod("1 Haftaya Kadar") 
-    //       setTCKNValidasyonError({ error: false, message: ""}) 
-    //       setEmailValidasyonError({ error: false, message: ""}) 
-    //       setPhoneValidasyonError({ error: false, message: ""})
-    //     })
-    //     .catch(error => {
-    //       return error
-    //     });
-        notify();
+        const params = {
+            identityNumber: tckn,
+            firstName: name,
+            lastName: surname,
+            email: email,
+            phone: phone,
+            city: selectedCity,
+            district: selectedDistrict,
+            town: selectedTown,
+            neighborhood: selectedNeighborhoodAddress,
+            addressDetail: addressDetail,
+            guestCapacity: guest,
+            accommodationType,
+            accommodationPeriod
+        };
+       await axios({
+        method: 'POST', url: `https://zorgundostu.com/api/mp-booking/v1/bookings/offerers`,  data: {
+            identityNumber: tckn,
+            firstName: name,
+            lastName: surname,
+            email: email,
+            phone: phone,
+            city: selectedCity,
+            district: selectedDistrict,
+            town: selectedTown,
+            neighborhood: selectedNeighborhoodAddress,
+            addressDetail: addressDetail,
+            guestCapacity: guest,
+            accommodationType: accommodationType,
+            accommodationPeriod: accommodationPeriod,
+            note: note
+        }
+      })
+        .then(async response => {
+          notify();
+          setName("")
+          setTckn("")
+          setSurname("")
+          setEmail("") 
+          setPhone("") 
+          setGuest("") 
+          setNote("")
+          setCheckKVKK(false)
+          setNeighborhood("") 
+          setAddressDetail("") 
+          setAccommodationType("Ayrı Oda") 
+          setAccommodationPeriod("1 Haftaya Kadar") 
+          setTCKNValidasyonError({ error: false, message: ""}) 
+          setEmailValidasyonError({ error: false, message: ""}) 
+          setPhoneValidasyonError({ error: false, message: ""})
+        })
+        .catch(error => {
+          return error
+        });
     };
     const notify = () => {
         toast("Bilgileriniz alınmıştır. İmkanlarınıza uygun ihtiyaç sahipleri için sizinle iletişime geçilecektir.", {
