@@ -232,96 +232,97 @@ const GuestPage = () => {
         }
     }
 
-    const notify = () => toast("Bilgileriniz alınmıştır. Taleplerinize uygun imkan sahipleri için sizinle iletişime geçilecektir.", {
-        position: "top-center",
-        className: "black-background",
-        autoClose: 10000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        type: "success"
-        });
+  const notify = () => toast("Bilgileriniz alınmıştır. Taleplerinize uygun imkan sahipleri için sizinle iletişime geçilecektir.", {
+    position: "top-center",
+    className: "black-background",
+    autoClose: 10000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "light",
+    type: "success"
+  });
 
-    return(
+  return(
     <GuestPageContainer>
-    {({}) => {
-    return(
-        <>
-         <img alt="logo" className="bannerzor" src={Banner} />
-        <div className='house-container'>
-            <p className='guest-text'>Konaklama İhtiyacım Var</p>
-            <div className='guest-text-container'>
+      {({}) => {
+        return(
+          <>
+            <img alt="logo" className="bannerzor" src={Banner} />
+            <div className='row house-container w-100 mx-auto'>
+              <p className='guest-text w-75 mx-auto'>Konaklama İhtiyacım Var</p>
+              <div className='guest-text-container col-12 w-75 mx-auto'>
                 <div className='guest-text2'>
-                Doldurduğunuz formdaki bilgiler konaklama ihtiyacı sahipleri için listelenecek ve görüntülenebilecektir. Konaklama ihtiyacı sahipleri sizleri arayabilir ve görüşebilir.
-                Yardımcı olduğunuz için teşekkür ederiz.
+                  Doldurduğunuz formdaki bilgiler konaklama ihtiyacı sahipleri için listelenecek ve görüntülenebilecektir. Konaklama ihtiyacı sahipleri sizleri arayabilir ve görüşebilir.
+                  Yardımcı olduğunuz için teşekkür ederiz.
                 </div>
+              </div>
 
-            </div>
-            <p className='ilan'>İlan Bilgi Formu</p>
-            <form style={{ width: "80%"}}>
+              <p className='ilan w-75 mx-auto my-2'>İlan Bilgi Formu</p>
+              <form className="row w-75 mx-auto px-0">
                 {/* TCKN */}
-                <div className='tckn'>
-                    <span>T.C. Kimlik No <span style={{ color: "#D42E13"}}>*</span></span>
-                    <Input error={tcknValidasyonError.error} placeholder="T.C. Kimlik No" type="number" value={tckn} onChange={(e) => checkTCKN(e.target.value)} />
-                    {tcknValidasyonError.error && <p style={{ color: "#525252", marginLeft: 5}}>{tcknValidasyonError.message}</p>}
+                <div className='d-flex flex-column col-md-6 mb-1'>
+                  <span>T.C. Kimlik No <span style={{ color: "#D42E13"}}>*</span></span>
+                  <Input error={tcknValidasyonError.error} styleProps={{maxWidth:'100%'}} placeholder="T.C. Kimlik No" type="number" value={tckn} onChange={(e) => checkTCKN(e.target.value)} />
+                  {tcknValidasyonError.error && <p style={{ color: "#525252", marginLeft: 5}}>{tcknValidasyonError.message}</p>}
                 </div>
+                <div className="offset-6"></div>
                 {/* Ad soyad */}
-                <div className='name-surname'>
-                    <div className='name'>
-                        <span>Adınız <span style={{ color: "#D42E13"}}>*</span></span>
-                        <Input placeholder="Adınız" error={nameValidasyonError.error} value={name} onChange={(e) => changeName(e.target.value)}/>
-                        {nameValidasyonError.error && <p style={{ color: "#525252", marginLeft: 5}}>{nameValidasyonError.message}</p>}
-                    </div>
-                    <div className='name'>
-                        <span>Soyadınız <span style={{ color: "#D42E13"}}>*</span></span>
-                        <Input placeholder="Soyadınız" error={surnameValidasyonError.error} value={surname} onChange={(e) => changeSurName(e.target.value)}/>
-                        {surnameValidasyonError.error && <p style={{ color: "#525252", marginLeft: 5}}>{surnameValidasyonError.message}</p>}
-                    </div>
+                {/*<div className='name-surname'>*/}
+                <div className='d-flex flex-column col-md-6 my-1'>
+                  <span>Adınız <span style={{ color: "#D42E13"}}>*</span></span>
+                  <Input placeholder="Adınız" styleProps={{maxWidth:'100%'}} error={nameValidasyonError.error} value={name} onChange={(e) => changeName(e.target.value)}/>
+                  {nameValidasyonError.error && <p style={{ color: "#525252", marginLeft: 5}}>{nameValidasyonError.message}</p>}
                 </div>
+                <div className='d-flex flex-column col-md-6 my-1'>
+                  <span>Soyadınız <span style={{ color: "#D42E13"}}>*</span></span>
+                  <Input placeholder="Soyadınız" styleProps={{maxWidth:'100%'}} error={surnameValidasyonError.error} value={surname} onChange={(e) => changeSurName(e.target.value)}/>
+                  {surnameValidasyonError.error && <p style={{ color: "#525252", marginLeft: 5}}>{surnameValidasyonError.message}</p>}
+                </div>
+                {/*</div>*/}
                 {/* Email Telefon */}
-                <div className='name-surname' >
-                    <div className='name'>
-                    <span>E-posta</span>
-                        <Input placeholder="E-posta" error={emailValidasyonError.error} value={email} onChange={(e) => checkEmail(e.target.value)} />
-                        {emailValidasyonError.error && <p style={{ color: "#525252", marginLeft: 5}}>{emailValidasyonError.message}</p>}
-                    </div>
-                    <div className='name'>
-                        <span>Telefon <span style={{ color: "#D42E13"}}>*</span></span>
-                        <Input  error={phoneValidasyonError.error} placeholder="05xx xxx xx xx" value={phone} onChange={(e) => checkPhone(e.target.value)}/>
-                        {phoneValidasyonError.error && <p style={{ color: "#525252", marginLeft: 5}}>{phoneValidasyonError.message}</p>}
-                    </div>
+                {/*<div className='name-surname' >*/}
+                <div className='d-flex flex-column col-md-6 my-1'>
+                  <span>E-posta</span>
+                  <Input placeholder="E-posta" styleProps={{maxWidth:'100%'}} error={emailValidasyonError.error} value={email} onChange={(e) => checkEmail(e.target.value)} />
+                  {emailValidasyonError.error && <p style={{ color: "#525252", marginLeft: 5}}>{emailValidasyonError.message}</p>}
                 </div>
-                <div className='guest-list' >
-                    {/* Kaç Misafir Kaç Çocuk */}
-                        <div className='guest-list-number'>
-                        <span>Yetişkin Sayısı <span style={{ color: "#D42E13"}}>*</span></span>
-                            <Input placeholder="Yetişkin Sayısı" type="number" value={guest} onChange={(e) => setGuest(e.target.value)}/>
-                        </div>
-                        <div className='guest-list-number'>
-                        <span> Çocuk Sayısı</span>
-                            <Input placeholder="Çocuk Sayısı" type="number" value={childNumber} onChange={(e) => setChildNumber(e.target.value)}/>
-                        </div>
-                    {/* Misafirlik Süresi Konaklama Türü */}
-                        <div className='guest-list-number' >
-                        <span> Ne Kadar Süre Konaklanacak</span>
-                            <Select onChange={(e) => setAccommodationPeriod(e.target.value)} data={[{name: "1 Haftaya Kadar"}, {name: "2 Haftaya Kadar"}, {name: "1 Aya Kadar"}, {name: "Belirsiz"}]} />
-                        </div>
+                <div className='d-flex flex-column col-md-6 my-1'>
+                  <span>Telefon <span style={{ color: "#D42E13"}}>*</span></span>
+                  <Input  error={phoneValidasyonError.error} styleProps={{maxWidth:'100%'}} placeholder="05xx xxx xx xx" value={phone} onChange={(e) => checkPhone(e.target.value)}/>
+                  {phoneValidasyonError.error && <p style={{ color: "#525252", marginLeft: 5}}>{phoneValidasyonError.message}</p>}
+                </div>
+                {/*</div>*/}
+                {/*<div className='col-12' >*/}
+                {/* Kaç Misafir Kaç Çocuk */}
+                <div className='d-flex flex-column col-lg-4 col-md-6 my-1'>
+                  <span>Yetişkin Sayısı <span style={{ color: "#D42E13"}}>*</span></span>
+                  <Input placeholder="Yetişkin Sayısı" styleProps={{maxWidth:'100%'}} type="number" value={guest} onChange={(e) => setGuest(e.target.value)}/>
+                </div>
+                <div className='d-flex flex-column col-lg-4 col-md-6 my-1'>
+                  <span> Çocuk Sayısı</span>
+                  <Input placeholder="Çocuk Sayısı" type="number" styleProps={{maxWidth:'100%'}} value={childNumber} onChange={(e) => setChildNumber(e.target.value)}/>
+                </div>
+                {/* Misafirlik Süresi Konaklama Türü */}
+                <div className='d-flex flex-column col-lg-4 col-md-6 my-1'>
+                  <span> Ne Kadar Süre Konaklanacak</span>
+                  <Select onChange={(e) => setAccommodationPeriod(e.target.value)} styleProps={{maxWidth:'100%'}} data={[{name: "1 Haftaya Kadar"}, {name: "2 Haftaya Kadar"}, {name: "1 Aya Kadar"}, {name: "Belirsiz"}]} />
+                </div>
 
-                </div>
+                {/*</div>*/}
                 {/* İl İlçe */}
-                <div className='name-surname'>
-                    <div className='name'>
-                        <span>İl <span style={{ color: "#D42E13"}}>*</span></span>
-                        <Select onChange={(e) => setSelectedCity(e.target.value)} data={city} />
-                    </div>
-                    <div  className='name'>
-                        <span>İlçe <span style={{ color: "#D42E13"}}>*</span></span>
-                        <Select disabled={selectedCity === ""} onChange={(e) => setSelectedDistrict(e.target.value)} data={district} />
-                    </div>
+                {/*<div className='name-surname'>*/}
+                <div className='d-flex flex-column col-md-6 my-1'>
+                  <span>İl <span style={{ color: "#D42E13"}}>*</span></span>
+                  <Select onChange={(e) => setSelectedCity(e.target.value)} data={city} styleProps={{maxWidth:'100%'}} />
                 </div>
+                <div  className='d-flex flex-column col-md-6 my-1'>
+                  <span>İlçe <span style={{ color: "#D42E13"}}>*</span></span>
+                  <Select disabled={selectedCity === ""} onChange={(e) => setSelectedDistrict(e.target.value)} data={district} styleProps={{maxWidth:'100%'}} />
+                </div>
+                {/*</div>*/}
                 {/* Semt Mahalle */}
                 {/* <div className='name-surname'>
                     <div className='name'>
@@ -334,42 +335,42 @@ const GuestPage = () => {
                     </div>
                 </div> */}
                 {/* Adres Tarifi */}
-                <div className='address-style'>
-                <span>Adres Tarifi ( Zorunlu Değil ) </span>
-                    <TextArea placeholder="Adres Tarifi" value={addressDetail} onChange={(e) => setAddressDetail(e.target.value)}/>
+                <div className=' my-1'>
+                  <span>Adres Tarifi ( Zorunlu Değil ) </span>
+                  <TextArea placeholder="Adres Tarifi" value={addressDetail} onChange={(e) => setAddressDetail(e.target.value)} styleProps={{maxWidth:'100%'}} />
                 </div>
                 {/* Ekstra Bilgi */}
-                <div className='address-style'>
-                   <span>Özel Not ( Zorunlu Değil ) </span>
-                   <TextArea placeholder="Ör. Engeli birey var..." value={note} onChange={(e) => setNote(e.target.value)}/>
+                <div className=' my-1'>
+                  <span>Özel Not ( Zorunlu Değil ) </span>
+                  <TextArea placeholder="Ör. Engeli birey var..." value={note} onChange={(e) => setNote(e.target.value)} styleProps={{maxWidth:'100%'}} />
                 </div>
                 <div style={{display: "flex", fontWeight: 400, width: "100%", margin: 10}}>
-                   {/* <TextArea placeholder="Örnek: Engelli birey var" value={neighborhood} onChange={(e) => setNeighborhood(e.target.value)}/> */}
-                   <input value={checkKVKK} onChange={(e) => setCheckKVKK(e.target.checked ? true: false)}  type="checkbox" id="vehicle1" name="vehicle1"></input>
-                   <a
-                        download="KVKK.pdf"
-                        href="KVKK.pdf"
-                        style={{ marginLeft: 10, color: "#323232"}}>
-                            KVKK Metnini okudum ve kabul ediyorum.<span style={{ color: "#D42E13E5"}}>*</span>
-                    </a>
+                  {/* <TextArea placeholder="Örnek: Engelli birey var" value={neighborhood} onChange={(e) => setNeighborhood(e.target.value)}/> */}
+                  <input value={checkKVKK} onChange={(e) => setCheckKVKK(e.target.checked ? true: false)}  type="checkbox" id="vehicle1" name="vehicle1"></input>
+                  <a
+                    download="KVKK.pdf"
+                    href="KVKK.pdf"
+                    style={{ marginLeft: 10, color: "#323232"}}>
+                    KVKK Metnini okudum ve kabul ediyorum.<span style={{ color: "#D42E13E5"}}>*</span>
+                  </a>
                 </div>
                 <div style={{display: "flex", flexDirection: "column", fontWeight: 400, width: 200, margin: "0px 30px 0px 10px"}}>
-                    <Button
-                        disabled={tckn === "" || name === "" || surname === "" || phone === "" || city === "" || district === "" || guest === "" || nameValidasyonError.error || surnameValidasyonError.error || tcknValidasyonError.error || emailValidasyonError.error || phoneValidasyonError.error || !checkKVKK}
-                        onClick={(e) => {
-                            e.preventDefault()
-                            handleSubmit()}}
-                        text="Gönder"
-                        styleProps={{border: "1px solid #323232", borderRadius: 48, backgroundColor: "#323232", color: "#FFFFFF", padding: "10px 20px"}}
-                    />
+                  <Button
+                    disabled={tckn === "" || name === "" || surname === "" || phone === "" || city === "" || district === "" || guest === "" || nameValidasyonError.error || surnameValidasyonError.error || tcknValidasyonError.error || emailValidasyonError.error || phoneValidasyonError.error || !checkKVKK}
+                    onClick={(e) => {
+                      e.preventDefault()
+                      handleSubmit()}}
+                    text="Gönder"
+                    styleProps={{border: "1px solid #323232", borderRadius: 48, backgroundColor: "#323232", color: "#FFFFFF", padding: "10px 20px"}}
+                  />
 
-                    <ToastContainer />
+                  <ToastContainer />
                 </div>
             </form>
         </div>
         </>
       )}}
     </GuestPageContainer>
-);
+  );
 }
 export default GuestPage;
