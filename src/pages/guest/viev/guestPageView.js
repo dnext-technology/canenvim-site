@@ -9,6 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import '../style/guestPageStyles.scss'
 
 const GuestPage = () => {
+  const { REACT_APP_BASE_URL, REACT_APP_BOOKING_API, REACT_APP_LOCATION_API } = process.env;
   const [note, setNote] = useState("");
   const [tckn, setTckn] = useState("");
   const [name, setName] = useState("");
@@ -37,13 +38,12 @@ const GuestPage = () => {
   const [surnameValidasyonError, setSurnameValidasyonError] = useState({ error: false, message: "" })
   const [selectedTown, setSelectedTown] = useState("");
 
-
   useEffect(() => {
     async function fetchData () {
       if (selectedTown !== "") {
         await axios({
           method: 'GET',
-          url: `https://zorgundostu.com/api/mp-location/v1/locations?city=${selectedCity}&district=${selectedDistrict}&town=${selectedTown}`
+          url: `${REACT_APP_BASE_URL}${REACT_APP_LOCATION_API}/locations?city=${selectedCity}&district=${selectedDistrict}&town=${selectedTown}`
         })
           .then(async response => {
             setNeighborhoodAddress(response.data)
@@ -62,7 +62,7 @@ const GuestPage = () => {
   useEffect(() => {
     async function fetchData () {
       await axios({
-        method: 'GET', url: `https://zorgundostu.com/api/mp-location/v1/locations`
+        method: 'GET', url: `${REACT_APP_BASE_URL}${REACT_APP_LOCATION_API}/locations`
       })
         .then(async response => {
           setCity(response.data)
@@ -81,7 +81,7 @@ const GuestPage = () => {
     async function fetchData () {
       if (selectedCity !== "") {
         await axios({
-          method: 'GET', url: `https://zorgundostu.com/api/mp-location/v1/locations?city=${selectedCity}`
+          method: 'GET', url: `${REACT_APP_BASE_URL}${REACT_APP_LOCATION_API}/locations?city=${selectedCity}`
         })
           .then(async response => {
             setDistrict(response.data)
@@ -102,7 +102,7 @@ const GuestPage = () => {
       if (selectedDistrict !== "") {
         await axios({
           method: 'GET',
-          url: `https://zorgundostu.com/api/mp-location/v1/locations?city=${selectedCity}&district=${selectedDistrict}`
+          url: `${REACT_APP_BASE_URL}${REACT_APP_LOCATION_API}/locations?city=${selectedCity}&district=${selectedDistrict}`
         })
           .then(async response => {
             setTown(response.data)
@@ -135,7 +135,7 @@ const GuestPage = () => {
       accommodationPeriod: accommodationPeriod
     };
     await axios({
-      method: 'POST', url: `https://zorgundostu.com/api/mp-booking/v1/bookings/requesters`, data: {
+      method: 'POST', url: `${REACT_APP_BASE_URL}${REACT_APP_BOOKING_API}/bookings/requesters`, data: {
         identityNumber: tckn,
         firstName: name,
         lastName: surname,

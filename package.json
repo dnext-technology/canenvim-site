@@ -15,6 +15,7 @@
     "axios": "^0.25.0",
     "babel-eslint": "^10.1.0",
     "bootstrap": "^5.2.3",
+    "env-cmd": "^10.1.0",
     "eslint": "^7.32.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^8.3.0",
@@ -50,8 +51,10 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "env-cmd -f ./environments/.dev.env react-scripts start",
+    "start:prod": "env-cmd -f ./environments/.prod.env react-scripts start",
+    "build": "env-cmd -f ./environments/.dev.env react-scripts build",
+    "build:prod": "env-cmd -f ./environments/.prod.env react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint .eslintrc.js '**/*.js' --ignore-pattern node_modules/"

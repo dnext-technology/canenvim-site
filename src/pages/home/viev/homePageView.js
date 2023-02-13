@@ -12,6 +12,7 @@ import axios from "axios";
 import "../style/homePageStyles.scss";
 
 const HomePage = () => {
+  const { REACT_APP_BASE_URL, REACT_APP_BOOKING_API } = process.env;
   const navigate = useNavigate();
 
   return (
@@ -25,7 +26,7 @@ const HomePage = () => {
           async function fetchData() {
             await axios({
               method: "GET",
-              url: `https://zorgundostu.com/api/mp-booking/v1/bookings/stats`,
+              url: `${REACT_APP_BASE_URL}${REACT_APP_BOOKING_API}/bookings/stats`,
             })
               .then(async (response) => {
                 setData(response.data);

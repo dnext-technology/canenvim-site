@@ -8,6 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "../style/housePageStyles.scss";
 
 const HouseTablePage = () => {
+  const { REACT_APP_BASE_URL, REACT_APP_BOOKING_API, REACT_APP_LOCATION_API } = process.env;
   const [data, setData] = useState([]);
   const [perPage, setPerPage] = useState(10);
   const [totalRow, setTotalRow] = useState(0);
@@ -45,10 +46,10 @@ const HouseTablePage = () => {
   ];
 
   useEffect(() => {
-    async function fetchData() {
+    async function fetchData () {
       await axios({
         method: "GET",
-        url: `https://zorgundostu.com/api/mp-booking/v1/bookings/offerers?page=${page}&size=${perPage}`,
+        url: `${REACT_APP_BASE_URL}${REACT_APP_BOOKING_API}/bookings/offerers?page=${page}&size=${perPage}`,
       })
         .then(async (response) => {
           setTotalRow(response.data?.totalElements);
@@ -67,8 +68,8 @@ const HouseTablePage = () => {
                   is.status === "active"
                     ? "Aktif"
                     : is.status === "completed"
-                    ? "Tamamlandı"
-                    : "Devam Ediyor",
+                      ? "Tamamlandı"
+                      : "Devam Ediyor",
               };
             })
           );
@@ -118,8 +119,7 @@ const HouseTablePage = () => {
 
   const handlePerRowsChange = async (newPerPage, page) => {
     const response = await axios.get(
-      `https://zorgundostu.com/api/mp-booking/v1/bookings/offerers?page=${
-        page - 1
+      `${REACT_APP_BASE_URL}${REACT_APP_BOOKING_API}/bookings/offerers?page=${page - 1
       }&size=${newPerPage}`
     );
     setData(
@@ -137,8 +137,8 @@ const HouseTablePage = () => {
             is.status === "active"
               ? "Aktif"
               : is.status === "completed"
-              ? "Tamamlandı"
-              : "Devam Ediyor",
+                ? "Tamamlandı"
+                : "Devam Ediyor",
         };
       })
     );
@@ -153,7 +153,7 @@ const HouseTablePage = () => {
 
   return (
     <HousePageContainer>
-      {({}) => {
+      {({ }) => {
         return (
           <>
             <img alt="logo" className="bannerzor" src={Banner} />
