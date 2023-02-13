@@ -18,7 +18,7 @@ const Header = () => {
     <HeaderContainer>
       {({ logo, menuIcon }) => (
         <>
-          <header className="header">
+          <header className="headerHome">
             <div className="overlay"> </div>
             <div className="headerOuter">
               <img
