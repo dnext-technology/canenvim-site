@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import HousePageContainer from "../container/housePageContainer";
 import axios from "axios";
 import DataTable from "react-data-table-component";
-import Banner from "../../../assets/images/bannerzor.png";
+import Banner from "../../../assets/images/banner2.png";
 import "react-toastify/dist/ReactToastify.css";
 import "../style/housePageStyles.scss";
 

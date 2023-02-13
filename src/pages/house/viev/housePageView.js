@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import HousePageContainer from '../container/housePageContainer';
 import { Button, Input, TextArea, Select } from '../../../components';
 import axios from 'axios';
-import Banner from '../../../assets/images/bannerzor.png';
+import Banner from '../../../assets/images/banner2.png';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../style/housePageStyles.scss';
