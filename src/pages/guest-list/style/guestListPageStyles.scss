@@ -1,0 +1,50 @@
+@import "../../../_base";
+
+span {
+    font-size: 13px;
+}
+.guest-list {
+    display: flex;
+    font-weight: 400;
+    justify-content: flex-start;
+}
+.guest-list-house{
+    display: flex;
+    font-weight: 400;
+    justify-content: flex-start;
+}
+.guest-list-number {
+    display: flex;
+    margin: 0px 30px 0px 0px;
+    font-weight: 400;
+    flex-direction: column;
+}
+.guest-list-number1 {
+    display: flex;
+    margin: 0px;
+    font-weight: 400;
+    flex-direction: column;
+}
+
+::-webkit-scrollbar {
+    width: 0;
+    background: transparent;
+}
+.divider {
+    border: 2px solid $button-border-color;
+    @include width-hight(100%, 1px);
+}
+
+.home-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 50px;
+    .deprem-img {
+        max-width: 900px;
+    }
+}
+
+@media (max-width: $breakpoint-mobile) {
+
+}

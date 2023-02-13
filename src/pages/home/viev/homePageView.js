@@ -14,12 +14,12 @@ import '../style/homePageStyles.scss'
 const HomePage = () => {
     const navigate = useNavigate();
 
-    return (
-        <HomePageContainer>
-            {({ }) => {
-                const [data, setData] = useState([])
-                const [offerer, setOfferer] = useState({})
-                const [requester, setRequester] = useState({})
+return(
+    <HomePageContainer>
+    {({}) => {
+    const [data, setData] = useState([])
+    const [offerer, setOfferer] = useState({})
+    const [requester, setRequester] = useState({})
 
 
                 useEffect(() => {
@@ -59,7 +59,29 @@ const HomePage = () => {
                                     <Button
                                         onClick={() => navigate('guest')}
                                         text="Konaklamaya İhtiyacım Var"
-                                        styleProps={{ border: "2px solid #d63215", borderRadius: 48, padding: "10px 50px", backgroundColor: "#D42E13", color: "#fff", boxShadow: "0px 0px 16px rgba(0, 0, 0, 0.25)" }}
+                                        styleProps={{
+                                            border: "2px solid #d63215",
+                                            borderRadius: 48,
+                                            padding: "10px 50px",
+                                            backgroundColor: "#D42E13",
+                                            color: "#fff",
+                                            boxShadow: "0px 0px 16px rgba(0, 0, 0, 0.25)",
+                                            width:"100%"
+                                        }}
+                                    />
+                                    <Button
+                                        onClick={() => navigate('misafirlistesi')}
+                                        text="Konaklama Talepleri"
+                                        styleProps={{
+                                            border: "2px solid #d63215",
+                                            borderRadius: 48,
+                                            padding: "10px 50px",
+                                            backgroundColor: "#D42E13",
+                                            color: "#fff",
+                                            boxShadow: "0px 0px 16px rgba(0, 0, 0, 0.25)",
+                                            marginTop: "5px",
+                                            width:"100%"
+                                        }}
                                     />
                                 </div>
                                 <div className="requester">
