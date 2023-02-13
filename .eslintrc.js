@@ -47,6 +47,7 @@ module.exports = {
     "jsx-quotes": 0,
     "react/jsx-one-expression-per-line": 0,
     "jsx-a11y/control-has-associated-label": 0,
+    "jsx-a11y/label-has-associated-control": 0,
     'no-case-declarations': 0,
     "react/jsx-tag-spacing": 0,
     "no-multiple-empty-lines": 0,

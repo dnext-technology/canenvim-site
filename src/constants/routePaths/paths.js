@@ -7,5 +7,6 @@ export default {
   GUEST_PAGE: `${COMMON_PREFIX}guest`,
   GUEST_LIST_PAGE: `${COMMON_PREFIX}misafirlistesi`,
   HOUSE_PAGE: `${COMMON_PREFIX}house`,
+  HOUSE_TABLE_PAGE: `${COMMON_PREFIX}house/table`,
   NOT_FOUND: `${COMMON_PREFIX}notfound`,
 };

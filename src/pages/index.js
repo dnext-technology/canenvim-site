@@ -4,7 +4,8 @@ import AboutPage from './about/viev/aboutPageView';
 import PrivacyPage from './privacy/viev/privacyPageView';
 import GuestPage from './guest/viev/guestPageView';
 import HousePage from './house/viev/housePageView';
+import HouseTablePage from './house/viev/houseTablePageView';
 import GuestListPage from './guest-list/viev/guestListPageView';
 
 
-export { HomePage, NotFoundPage, AboutPage, PrivacyPage, GuestPage, GuestListPage, HousePage };
+export { HomePage, NotFoundPage, AboutPage, PrivacyPage, GuestPage, GuestListPage, HousePage, HouseTablePage };
