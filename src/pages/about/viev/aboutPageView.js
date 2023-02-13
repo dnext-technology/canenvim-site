@@ -17,7 +17,7 @@ const AboutPage = () => {
               <p style={{ color: "#D42E13E5", fontSize: 40 }}>Hakkımızda</p>
 
               <p style={{ color: "#000000", fontSize: 18, fontWeight: 400 }}>
-                Zor Gün Dostu platformu, ihtiyaç sahiplerini, destek sağlamak
+                Can Evim platformu, ihtiyaç sahiplerini, destek sağlamak
                 isteyen birey, kurum ve kuruluşlarla eşleştirmek amacıyla
                 kullanıma açılmıştır.
               </p>
@@ -31,10 +31,10 @@ const AboutPage = () => {
                 sağlanacaktır.
               </p>
               <p style={{ color: "#000000", fontSize: 18 }}>
-                Zor Gün Dostu Ekibi
+                Can Evim Dostu Ekibi
               </p>
-              <a href="mailto:iletisim.zorgundostu@gmail.com">
-                iletisim.zorgundostu@gmail.com
+              <a href="mailto:iletisim.canevim@gmail.com">
+                iletisim.canevim@gmail.com
               </a>
             </div>
           </>

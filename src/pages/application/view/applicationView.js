@@ -13,7 +13,7 @@ const ApplicationView = () => (
     {({ routes, isLoading }) => (
       <div className="main">
         <Helmet htmlAttributes={{ lang: 'en' }}>
-          <title>Zor Gün Dostu</title>
+          <title>Can Evim</title>
         </Helmet>
         {isLoading && <Loader />}
         <Header />

@@ -24,9 +24,8 @@ const Footer = () => {
 
             <span onClick={() => navigate('/')}><img alt="footer-logo" className="footer-logo" src={Logo} /></span>
 
-
             <div className='footer-bottom-left'>
-              Zor Gün Dostu, felaketlerden etkilenen insanlara yönelik ihtiyaçların karşılanması hedefiyle kurulan projedir. Desteğinizle bize en çok ihtiyacı olan insanların yanlarında olmamıza yardımcı olabilirsiniz.
+              Can Evim, felaketlerden etkilenen insanlara yönelik ihtiyaçların karşılanması hedefiyle kurulan projedir. Desteğinizle bize en çok ihtiyacı olan insanların yanlarında olmamıza yardımcı olabilirsiniz.
             </div>
           </div>
           <div className='footer-bottom-center'>
@@ -37,32 +36,27 @@ const Footer = () => {
           </div>
           <div className='footer-bottom-right'>
             <div className='iletisim'>İletişim</div>
-            <p><FiMail />  iletisim.zorgundostu@gmail.com</p>
+            <p><FiMail />iletisim.canevim@gmail.com</p>
           </div>
         </div>
         <div className='socials'>
-          <div>© 2023 Zorgundostu</div>
+          <div>© 2023 CanEvim.org</div>
           <div className='social-network'>
             <div>
-              <Link to={'https://www.instagram.com/zorgundostuyardimlasmaagi/'} target='_blank'>
+              <Link to={'https://www.instagram.com/canevim_tr/'} target='_blank'>
                 <FaInstagram />
               </Link>
             </div>
 
             <div>
-              <Link to={'https://twitter.com/zorgundostuyrdm'} target='_blank'>
+              <Link to={'https://twitter.com/canevim_tr'} target='_blank'>
                 <FaTwitter />
               </Link>
 
             </div>
           </div>
         </div>
-
-
       </div>
-
-
-
     </FooterContainer>
   )
 
