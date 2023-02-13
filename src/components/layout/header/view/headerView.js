@@ -24,7 +24,7 @@ const Header = () => {
               onClick={() => navigate('/')}
             />
             <div className="header-nav">
-              <span onClick={() => navigate('house/table')}>Konaklamaya İhtiyacım Var</span>
+              <span onClick={() => navigate('guest')}>Konaklamaya İhtiyacım Var</span>
               <span onClick={() => navigate('house')}>Konaklamaya Uygun Yerim Var</span>
               <span onClick={() => navigate('about')}>Hakkımızda</span>
               <div className='social-logos'>
