@@ -380,8 +380,8 @@ const HousePage = () => {
               <form style={{ width: '80%' }}>
                 {/* TCKN */}
                 <div>
-                  <label class='block text-sm font-medium text-gray-700'>T.C. Kimlik No</label>
                   <Input
+                    text='T.C. Kimlik No'
                     placeholder='T.C. Kimlik No'
                     error={tcknValidasyonError.error}
                     type='number'
@@ -393,8 +393,8 @@ const HousePage = () => {
                 {/* Ad soyad */}
                 <div>
                   <div>
-                    <label class='block text-sm font-medium text-gray-700'>Adınız</label>
                     <Input
+                      text='Adınız'
                       placeholder='Adınız'
                       error={nameValidasyonError.error}
                       value={name}
@@ -403,8 +403,8 @@ const HousePage = () => {
                     {nameValidasyonError.error && <p style={{ color: '#525252', marginLeft: 5 }}>{nameValidasyonError.message}</p>}
                   </div>
                   <div className='name'>
-                    <label class='block text-sm font-medium text-gray-700'>Soyadınız</label>
                     <Input
+                      text='Soyadınız'
                       placeholder='Soyadınız'
                       error={surnameValidasyonError.error}
                       value={surname}
@@ -416,8 +416,8 @@ const HousePage = () => {
                 {/* Email Telefon */}
                 <div className='name-surname'>
                   <div className='name'>
-                  <label class='block text-sm font-medium text-gray-700'>E-posta</label>
                     <Input
+                      text='E-posta'
                       placeholder='E-posta'
                       error={emailValidasyonError.error}
                       value={email}
@@ -426,10 +426,8 @@ const HousePage = () => {
                     {emailValidasyonError.error && <p style={{ color: '#525252', marginLeft: 5 }}>{emailValidasyonError.message}</p>}
                   </div>
                   <div className='name'>
-                    <span>
-                      Telefon <span style={{ color: '#D42E13' }}>*</span>
-                    </span>
                     <Input
+                      text='Telefon'
                       error={phoneValidasyonError.error}
                       placeholder='05xx xxx xx xx'
                       value={phone}
@@ -442,9 +440,9 @@ const HousePage = () => {
                   {/* Kaç Misafir Kaç Çocuk */}
                   <div className='name-surname'>
                     <div className='guest-list-number'>
-                    <label class='block text-sm font-medium text-gray-700'>Kaç Kişi Misafir Edebilirsiniz?</label>
                       <Input
                         placeholder='Kaç Kişi Misafir Edebilirsiniz?'
+                        text='Kaç Kişi Misafir Edebilirsiniz?'
                         type='number'
                         value={guest}
                         onChange={(e) => setGuest(e.target.value)}
@@ -452,16 +450,16 @@ const HousePage = () => {
                     </div>
 
                     <div className='guest-list-number'>
-                    <label class='block text-sm font-medium text-gray-700'>Misafirlik Süresi</label>
                       <Select
+                        text="Misafirlik Süresi"
                         value={accommodationPeriod}
                         onChange={(e) => setAccommodationPeriod(e.target.value)}
                         data={[{ name: '1 Haftaya Kadar' }, { name: '2 Haftaya Kadar' }, { name: '1 Aya Kadar' }, { name: 'Belirsiz' }]}
                       />
                     </div>
                     <div className='guest-list-number'>
-                    <label class='block text-sm font-medium text-gray-700'>Konaklama Türü</label>
                       <Select
+                        text='Konaklama Türü'
                         value={accommodationType}
                         onChange={(e) => setAccommodationType(e.target.value)}
                         data={[{ name: 'Ayrı Oda' }, { name: 'Otel Odası' }, { name: 'Müstakil Ev' }]}
@@ -472,27 +470,21 @@ const HousePage = () => {
                 {/* İl İlçe */}
                 <div className='name-surname'>
                   <div className='name'>
-                    <span>
-                      İl <span style={{ color: '#D42E13' }}>*</span>
-                    </span>
-                    <Select onChange={(e) => setSelectedCity(e.target.value)} data={city} />
+                    <Select text='İl' onChange={(e) => setSelectedCity(e.target.value)} data={city} />
                   </div>
                   <div className='name'>
-                    <span>
-                      İlçe <span style={{ color: '#D42E13' }}>*</span>
-                    </span>
-                    <Select disabled={selectedCity === ''} onChange={(e) => setSelectedDistrict(e.target.value)} data={district} />
+                    <Select text='İlçe' disabled={selectedCity === ''} onChange={(e) => setSelectedDistrict(e.target.value)} data={district} />
                   </div>
                 </div>
                 {/* Semt Mahalle */}
                 <div className='name-surname'>
                   <div className='name'>
-                    <span>Semt</span>
-                    <Select disabled={selectedDistrict === ''} onChange={(e) => setSelectedTown(e.target.value)} data={town} />
+                    <Select text='Semt' disabled={selectedDistrict === ''} onChange={(e) => setSelectedTown(e.target.value)} data={town} />
                   </div>
                   <div className='name'>
-                    <span> Mahalle</span>
+                    <span> </span>
                     <Select
+                      text='Mahalle'
                       disabled={selectedTown === ''}
                       onChange={(e) => setSelectedNeighborhoodAddress(e.target.value)}
                       data={neighborhoodAddress}
@@ -501,13 +493,11 @@ const HousePage = () => {
                 </div>
                 {/* Adres Tarifi */}
                 <div className='address-style'>
-                  <span> Adres Tarifi ( Zorunlu Değil ) </span>
-                  <TextArea placeholder='Adres Tarifi' value={addressDetail} onChange={(e) => setAddressDetail(e.target.value)} />
+                  <TextArea text='Adres Tarifi ( Zorunlu Değil )' placeholder='Adres Tarifi' value={addressDetail} onChange={(e) => setAddressDetail(e.target.value)} />
                 </div>
                 {/* Ekstra Bilgi */}
                 <div className='address-style'>
-                  <span> Özel Not ( Zorunlu Değil )</span>
-                  <TextArea placeholder='Ör. Engeli birey var...' value={note} onChange={(e) => setNote(e.target.value)} />
+                  <TextArea text='Özel Not ( Zorunlu Değil )' placeholder='Ör. Engeli birey var...' value={note} onChange={(e) => setNote(e.target.value)} />
                 </div>
                 <div style={{ display: 'flex', fontWeight: 400, width: '100%', margin: 10 }}>
                   {/* <TextArea placeholder="Örnek: Engelli birey var" value={neighborhood} onChange={(e) => setNeighborhood(e.target.value)}/> */}
