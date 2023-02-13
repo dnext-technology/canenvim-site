@@ -32,6 +32,10 @@ const HousePage = () => {
   const [selectedNeighborhoodAddress, setSelectedNeighborhoodAddress] = useState([]);
   const [accommodationType, setAccommodationType] = useState('Ayrı Oda');
   const [accommodationPeriod, setAccommodationPeriod] = useState('1 Haftaya Kadar');
+  const [formData, setFormData] = useState([
+    {identityNumber:1235678902, firstName: "mehmet", lastName:"yılmaz", relation:"kendisi"}, 
+    {identityNumber:1235678904, firstName: "ahmet", lastName:"yılmaz", relation:"kardeşi"}
+  ]);
   const [relationValidasyonError, setRelationValidasyonError] = useState({ error: false, message: '' });
   const [tcknValidasyonError, setTCKNValidasyonError] = useState({ error: false, message: '' });
   const [guestValidasyonError, setGuestValidasyonError] = useState({ error: false, message: '' });
@@ -118,6 +122,7 @@ const HousePage = () => {
   const handleSubmit = async () => {
     const params = {
       identityNumber: tckn,
+      relation: relation,
       firstName: name,
       lastName: surname,
       email: email,
@@ -131,48 +136,41 @@ const HousePage = () => {
       accommodationType,
       accommodationPeriod,
     };
+    setFormData(prev => [...prev, {...params}]);
+    resetForm();
+  };
+  const resetForm = () => {
+    setRelation('');
+    setName('');
+    setTckn('');
+    setSurname('');
+    setEmail('');
+    setPhone('');
+    setGuest('');
+    setNote('');
+    setCheckKVKK(false);
+    setNeighborhood('');
+    setAddressDetail('');
+    setAccommodationType('Ayrı Oda');
+    setAccommodationPeriod('1 Haftaya Kadar');
+    setTCKNValidasyonError({ error: false, message: '' });
+    setEmailValidasyonError({ error: false, message: '' });
+    setPhoneValidasyonError({ error: false, message: '' });
+  }
+  const sendPost = async () => {
     await axios({
       method: 'POST',
       url: `https://zorgundostu.com/api/mp-booking/v1/bookings/offerers`,
-      data: {
-        identityNumber: tckn,
-        firstName: name,
-        lastName: surname,
-        email: email,
-        phone: phone,
-        city: selectedCity,
-        district: selectedDistrict,
-        town: selectedTown,
-        neighborhood: selectedNeighborhoodAddress,
-        addressDetail: addressDetail,
-        guestCapacity: guest,
-        accommodationType: accommodationType,
-        accommodationPeriod: accommodationPeriod,
-        note: note,
-      },
+      data: formData,
     })
       .then(async (response) => {
         notify();
-        setName('');
-        setTckn('');
-        setSurname('');
-        setEmail('');
-        setPhone('');
-        setGuest('');
-        setNote('');
-        setCheckKVKK(false);
-        setNeighborhood('');
-        setAddressDetail('');
-        setAccommodationType('Ayrı Oda');
-        setAccommodationPeriod('1 Haftaya Kadar');
-        setTCKNValidasyonError({ error: false, message: '' });
-        setEmailValidasyonError({ error: false, message: '' });
-        setPhoneValidasyonError({ error: false, message: '' });
+        resetForm();
       })
       .catch((error) => {
         return error;
       });
-  };
+  }
   const notify = () => {
     toast('Bilgileriniz alınmıştır. İmkanlarınıza uygun ihtiyaç sahipleri için sizinle iletişime geçilecektir.', {
       position: 'top-center',
@@ -277,186 +275,234 @@ const HousePage = () => {
                 </div>
               </div>
               <p className='ilan'>İlan Bilgi Formu</p>
-              <form className='grid gap-6 w-100 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2'>
-              <div>
-                  <Input
-                    text='Yakınlık Derecesi'
-                    placeholder='Yakınlık Derecesi'
-                    value={relation}
-                    error={relationValidasyonError.error}
-                    onChange={(e) => checkRelation(e.target.value)}
-                    onBlur={(e) => checkRelation(e.target.value)}
-                  />
-                  {relationValidasyonError.error && <p>{relationValidasyonError.message}</p>}
-                </div>
+              <div className='grid grid-cols-6 gap-4'>
+                <form className='grid gap-6 col-span-4 w-100 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2'>
                 <div>
-                  <Input
-                    text='T.C. Kimlik No'
-                    placeholder='T.C. Kimlik No'
-                    error={tcknValidasyonError.error}
-                    type='number'
-                    value={tckn}
-                    onChange={(e) => checkTCKN(e.target.value)}
-                    onBlur={(e) => checkTCKN(e.target.value)}
-                  />
-                  {tcknValidasyonError.error && <p>{tcknValidasyonError.message}</p>}
-                </div>
-                <div>
-                  <Input
-                    text='Adınız'
-                    placeholder='Adınız'
-                    error={nameValidasyonError.error}
-                    value={name}
-                    onChange={(e) => changeName(e.target.value)}
-                    onBlur={(e) => changeName(e.target.value)}
-                  />
-                  {nameValidasyonError.error && <p>{nameValidasyonError.message}</p>}
-                </div>
-                <div>
-                  <Input
-                    text='Soyadınız'
-                    placeholder='Soyadınız'
-                    error={surnameValidasyonError.error}
-                    value={surname}
-                    onChange={(e) => changeSurName(e.target.value)}
-                    onBlur={(e) => changeSurName(e.target.value)}
-                  />
-                  {surnameValidasyonError.error && <p>{surnameValidasyonError.message}</p>}
-                </div>
-                <div>
-                  <Input
-                    text='E-posta'
-                    placeholder='E-posta'
-                    error={emailValidasyonError.error}
-                    value={email}
-                    onChange={(e) => checkEmail(e.target.value)}
-                    onBlur={(e) => checkEmail(e.target.value)}
-                  />
-                  {emailValidasyonError.error && <p>{emailValidasyonError.message}</p>}
-                </div>
-                <div>
-                  <Input
-                    text='Telefon'
-                    error={phoneValidasyonError.error}
-                    placeholder='05xx xxx xx xx'
-                    value={phone}
-                    onChange={(e) => checkPhone(e.target.value)}
-                    onBlur={(e) => checkPhone(e.target.value)}
-                  />
-                  {phoneValidasyonError.error && <p>{phoneValidasyonError.message}</p>}
-                </div>
-                <div>
-                  <Input
-                    placeholder='Kaç Kişi Misafir Edebilirsiniz?'
-                    text='Kaç Kişi Misafir Edebilirsiniz?'
-                    type='number'
-                    value={guest}
-                    error={guestValidasyonError.error}
-                    onChange={(e) => checkGuest(e.target.value)}
-                    onBlur={(e) => checkGuest(e.target.value)}
-                  />
-                </div>
-                <div>
-                  <Select
-                    text='Misafirlik Süresi'
-                    value={accommodationPeriod}
-                    onChange={(e) => setAccommodationPeriod(e.target.value)}
-                    data={[{ name: '1 Haftaya Kadar' }, { name: '2 Haftaya Kadar' }, { name: '1 Aya Kadar' }, { name: 'Belirsiz' }]}
-                  />
-                </div>
-                <div>
-                  <Select
-                    text='Konaklama Türü'
-                    value={accommodationType}
-                    onChange={(e) => setAccommodationType(e.target.value)}
-                    data={[{ name: 'Ayrı Oda' }, { name: 'Otel Odası' }, { name: 'Müstakil Ev' }]}
-                  />
-                </div>
-                <div>
-                  <Select text='İl' onChange={(e) => setSelectedCity(e.target.value)} data={city} />
-                </div>
-                <div>
-                  <Select
-                    text='İlçe'
-                    disabled={selectedCity === ''}
-                    onChange={(e) => setSelectedDistrict(e.target.value)}
-                    onBlur={(e) => setSelectedDistrict(e.target.value)}
-                    data={district}
-                  />
-                </div>
-                <div>
-                  <Select text='Semt' disabled={selectedDistrict === ''} onChange={(e) => setSelectedTown(e.target.value)} data={town} />
-                </div>
-                <div>
-                  <Select
-                    text='Mahalle'
-                    disabled={selectedTown === ''}
-                    onChange={(e) => setSelectedNeighborhoodAddress(e.target.value)}
-                    data={neighborhoodAddress}
-                  />
-                </div>
-                <div className='lg:col-span-2 md:col-span-3'>
-                  <TextArea
-                    text='Adres Tarifi ( Zorunlu Değil )'
-                    placeholder='Adres Tarifi'
-                    value={addressDetail}
-                    onChange={(e) => setAddressDetail(e.target.value)}
-                  />
-                </div>
-                <div className='lg:col-span-2 md:col-span-3'>
-                  <TextArea
-                    text='Özel Not ( Zorunlu Değil )'
-                    placeholder='Ör. Engeli birey var...'
-                    value={note}
-                    onChange={(e) => setNote(e.target.value)}
-                  />
-                </div>
-                <div className='lg:col-span-4 md:col-span-3 sm:col-span-2'>
-                  <input
-                    value={checkKVKK}
-                    onChange={(e) => setCheckKVKK(e.target.checked ? true : false)}
-                    type='checkbox'
-                    id='vehicle1'
-                    name='vehicle1'
-                  ></input>
-                  <a download='KVKK.pdf' href='KVKK.pdf'>
-                    KVKK Metnini okudum ve kabul ediyorum.<span>*</span>
-                  </a>
-                </div>
-                <div>
-                  <Button
-                    disabled={
-                      tckn === '' ||
-                      name === '' ||
-                      surname === '' ||
-                      phone === '' ||
-                      city === '' ||
-                      district === '' ||
-                      guest === '' ||
-                      nameValidasyonError.error ||
-                      surnameValidasyonError.error ||
-                      tcknValidasyonError.error ||
-                      emailValidasyonError.error ||
-                      phoneValidasyonError.error ||
-                      !checkKVKK
+                    <Input
+                      text='Yakınlık Derecesi'
+                      placeholder='Yakınlık Derecesi'
+                      value={relation}
+                      error={relationValidasyonError.error}
+                      onChange={(e) => checkRelation(e.target.value)}
+                      onBlur={(e) => checkRelation(e.target.value)}
+                    />
+                    {relationValidasyonError.error && <p>{relationValidasyonError.message}</p>}
+                  </div>
+                  <div>
+                    <Input
+                      text='T.C. Kimlik No'
+                      placeholder='T.C. Kimlik No'
+                      error={tcknValidasyonError.error}
+                      type='number'
+                      value={tckn}
+                      onChange={(e) => checkTCKN(e.target.value)}
+                      onBlur={(e) => checkTCKN(e.target.value)}
+                    />
+                    {tcknValidasyonError.error && <p>{tcknValidasyonError.message}</p>}
+                  </div>
+                  <div>
+                    <Input
+                      text='Adınız'
+                      placeholder='Adınız'
+                      error={nameValidasyonError.error}
+                      value={name}
+                      onChange={(e) => changeName(e.target.value)}
+                      onBlur={(e) => changeName(e.target.value)}
+                    />
+                    {nameValidasyonError.error && <p>{nameValidasyonError.message}</p>}
+                  </div>
+                  <div>
+                    <Input
+                      text='Soyadınız'
+                      placeholder='Soyadınız'
+                      error={surnameValidasyonError.error}
+                      value={surname}
+                      onChange={(e) => changeSurName(e.target.value)}
+                      onBlur={(e) => changeSurName(e.target.value)}
+                    />
+                    {surnameValidasyonError.error && <p>{surnameValidasyonError.message}</p>}
+                  </div>
+                  <div>
+                    <Input
+                      text='E-posta'
+                      placeholder='E-posta'
+                      error={emailValidasyonError.error}
+                      value={email}
+                      onChange={(e) => checkEmail(e.target.value)}
+                      onBlur={(e) => checkEmail(e.target.value)}
+                    />
+                    {emailValidasyonError.error && <p>{emailValidasyonError.message}</p>}
+                  </div>
+                  <div>
+                    <Input
+                      text='Telefon'
+                      error={phoneValidasyonError.error}
+                      placeholder='05xx xxx xx xx'
+                      value={phone}
+                      onChange={(e) => checkPhone(e.target.value)}
+                      onBlur={(e) => checkPhone(e.target.value)}
+                    />
+                    {phoneValidasyonError.error && <p>{phoneValidasyonError.message}</p>}
+                  </div>
+                  <div>
+                    <Input
+                      placeholder='Kaç Kişi Misafir Edebilirsiniz?'
+                      text='Kaç Kişi Misafir Edebilirsiniz?'
+                      type='number'
+                      value={guest}
+                      error={guestValidasyonError.error}
+                      onChange={(e) => checkGuest(e.target.value)}
+                      onBlur={(e) => checkGuest(e.target.value)}
+                    />
+                  </div>
+                  <div>
+                    <Select
+                      text='Misafirlik Süresi'
+                      value={accommodationPeriod}
+                      onChange={(e) => setAccommodationPeriod(e.target.value)}
+                      data={[{ name: '1 Haftaya Kadar' }, { name: '2 Haftaya Kadar' }, { name: '1 Aya Kadar' }, { name: 'Belirsiz' }]}
+                    />
+                  </div>
+                  <div>
+                    <Select
+                      text='Konaklama Türü'
+                      value={accommodationType}
+                      onChange={(e) => setAccommodationType(e.target.value)}
+                      data={[{ name: 'Ayrı Oda' }, { name: 'Otel Odası' }, { name: 'Müstakil Ev' }]}
+                    />
+                  </div>
+                  <div>
+                    <Select text='İl' onChange={(e) => setSelectedCity(e.target.value)} data={city} />
+                  </div>
+                  <div>
+                    <Select
+                      text='İlçe'
+                      disabled={selectedCity === ''}
+                      onChange={(e) => setSelectedDistrict(e.target.value)}
+                      onBlur={(e) => setSelectedDistrict(e.target.value)}
+                      data={district}
+                    />
+                  </div>
+                  <div>
+                    <Select text='Semt' disabled={selectedDistrict === ''} onChange={(e) => setSelectedTown(e.target.value)} data={town} />
+                  </div>
+                  <div>
+                    <Select
+                      text='Mahalle'
+                      disabled={selectedTown === ''}
+                      onChange={(e) => setSelectedNeighborhoodAddress(e.target.value)}
+                      data={neighborhoodAddress}
+                    />
+                  </div>
+                  <div className='lg:col-span-2 md:col-span-3'>
+                    <TextArea
+                      text='Adres Tarifi ( Zorunlu Değil )'
+                      placeholder='Adres Tarifi'
+                      value={addressDetail}
+                      onChange={(e) => setAddressDetail(e.target.value)}
+                    />
+                  </div>
+                  <div className='lg:col-span-2 md:col-span-3'>
+                    <TextArea
+                      text='Özel Not ( Zorunlu Değil )'
+                      placeholder='Ör. Engeli birey var...'
+                      value={note}
+                      onChange={(e) => setNote(e.target.value)}
+                    />
+                  </div>
+                  <div className='lg:col-span-4 md:col-span-3 sm:col-span-2'>
+                    <input
+                      value={checkKVKK}
+                      onChange={(e) => setCheckKVKK(e.target.checked ? true : false)}
+                      type='checkbox'
+                      id='vehicle1'
+                      name='vehicle1'
+                    ></input>
+                    <a download='KVKK.pdf' href='KVKK.pdf'>
+                      KVKK Metnini okudum ve kabul ediyorum.<span>*</span>
+                    </a>
+                  </div>
+                  <div>
+                    <Button
+                      disabled={
+                        relation === '' ||
+                        tckn === '' ||
+                        name === '' ||
+                        surname === '' ||
+                        phone === '' ||
+                        city === '' ||
+                        district === '' ||
+                        guest === '' ||
+                        nameValidasyonError.error ||
+                        surnameValidasyonError.error ||
+                        tcknValidasyonError.error ||
+                        emailValidasyonError.error ||
+                        phoneValidasyonError.error ||
+                        !checkKVKK
+                      }
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleSubmit();
+                      }}
+                      text='Listeye Ekle'
+                      styleProps={{
+                        border: '1px solid #323232',
+                        borderRadius: 48,
+                        backgroundColor: '#323232',
+                        color: '#FFFFFF',
+                        padding: '10px 20px',
+                      }}
+                    />
+
+                    <ToastContainer />
+                  </div>
+                </form>
+
+                <table className="table-auto col-span-2 guest-table">
+                  <thead>
+                    <tr>
+                      <th>TC</th>  
+                      <th>Ad</th>
+                      <th>Soyad</th>
+                      <th>Yakınlık</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {
+                      formData.map(data => {
+                        return (
+                          <tr key={data.identityNumber}>
+                            <td>{data.identityNumber}</td>
+                            <td>{data.firstName}</td>
+                            <td>{data.lastName}</td>
+                            <td>{data.relation}</td>
+                          </tr>
+                        )
+                      })
                     }
+                  </tbody>
+                </table>           
+                <Button
+                    disabled={!formData.length}
                     onClick={(e) => {
                       e.preventDefault();
-                      handleSubmit();
+                      sendPost();
                     }}
                     text='Gönder'
                     styleProps={{
                       border: '1px solid #323232',
-                      borderRadius: 48,
+                      borderRadius: 10,
                       backgroundColor: '#323232',
+                      width: '100px',
                       color: '#FFFFFF',
-                      padding: '10px 20px',
+                      padding: '5px 10px',
+                      position: 'absolute',
+                      top: '250px',
+                      right: '35px',
+                      margin: '20px 20px' 
                     }}
                   />
-
-                  <ToastContainer />
-                </div>
-              </form>
+              </div>
             </div>
           </>
         );

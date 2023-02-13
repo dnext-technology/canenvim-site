@@ -33,6 +33,11 @@
     font-weight: 400;
     width: 80%
 }
+.guest-table {
+  position: absolute;
+  top: 165px;
+  right: 40px;
+}
 .house-container {
     @include flex(flex, flex-start, center, column);
     padding: 20px 40px;
