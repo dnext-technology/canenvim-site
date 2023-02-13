@@ -5,4 +5,5 @@ import PrivacyPage from './privacy/viev/privacyPageView';
 import Guest from './guest/viev/guestPageView';
 import HousePage from './house/viev/housePageView';
 
+
 export { HomePage, NotFoundPage, AboutPage, PrivacyPage, Guest, HousePage };
