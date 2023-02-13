@@ -10,186 +10,180 @@ import 'react-toastify/dist/ReactToastify.css';
 import '../style/housePageStyles.scss';
 
 const HousePage = () => {
-    const navigate = useNavigate();
-    const [note, setNote] = useState("");
-    const [tckn, setTckn] = useState("");
-    const [name, setName] = useState("");
-    const [surname, setSurname] = useState("");
-    const [email, setEmail] = useState("");
-    const [phone, setPhone] = useState("");
-    const [guest, setGuest] = useState("");
-    const [neighborhood, setNeighborhood] = useState("");
-    const [addressDetail, setAddressDetail] = useState("");
-    const [childNumber, setChildNumber] = useState("");
-    const [city, setCity] = useState([]);
-    const [selectedCity, setSelectedCity] = useState("");
-    const [district, setDistrict] = useState([]);
-    const [checkKVKK, setCheckKVKK] = useState(false);
-    const [selectedDistrict, setSelectedDistrict] = useState("");
-    const [town, setTown] = useState([]);
-    const [neighborhoodAddress, setNeighborhoodAddress] = useState([]);
-    const [selectedNeighborhoodAddress, setSelectedNeighborhoodAddress] = useState([]);
-    const [accommodationType, setAccommodationType] = useState("Ayrı Oda");
-    const [accommodationPeriod, setAccommodationPeriod] = useState("1 Haftaya Kadar");
-    const [tcknValidasyonError ,setTCKNValidasyonError] = useState({ error: false, message: ""})
-    const [emailValidasyonError ,setEmailValidasyonError] = useState({ error: false, message: ""})
-    const [phoneValidasyonError ,setPhoneValidasyonError] = useState({ error: false, message: ""})
-    const [nameValidasyonError ,setNameValidasyonError] = useState({ error: false, message: ""})
-    const [surnameValidasyonError ,setSurnameValidasyonError] = useState({ error: false, message: ""})
-    const [selectedTown, setSelectedTown] = useState("");
+  const { REACT_APP_BASE_URL, REACT_APP_BOOKING_API, REACT_APP_LOCATION_API } = process.env;
+  const navigate = useNavigate();
+  const [note, setNote] = useState("");
+  const [tckn, setTckn] = useState("");
+  const [name, setName] = useState("");
+  const [surname, setSurname] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [guest, setGuest] = useState("");
+  const [neighborhood, setNeighborhood] = useState("");
+  const [addressDetail, setAddressDetail] = useState("");
+  const [childNumber, setChildNumber] = useState("");
+  const [city, setCity] = useState([]);
+  const [selectedCity, setSelectedCity] = useState("");
+  const [district, setDistrict] = useState([]);
+  const [checkKVKK, setCheckKVKK] = useState(false);
+  const [selectedDistrict, setSelectedDistrict] = useState("");
+  const [town, setTown] = useState([]);
+  const [neighborhoodAddress, setNeighborhoodAddress] = useState([]);
+  const [selectedNeighborhoodAddress, setSelectedNeighborhoodAddress] = useState([]);
+  const [accommodationType, setAccommodationType] = useState("Ayrı Oda");
+  const [accommodationPeriod, setAccommodationPeriod] = useState("1 Haftaya Kadar");
+  const [tcknValidasyonError, setTCKNValidasyonError] = useState({ error: false, message: "" })
+  const [emailValidasyonError, setEmailValidasyonError] = useState({ error: false, message: "" })
+  const [phoneValidasyonError, setPhoneValidasyonError] = useState({ error: false, message: "" })
+  const [nameValidasyonError, setNameValidasyonError] = useState({ error: false, message: "" })
+  const [surnameValidasyonError, setSurnameValidasyonError] = useState({ error: false, message: "" })
+  const [selectedTown, setSelectedTown] = useState("");
 
-    
-  
-
-      useEffect(() => {
-        async function fetchData() {
-            await axios({
-              method: 'GET', url: `https://zorgundostu.com/api/mp-location/v1/locations`
-            })
-              .then(async response => {
-               setCity(response.data)
-               setSelectedCity(response.data[0].name)
-              
-              })
-              .catch(error => {
-                return error
-              });
-            
-          }
-        fetchData();
-      }, []);
-
-      useEffect(() => {
-        async function fetchData() {
-            if(selectedCity !== "") {
-            await axios({
-              method: 'GET', url: `https://zorgundostu.com/api/mp-location/v1/locations?city=${selectedCity}`
-            })
-              .then(async response => {
-                setDistrict(response.data)
-                setSelectedDistrict(response.data[0].name)
-              })
-              .catch(error => {
-                return error
-              });
-            }
-            
-          }
-        fetchData();
-      }, [selectedCity]);
-
-      useEffect(() => {
-        async function fetchData() {
-            if(selectedDistrict !== "") {
-            await axios({
-              method: 'GET', url: `https://zorgundostu.com/api/mp-location/v1/locations?city=${selectedCity}&district=${selectedDistrict}`
-            })
-              .then(async response => {
-                setTown(response.data)
-                setSelectedTown(response.data[0].name)
-              })
-              .catch(error => {
-                return error
-              });
-            }
-            
-          }
-        fetchData();
-      }, [selectedDistrict]);
-
-      useEffect(() => {
-        async function fetchData() {
-            if(selectedTown !== "") {
-            await axios({
-              method: 'GET', url: `https://zorgundostu.com/api/mp-location/v1/locations?city=${selectedCity}&district=${selectedDistrict}&town=${selectedTown}`
-            })
-              .then(async response => {
-                setNeighborhoodAddress(response.data)
-                setSelectedNeighborhoodAddress(response.data[0].name)
-              })
-              .catch(error => {
-                return error
-              });
-            }
-            
-          }
-        fetchData();
-      }, [selectedTown]);
-
-
-    const handleSubmit = async () => {
-        const params = {
-            identityNumber: tckn,
-            firstName: name,
-            lastName: surname,
-            email: email,
-            phone: phone,
-            city: selectedCity,
-            district: selectedDistrict,
-            town: selectedTown,
-            neighborhood: selectedNeighborhoodAddress,
-            addressDetail: addressDetail,
-            guestCapacity: guest,
-            accommodationType,
-            accommodationPeriod
-        };
-       await axios({
-        method: 'POST', url: `https://zorgundostu.com/api/mp-booking/v1/bookings/offerers`,  data: {
-            identityNumber: tckn,
-            firstName: name,
-            lastName: surname,
-            email: email,
-            phone: phone,
-            city: selectedCity,
-            district: selectedDistrict,
-            town: selectedTown,
-            neighborhood: selectedNeighborhoodAddress,
-            addressDetail: addressDetail,
-            guestCapacity: guest,
-            accommodationType: accommodationType,
-            accommodationPeriod: accommodationPeriod,
-            note: note
-        }
+  useEffect(() => {
+    async function fetchData () {
+      await axios({
+        method: 'GET', url: `${REACT_APP_BASE_URL}${REACT_APP_LOCATION_API}/locations`
       })
         .then(async response => {
-          notify();
-          setName("")
-          setTckn("")
-          setSurname("")
-          setEmail("") 
-          setPhone("") 
-          setGuest("") 
-          setNote("")
-          setCheckKVKK(false)
-          setNeighborhood("") 
-          setAddressDetail("") 
-          setAccommodationType("Ayrı Oda") 
-          setAccommodationPeriod("1 Haftaya Kadar") 
-          setTCKNValidasyonError({ error: false, message: ""}) 
-          setEmailValidasyonError({ error: false, message: ""}) 
-          setPhoneValidasyonError({ error: false, message: ""})
+          setCity(response.data)
+          setSelectedCity(response.data[0].name)
         })
         .catch(error => {
           return error
         });
-    };
-    const notify = () => {
-        toast("Bilgileriniz alınmıştır. İmkanlarınıza uygun ihtiyaç sahipleri için sizinle iletişime geçilecektir.", {
-            position: "top-center",
-            className: "black-background",
-            autoClose: 10000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-            type: "success"
-            });
-            setTimeout(() => {
-                navigate('/house/table');
-            }, 3000);
     }
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    async function fetchData () {
+      if (selectedCity !== "") {
+        await axios({
+          method: 'GET', url: `${REACT_APP_BASE_URL}${REACT_APP_LOCATION_API}/locations?city=${selectedCity}`
+        })
+          .then(async response => {
+            setDistrict(response.data)
+            setSelectedDistrict(response.data[0].name)
+          })
+          .catch(error => {
+            return error
+          });
+      }
+
+    }
+    fetchData();
+  }, [selectedCity]);
+
+  useEffect(() => {
+    async function fetchData () {
+      if (selectedDistrict !== "") {
+        await axios({
+          method: 'GET', url: `${REACT_APP_BASE_URL}${REACT_APP_LOCATION_API}/locations?city=${selectedCity}&district=${selectedDistrict}`
+        })
+          .then(async response => {
+            setTown(response.data)
+            setSelectedTown(response.data[0].name)
+          })
+          .catch(error => {
+            return error
+          });
+      }
+
+    }
+    fetchData();
+  }, [selectedDistrict]);
+
+  useEffect(() => {
+    async function fetchData () {
+      if (selectedTown !== "") {
+        await axios({
+          method: 'GET', url: `${REACT_APP_BASE_URL}${REACT_APP_LOCATION_API}/locations?city=${selectedCity}&district=${selectedDistrict}&town=${selectedTown}`
+        })
+          .then(async response => {
+            setNeighborhoodAddress(response.data)
+            setSelectedNeighborhoodAddress(response.data[0].name)
+          })
+          .catch(error => {
+            return error
+          });
+      }
+    }
+    fetchData();
+  }, [selectedTown]);
+
+  const handleSubmit = async () => {
+    const params = {
+      identityNumber: tckn,
+      firstName: name,
+      lastName: surname,
+      email: email,
+      phone: phone,
+      city: selectedCity,
+      district: selectedDistrict,
+      town: selectedTown,
+      neighborhood: selectedNeighborhoodAddress,
+      addressDetail: addressDetail,
+      guestCapacity: guest,
+      accommodationType,
+      accommodationPeriod
+    };
+    await axios({
+      method: 'POST', url: `${REACT_APP_BASE_URL}${REACT_APP_BOOKING_API}/bookings/offerers`, data: {
+        identityNumber: tckn,
+        firstName: name,
+        lastName: surname,
+        email: email,
+        phone: phone,
+        city: selectedCity,
+        district: selectedDistrict,
+        town: selectedTown,
+        neighborhood: selectedNeighborhoodAddress,
+        addressDetail: addressDetail,
+        guestCapacity: guest,
+        accommodationType: accommodationType,
+        accommodationPeriod: accommodationPeriod,
+        note: note
+      }
+    })
+      .then(async response => {
+        notify();
+        setName("")
+        setTckn("")
+        setSurname("")
+        setEmail("")
+        setPhone("")
+        setGuest("")
+        setNote("")
+        setCheckKVKK(false)
+        setNeighborhood("")
+        setAddressDetail("")
+        setAccommodationType("Ayrı Oda")
+        setAccommodationPeriod("1 Haftaya Kadar")
+        setTCKNValidasyonError({ error: false, message: "" })
+        setEmailValidasyonError({ error: false, message: "" })
+        setPhoneValidasyonError({ error: false, message: "" })
+      })
+      .catch(error => {
+        return error
+      });
+  };
+  const notify = () => {
+    toast("Bilgileriniz alınmıştır. İmkanlarınıza uygun ihtiyaç sahipleri için sizinle iletişime geçilecektir.", {
+      position: "top-center",
+      className: "black-background",
+      autoClose: 10000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      type: "success"
+    });
+    setTimeout(() => {
+      navigate('/house/table');
+    }, 3000);
+  }
 
   const checkTCKN = (e) => {
     setTckn(e);
@@ -243,7 +237,7 @@ const HousePage = () => {
 
   return (
     <HousePageContainer>
-      {({}) => {
+      {({ }) => {
         return (
           <>
             <img alt='logo' className='bannerzor' src={Banner} />
@@ -430,6 +424,6 @@ const HousePage = () => {
         );
       }}
     </HousePageContainer>
-);
+  );
 }
 export default HousePage;
