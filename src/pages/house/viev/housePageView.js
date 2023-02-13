@@ -426,28 +426,6 @@ const HousePage = () => {
                 </div>
               </form>
             </div>
-            <div className='house-list-container'>
-              <div>
-                <p >Misafir Kabul Edebilenler</p>
-                <p>
-                  Aşağıdaki tabloda misafir kabul edebilecek olan kişileri görüntüleyebilirsiniz.
-                </p>
-                <DataTable
-                  columns={columns}
-                  data={data}
-                  pagination
-                  paginationRowsPerPageOptions={[10, 25, 50, 100]}
-                  responsive
-                  customStyles={customStyles}
-                  paginationServer
-                  onChangeRowsPerPage={handlePerRowsChange}
-                  paginationTotalRows={totalRow}
-                  onChangePage={handlePageChange}
-                  paginationComponentOptions={paginationOptions}
-                  noDataComponent='Gösterilecek veri bulunmamaktadır'
-                />
-              </div>
-            </div>
           </>
         );
       }}
