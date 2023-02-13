@@ -28,11 +28,11 @@ const Header = () => {
               <span onClick={() => navigate('house')}>Konaklamaya Uygun Yerim Var</span>
               <span onClick={() => navigate('about')}>Hakkımızda</span>
               <div className='social-logos'>
-                <Link to="https://twitter.com/zorgundostuyrdm" target="_blank">
+                <Link to="https://twitter.com/canevim_tr" target="_blank">
                   <FaTwitter />
                 </Link>
                 <Link
-                  to="https://www.instagram.com/zorgundostuyardimlasmaagi/"
+                  to="https://www.instagram.com/canevim_tr/"
                   target="_blank"
                 >
                   <FaInstagram />
