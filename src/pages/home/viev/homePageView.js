@@ -117,7 +117,7 @@ const HomePage = () => {
                       backgroundColor: "#D42E13",
                       color: "#fff",
                       boxShadow: "0px 0px 16px rgba(0, 0, 0, 0.25)",
-                      marginTop: "5px",
+                      marginTop: "10px",
                       width:"100%"
                     }}
                   />
@@ -163,6 +163,7 @@ const HomePage = () => {
                       backgroundColor: "#D42E13",
                       color: "#fff",
                       boxShadow: "0px 0px 16px rgba(0, 0, 0, 0.25)",
+                      width:"100%"
                     }}
                   />
                   <Button
@@ -176,6 +177,7 @@ const HomePage = () => {
                       color: "#fff",
                       boxShadow: "0px 0px 16px rgba(0, 0, 0, 0.25)",
                       marginTop: "10px",
+                      width:"100%"
                     }}
                   />
                 </div>
