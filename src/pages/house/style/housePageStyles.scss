@@ -33,7 +33,7 @@
 }
 .house-container {
     @include flex(flex, flex-start, center, column);
-    padding: 20px 120px;
+    padding: 20px 40px;
     position: relative;
     flex-wrap: wrap;
     background-color: #F5F5F5;
