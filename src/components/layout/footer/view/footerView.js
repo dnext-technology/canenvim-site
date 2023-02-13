@@ -1,7 +1,7 @@
 /* eslint-disable */
 import React from 'react';
 import FooterContainer from '../container/footerContainer';
-import Logo from '../../../../assets/images/logo-footer.png';
+import Logo from '../../../../assets/images/logo.svg';
 import { FiMail } from "react-icons/fi";
 import { FaTwitter,FaInstagram } from "react-icons/fa";
 import { useNavigate,Link } from 'react-router-dom';
