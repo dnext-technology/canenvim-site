@@ -1,6 +1,6 @@
 /* eslint-disable */
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 import HousePageContainer from '../container/housePageContainer';
 import { Button, Input, TextArea, Select } from '../../../components';
 import axios from 'axios';
@@ -10,186 +10,183 @@ import 'react-toastify/dist/ReactToastify.css';
 import '../style/housePageStyles.scss';
 
 const HousePage = () => {
-    const navigate = useNavigate();
-    const [note, setNote] = useState("");
-    const [tckn, setTckn] = useState("");
-    const [name, setName] = useState("");
-    const [surname, setSurname] = useState("");
-    const [email, setEmail] = useState("");
-    const [phone, setPhone] = useState("");
-    const [guest, setGuest] = useState("");
-    const [neighborhood, setNeighborhood] = useState("");
-    const [addressDetail, setAddressDetail] = useState("");
-    const [childNumber, setChildNumber] = useState("");
-    const [city, setCity] = useState([]);
-    const [selectedCity, setSelectedCity] = useState("");
-    const [district, setDistrict] = useState([]);
-    const [checkKVKK, setCheckKVKK] = useState(false);
-    const [selectedDistrict, setSelectedDistrict] = useState("");
-    const [town, setTown] = useState([]);
-    const [neighborhoodAddress, setNeighborhoodAddress] = useState([]);
-    const [selectedNeighborhoodAddress, setSelectedNeighborhoodAddress] = useState([]);
-    const [accommodationType, setAccommodationType] = useState("Ayrı Oda");
-    const [accommodationPeriod, setAccommodationPeriod] = useState("1 Haftaya Kadar");
-    const [tcknValidasyonError ,setTCKNValidasyonError] = useState({ error: false, message: ""})
-    const [emailValidasyonError ,setEmailValidasyonError] = useState({ error: false, message: ""})
-    const [phoneValidasyonError ,setPhoneValidasyonError] = useState({ error: false, message: ""})
-    const [nameValidasyonError ,setNameValidasyonError] = useState({ error: false, message: ""})
-    const [surnameValidasyonError ,setSurnameValidasyonError] = useState({ error: false, message: ""})
-    const [selectedTown, setSelectedTown] = useState("");
+  const navigate = useNavigate();
+  const [note, setNote] = useState('');
+  const [tckn, setTckn] = useState('');
+  const [name, setName] = useState('');
+  const [surname, setSurname] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [guest, setGuest] = useState('');
+  const [neighborhood, setNeighborhood] = useState('');
+  const [addressDetail, setAddressDetail] = useState('');
+  const [childNumber, setChildNumber] = useState('');
+  const [city, setCity] = useState([]);
+  const [selectedCity, setSelectedCity] = useState('');
+  const [district, setDistrict] = useState([]);
+  const [checkKVKK, setCheckKVKK] = useState(false);
+  const [selectedDistrict, setSelectedDistrict] = useState('');
+  const [town, setTown] = useState([]);
+  const [neighborhoodAddress, setNeighborhoodAddress] = useState([]);
+  const [selectedNeighborhoodAddress, setSelectedNeighborhoodAddress] = useState([]);
+  const [accommodationType, setAccommodationType] = useState('Ayrı Oda');
+  const [accommodationPeriod, setAccommodationPeriod] = useState('1 Haftaya Kadar');
+  const [tcknValidasyonError, setTCKNValidasyonError] = useState({ error: false, message: '' });
+  const [emailValidasyonError, setEmailValidasyonError] = useState({ error: false, message: '' });
+  const [phoneValidasyonError, setPhoneValidasyonError] = useState({ error: false, message: '' });
+  const [nameValidasyonError, setNameValidasyonError] = useState({ error: false, message: '' });
+  const [surnameValidasyonError, setSurnameValidasyonError] = useState({ error: false, message: '' });
+  const [selectedTown, setSelectedTown] = useState('');
 
-    
-  
-
-      useEffect(() => {
-        async function fetchData() {
-            await axios({
-              method: 'GET', url: `https://zorgundostu.com/api/mp-location/v1/locations`
-            })
-              .then(async response => {
-               setCity(response.data)
-               setSelectedCity(response.data[0].name)
-              
-              })
-              .catch(error => {
-                return error
-              });
-            
-          }
-        fetchData();
-      }, []);
-
-      useEffect(() => {
-        async function fetchData() {
-            if(selectedCity !== "") {
-            await axios({
-              method: 'GET', url: `https://zorgundostu.com/api/mp-location/v1/locations?city=${selectedCity}`
-            })
-              .then(async response => {
-                setDistrict(response.data)
-                setSelectedDistrict(response.data[0].name)
-              })
-              .catch(error => {
-                return error
-              });
-            }
-            
-          }
-        fetchData();
-      }, [selectedCity]);
-
-      useEffect(() => {
-        async function fetchData() {
-            if(selectedDistrict !== "") {
-            await axios({
-              method: 'GET', url: `https://zorgundostu.com/api/mp-location/v1/locations?city=${selectedCity}&district=${selectedDistrict}`
-            })
-              .then(async response => {
-                setTown(response.data)
-                setSelectedTown(response.data[0].name)
-              })
-              .catch(error => {
-                return error
-              });
-            }
-            
-          }
-        fetchData();
-      }, [selectedDistrict]);
-
-      useEffect(() => {
-        async function fetchData() {
-            if(selectedTown !== "") {
-            await axios({
-              method: 'GET', url: `https://zorgundostu.com/api/mp-location/v1/locations?city=${selectedCity}&district=${selectedDistrict}&town=${selectedTown}`
-            })
-              .then(async response => {
-                setNeighborhoodAddress(response.data)
-                setSelectedNeighborhoodAddress(response.data[0].name)
-              })
-              .catch(error => {
-                return error
-              });
-            }
-            
-          }
-        fetchData();
-      }, [selectedTown]);
-
-
-    const handleSubmit = async () => {
-        const params = {
-            identityNumber: tckn,
-            firstName: name,
-            lastName: surname,
-            email: email,
-            phone: phone,
-            city: selectedCity,
-            district: selectedDistrict,
-            town: selectedTown,
-            neighborhood: selectedNeighborhoodAddress,
-            addressDetail: addressDetail,
-            guestCapacity: guest,
-            accommodationType,
-            accommodationPeriod
-        };
-       await axios({
-        method: 'POST', url: `https://zorgundostu.com/api/mp-booking/v1/bookings/offerers`,  data: {
-            identityNumber: tckn,
-            firstName: name,
-            lastName: surname,
-            email: email,
-            phone: phone,
-            city: selectedCity,
-            district: selectedDistrict,
-            town: selectedTown,
-            neighborhood: selectedNeighborhoodAddress,
-            addressDetail: addressDetail,
-            guestCapacity: guest,
-            accommodationType: accommodationType,
-            accommodationPeriod: accommodationPeriod,
-            note: note
-        }
+  useEffect(() => {
+    async function fetchData() {
+      await axios({
+        method: 'GET',
+        url: `https://zorgundostu.com/api/mp-location/v1/locations`,
       })
-        .then(async response => {
-          notify();
-          setName("")
-          setTckn("")
-          setSurname("")
-          setEmail("") 
-          setPhone("") 
-          setGuest("") 
-          setNote("")
-          setCheckKVKK(false)
-          setNeighborhood("") 
-          setAddressDetail("") 
-          setAccommodationType("Ayrı Oda") 
-          setAccommodationPeriod("1 Haftaya Kadar") 
-          setTCKNValidasyonError({ error: false, message: ""}) 
-          setEmailValidasyonError({ error: false, message: ""}) 
-          setPhoneValidasyonError({ error: false, message: ""})
+        .then(async (response) => {
+          setCity(response.data);
+          setSelectedCity(response.data[0].name);
         })
-        .catch(error => {
-          return error
+        .catch((error) => {
+          return error;
         });
-    };
-    const notify = () => {
-        toast("Bilgileriniz alınmıştır. İmkanlarınıza uygun ihtiyaç sahipleri için sizinle iletişime geçilecektir.", {
-            position: "top-center",
-            className: "black-background",
-            autoClose: 10000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-            type: "success"
-            });
-            setTimeout(() => {
-                navigate('/house/table');
-            }, 3000);
     }
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    async function fetchData() {
+      if (selectedCity !== '') {
+        await axios({
+          method: 'GET',
+          url: `https://zorgundostu.com/api/mp-location/v1/locations?city=${selectedCity}`,
+        })
+          .then(async (response) => {
+            setDistrict(response.data);
+            setSelectedDistrict(response.data[0].name);
+          })
+          .catch((error) => {
+            return error;
+          });
+      }
+    }
+    fetchData();
+  }, [selectedCity]);
+
+  useEffect(() => {
+    async function fetchData() {
+      if (selectedDistrict !== '') {
+        await axios({
+          method: 'GET',
+          url: `https://zorgundostu.com/api/mp-location/v1/locations?city=${selectedCity}&district=${selectedDistrict}`,
+        })
+          .then(async (response) => {
+            setTown(response.data);
+            setSelectedTown(response.data[0].name);
+          })
+          .catch((error) => {
+            return error;
+          });
+      }
+    }
+    fetchData();
+  }, [selectedDistrict]);
+
+  useEffect(() => {
+    async function fetchData() {
+      if (selectedTown !== '') {
+        await axios({
+          method: 'GET',
+          url: `https://zorgundostu.com/api/mp-location/v1/locations?city=${selectedCity}&district=${selectedDistrict}&town=${selectedTown}`,
+        })
+          .then(async (response) => {
+            setNeighborhoodAddress(response.data);
+            setSelectedNeighborhoodAddress(response.data[0].name);
+          })
+          .catch((error) => {
+            return error;
+          });
+      }
+    }
+    fetchData();
+  }, [selectedTown]);
+
+  const handleSubmit = async () => {
+    const params = {
+      identityNumber: tckn,
+      firstName: name,
+      lastName: surname,
+      email: email,
+      phone: phone,
+      city: selectedCity,
+      district: selectedDistrict,
+      town: selectedTown,
+      neighborhood: selectedNeighborhoodAddress,
+      addressDetail: addressDetail,
+      guestCapacity: guest,
+      accommodationType,
+      accommodationPeriod,
+    };
+    await axios({
+      method: 'POST',
+      url: `https://zorgundostu.com/api/mp-booking/v1/bookings/offerers`,
+      data: {
+        identityNumber: tckn,
+        firstName: name,
+        lastName: surname,
+        email: email,
+        phone: phone,
+        city: selectedCity,
+        district: selectedDistrict,
+        town: selectedTown,
+        neighborhood: selectedNeighborhoodAddress,
+        addressDetail: addressDetail,
+        guestCapacity: guest,
+        accommodationType: accommodationType,
+        accommodationPeriod: accommodationPeriod,
+        note: note,
+      },
+    })
+      .then(async (response) => {
+        notify();
+        setName('');
+        setTckn('');
+        setSurname('');
+        setEmail('');
+        setPhone('');
+        setGuest('');
+        setNote('');
+        setCheckKVKK(false);
+        setNeighborhood('');
+        setAddressDetail('');
+        setAccommodationType('Ayrı Oda');
+        setAccommodationPeriod('1 Haftaya Kadar');
+        setTCKNValidasyonError({ error: false, message: '' });
+        setEmailValidasyonError({ error: false, message: '' });
+        setPhoneValidasyonError({ error: false, message: '' });
+      })
+      .catch((error) => {
+        return error;
+      });
+  };
+  const notify = () => {
+    toast('Bilgileriniz alınmıştır. İmkanlarınıza uygun ihtiyaç sahipleri için sizinle iletişime geçilecektir.', {
+      position: 'top-center',
+      className: 'black-background',
+      autoClose: 10000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'light',
+      type: 'success',
+    });
+    setTimeout(() => {
+      navigate('/house/table');
+    }, 3000);
+  };
 
   const checkTCKN = (e) => {
     setTckn(e);
@@ -256,8 +253,7 @@ const HousePage = () => {
                 </div>
               </div>
               <p className='ilan'>İlan Bilgi Formu</p>
-              <form>
-                {/* TCKN */}
+              <form className='grid gap-6 w-100 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2'>
                 <div>
                   <Input
                     text='T.C. Kimlik No'
@@ -269,117 +265,110 @@ const HousePage = () => {
                   />
                   {tcknValidasyonError.error && <p>{tcknValidasyonError.message}</p>}
                 </div>
-                {/* Ad soyad */}
                 <div>
-                  <div>
-                    <Input
-                      text='Adınız'
-                      placeholder='Adınız'
-                      error={nameValidasyonError.error}
-                      value={name}
-                      onChange={(e) => changeName(e.target.value)}
-                    />
-                    {nameValidasyonError.error && <p>{nameValidasyonError.message}</p>}
-                  </div>
-                  <div className='name'>
-                    <Input
-                      text='Soyadınız'
-                      placeholder='Soyadınız'
-                      error={surnameValidasyonError.error}
-                      value={surname}
-                      onChange={(e) => changeSurName(e.target.value)}
-                    />
-                    {surnameValidasyonError.error && <p>{surnameValidasyonError.message}</p>}
-                  </div>
-                </div>
-                {/* Email Telefon */}
-                <div className='name-surname'>
-                  <div className='name'>
-                    <Input
-                      text='E-posta'
-                      placeholder='E-posta'
-                      error={emailValidasyonError.error}
-                      value={email}
-                      onChange={(e) => checkEmail(e.target.value)}
-                    />
-                    {emailValidasyonError.error && <p>{emailValidasyonError.message}</p>}
-                  </div>
-                  <div className='name'>
-                    <Input
-                      text='Telefon'
-                      error={phoneValidasyonError.error}
-                      placeholder='05xx xxx xx xx'
-                      value={phone}
-                      onChange={(e) => checkPhone(e.target.value)}
-                    />
-                    {phoneValidasyonError.error && <p>{phoneValidasyonError.message}</p>}
-                  </div>
-                </div>
-                <div className='guest-list-house'>
-                  {/* Kaç Misafir Kaç Çocuk */}
-                  <div className='name-surname'>
-                    <div className='guest-list-number'>
-                      <Input
-                        placeholder='Kaç Kişi Misafir Edebilirsiniz?'
-                        text='Kaç Kişi Misafir Edebilirsiniz?'
-                        type='number'
-                        value={guest}
-                        onChange={(e) => setGuest(e.target.value)}
-                      />
-                    </div>
-
-                    <div className='guest-list-number'>
-                      <Select
-                        text="Misafirlik Süresi"
-                        value={accommodationPeriod}
-                        onChange={(e) => setAccommodationPeriod(e.target.value)}
-                        data={[{ name: '1 Haftaya Kadar' }, { name: '2 Haftaya Kadar' }, { name: '1 Aya Kadar' }, { name: 'Belirsiz' }]}
-                      />
-                    </div>
-                    <div className='guest-list-number'>
-                      <Select
-                        text='Konaklama Türü'
-                        value={accommodationType}
-                        onChange={(e) => setAccommodationType(e.target.value)}
-                        data={[{ name: 'Ayrı Oda' }, { name: 'Otel Odası' }, { name: 'Müstakil Ev' }]}
-                      />
-                    </div>
-                  </div>
-                </div>
-                {/* İl İlçe */}
-                <div className='name-surname'>
-                  <div className='name'>
-                    <Select text='İl' onChange={(e) => setSelectedCity(e.target.value)} data={city} />
-                  </div>
-                  <div className='name'>
-                    <Select text='İlçe' disabled={selectedCity === ''} onChange={(e) => setSelectedDistrict(e.target.value)} data={district} />
-                  </div>
-                </div>
-                {/* Semt Mahalle */}
-                <div className='name-surname'>
-                  <div className='name'>
-                    <Select text='Semt' disabled={selectedDistrict === ''} onChange={(e) => setSelectedTown(e.target.value)} data={town} />
-                  </div>
-                  <div className='name'>
-                    <span> </span>
-                    <Select
-                      text='Mahalle'
-                      disabled={selectedTown === ''}
-                      onChange={(e) => setSelectedNeighborhoodAddress(e.target.value)}
-                      data={neighborhoodAddress}
-                    />
-                  </div>
-                </div>
-                {/* Adres Tarifi */}
-                <div className='address-style'>
-                  <TextArea text='Adres Tarifi ( Zorunlu Değil )' placeholder='Adres Tarifi' value={addressDetail} onChange={(e) => setAddressDetail(e.target.value)} />
-                </div>
-                {/* Ekstra Bilgi */}
-                <div className='address-style'>
-                  <TextArea text='Özel Not ( Zorunlu Değil )' placeholder='Ör. Engeli birey var...' value={note} onChange={(e) => setNote(e.target.value)} />
+                  <Input
+                    text='Adınız'
+                    placeholder='Adınız'
+                    error={nameValidasyonError.error}
+                    value={name}
+                    onChange={(e) => changeName(e.target.value)}
+                  />
+                  {nameValidasyonError.error && <p>{nameValidasyonError.message}</p>}
                 </div>
                 <div>
-                  {/* <TextArea placeholder="Örnek: Engelli birey var" value={neighborhood} onChange={(e) => setNeighborhood(e.target.value)}/> */}
+                  <Input
+                    text='Soyadınız'
+                    placeholder='Soyadınız'
+                    error={surnameValidasyonError.error}
+                    value={surname}
+                    onChange={(e) => changeSurName(e.target.value)}
+                  />
+                  {surnameValidasyonError.error && <p>{surnameValidasyonError.message}</p>}
+                </div>
+                <div>
+                  <Input
+                    text='E-posta'
+                    placeholder='E-posta'
+                    error={emailValidasyonError.error}
+                    value={email}
+                    onChange={(e) => checkEmail(e.target.value)}
+                  />
+                  {emailValidasyonError.error && <p>{emailValidasyonError.message}</p>}
+                </div>
+                <div>
+                  <Input
+                    text='Telefon'
+                    error={phoneValidasyonError.error}
+                    placeholder='05xx xxx xx xx'
+                    value={phone}
+                    onChange={(e) => checkPhone(e.target.value)}
+                  />
+                  {phoneValidasyonError.error && <p>{phoneValidasyonError.message}</p>}
+                </div>
+                <div>
+                  <Input
+                    placeholder='Kaç Kişi Misafir Edebilirsiniz?'
+                    text='Kaç Kişi Misafir Edebilirsiniz?'
+                    type='number'
+                    value={guest}
+                    onChange={(e) => setGuest(e.target.value)}
+                  />
+                </div>
+                <div>
+                  <Select
+                    text='Misafirlik Süresi'
+                    value={accommodationPeriod}
+                    onChange={(e) => setAccommodationPeriod(e.target.value)}
+                    data={[{ name: '1 Haftaya Kadar' }, { name: '2 Haftaya Kadar' }, { name: '1 Aya Kadar' }, { name: 'Belirsiz' }]}
+                  />
+                </div>
+                <div>
+                  <Select
+                    text='Konaklama Türü'
+                    value={accommodationType}
+                    onChange={(e) => setAccommodationType(e.target.value)}
+                    data={[{ name: 'Ayrı Oda' }, { name: 'Otel Odası' }, { name: 'Müstakil Ev' }]}
+                  />
+                </div>
+                <div>
+                  <Select text='İl' onChange={(e) => setSelectedCity(e.target.value)} data={city} />
+                </div>
+                <div>
+                  <Select
+                    text='İlçe'
+                    disabled={selectedCity === ''}
+                    onChange={(e) => setSelectedDistrict(e.target.value)}
+                    data={district}
+                  />
+                </div>
+                <div>
+                  <Select text='Semt' disabled={selectedDistrict === ''} onChange={(e) => setSelectedTown(e.target.value)} data={town} />
+                </div>
+                <div>
+                  <Select
+                    text='Mahalle'
+                    disabled={selectedTown === ''}
+                    onChange={(e) => setSelectedNeighborhoodAddress(e.target.value)}
+                    data={neighborhoodAddress}
+                  />
+                </div>
+                <div className='lg:col-span-2 md:col-span-3'>
+                  <TextArea
+                    text='Adres Tarifi ( Zorunlu Değil )'
+                    placeholder='Adres Tarifi'
+                    value={addressDetail}
+                    onChange={(e) => setAddressDetail(e.target.value)}
+                  />
+                </div>
+                <div className='lg:col-span-2 md:col-span-3'>
+                  <TextArea
+                    text='Özel Not ( Zorunlu Değil )'
+                    placeholder='Ör. Engeli birey var...'
+                    value={note}
+                    onChange={(e) => setNote(e.target.value)}
+                  />
+                </div>
+                <div className='lg:col-span-4 md:col-span-3 sm:col-span-2'>
                   <input
                     value={checkKVKK}
                     onChange={(e) => setCheckKVKK(e.target.checked ? true : false)}
@@ -391,7 +380,7 @@ const HousePage = () => {
                     KVKK Metnini okudum ve kabul ediyorum.<span>*</span>
                   </a>
                 </div>
-                <div style={{ display: 'flex', flexDirection: 'column', fontWeight: 400, width: 200, margin: '0px 30px 0px 10px' }}>
+                <div>
                   <Button
                     disabled={
                       tckn === '' ||
@@ -426,32 +415,10 @@ const HousePage = () => {
                 </div>
               </form>
             </div>
-            <div className='house-list-container'>
-              <div>
-                <p >Misafir Kabul Edebilenler</p>
-                <p>
-                  Aşağıdaki tabloda misafir kabul edebilecek olan kişileri görüntüleyebilirsiniz.
-                </p>
-                <DataTable
-                  columns={columns}
-                  data={data}
-                  pagination
-                  paginationRowsPerPageOptions={[10, 25, 50, 100]}
-                  responsive
-                  customStyles={customStyles}
-                  paginationServer
-                  onChangeRowsPerPage={handlePerRowsChange}
-                  paginationTotalRows={totalRow}
-                  onChangePage={handlePageChange}
-                  paginationComponentOptions={paginationOptions}
-                  noDataComponent='Gösterilecek veri bulunmamaktadır'
-                />
-              </div>
-            </div>
           </>
         );
       }}
     </HousePageContainer>
-);
-}
+  );
+};
 export default HousePage;
