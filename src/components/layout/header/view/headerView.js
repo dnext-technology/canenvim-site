@@ -4,6 +4,8 @@ import React from 'react';
 import { FaTwitter, FaInstagram } from 'react-icons/fa';
 import { useNavigate, Link } from 'react-router-dom';
 import HeaderContainer from '../container/headerContainer';
+// eslint-disable-next-line import/no-useless-path-segments
+import { Button } from '../../../../components';
 
 import '../style/headerStyles.scss';
 
@@ -17,35 +19,51 @@ const Header = () => {
       {({ logo, menuIcon }) => (
         <>
           <header className="header">
-            <img
-              alt="logo"
-              className="logo"
-              src={logo}
-              onClick={() => navigate('/')}
-            />
-            <div className="header-nav">
-              <span onClick={() => navigate('house/table')}>Konaklamaya İhtiyacım Var</span>
-              <span onClick={() => navigate('house')}>Konaklamaya Uygun Yerim Var</span>
-              <span onClick={() => navigate('about')}>Hakkımızda</span>
-              <div className='social-logos'>
-                <Link to="https://twitter.com/canevim_tr" target="_blank">
-                  <FaTwitter />
-                </Link>
-                <Link
-                  to="https://www.instagram.com/canevim_tr/"
-                  target="_blank"
-                >
-                  <FaInstagram />
-                </Link>
+            <div className="overlay"> </div>
+            <div className="headerOuter">
+              <img
+                alt="logo"
+                className="logo"
+                src={logo}
+                onClick={() => navigate('/')}
+              />
+              <div className="header-nav">
+                <span onClick={() => navigate('house/table')}>Konaklamaya İhtiyacım Var</span>
+                <span onClick={() => navigate('house')}>Konaklamaya Uygun Yerim Var</span>
+                <span onClick={() => navigate('about')}>Hakkımızda</span>
+                <div className='social-logos'>
+                  <Link to="https://twitter.com/zorgundostuyrdm" target="_blank">
+                    <FaTwitter />
+                  </Link>
+                  <Link
+                    to="https://www.instagram.com/zorgundostuyardimlasmaagi/"
+                    target="_blank"
+                  >
+                    <FaInstagram />
+                  </Link>
+                </div>
               </div>
+              <img
+                alt="menu-icon"
+                className="menu-icon"
+                src={menuIcon}
+                onClick={() => setIsVisibleMobileMenu(!isVisibleMobileMenu)}
+              />
             </div>
-
-            <img
-              alt="menu-icon"
-              className="menu-icon"
-              src={menuIcon}
-              onClick={() => setIsVisibleMobileMenu(!isVisibleMobileMenu)}
-            />
+            <div className="info-card">
+              <h1>Birbirimizin Yanındayız</h1>
+              <p>Deprem felaketinden etkilenen vatandaşlarımıza yardım edebiliriz.</p>
+              <Button
+                onClick={() => navigate('guest')}
+                text="Konaklamaya İhtiyacım Var"
+                className="button-con default"
+              />
+              <Button
+                onClick={() => navigate('guest')}
+                text="Konaklamaya Uygun Yerim Var"
+                className="button-con default"
+              />
+            </div>
           </header>
           {isVisibleMobileMenu && (
             <div className="header-mobile">

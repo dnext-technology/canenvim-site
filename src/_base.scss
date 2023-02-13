@@ -1,4 +1,4 @@
-$font-stack: 'Inter', sans-serif;
+$font-stack: 'Nunito Sans', sans-serif;
 $font-style: normal;
 $font-style-normal: normal;
 $font-weight-700: 700;
@@ -26,6 +26,7 @@ $footer-copywrite-color: #E6E6E6;
 
 $header-general-width: 100%;
 $align-center: center;
+
 
 @mixin flex($flex: flex, $align-items: flex-start, $justify-content: flex-start, $flex-direction: row) {
     display: $flex;
@@ -70,4 +71,32 @@ $align-center: center;
    background-color: #323232;
    color: #fff;
    @include flex(flex, center, center);
+}
+
+/* Breakpoints */
+
+@mixin xxl {
+  @media screen and (max-width: 1459.99px) {
+    @content;
+  }
+}
+@mixin xl {
+  @media screen and (max-width: 1199.98px) {
+    @content;
+  }
+}
+@mixin lg {
+  @media screen and (max-width: 991.98px) {
+    @content;
+  }
+}
+@mixin md {
+  @media screen and (max-width: 767.98px) {
+    @content;
+  }
+}
+@mixin sm {
+  @media screen and (max-width: 575.98px) {
+    @content;
+  }
 }

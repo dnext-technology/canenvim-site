@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import HomePageContainer from "../container/homePageContainer";
 import { Button } from "../../../components";
+import { FaHandsHelping, FaInstagram } from 'react-icons/fa';
 import Hand from "../../../assets/images/hand.png";
 import Deprem from "../../../assets/images/deprem.png";
 import Heart from "../../../assets/images/heart.png";
@@ -47,7 +48,61 @@ const HomePage = () => {
         }, []);
         return (
           <>
-            <div className="home-container">
+            <div className="home-help-section">
+              <div className="base-container">
+                <div className="left-col">
+                  <div className="content">
+                    <h2>
+                      Deprem bölgelerinde farklı şekillerde destek olabilirsiniz.
+                    </h2>
+                    <p>
+                      Deprem bölgelerinde yaşanan zarardan dolayı. Depremzedelerimizin ihtiyacı olan Gıda ve Konut ihtiyaçları için bağış yapabilirsiniz. Deprem bölgelerinde yaşanan zarardan dolayı. 
+                    </p>
+                    <Button
+                      onClick={() => navigate('donate')}
+                      text="Bağış Yap"
+                      className="button-con secondary"
+                    />
+                  </div>
+                  <img alt="logo" className="logo-hand" src={Hand} />          
+                </div>
+                <div className="right-col">
+                  <div className="content">
+                    <h2>
+                      Konaklama İhtiyacı Olan
+                      <span className="countOuter">
+                      <span className="countTitle">24,392 </span><span className="countText">Kişi var</span>
+                      </span>
+                    </h2>
+                    <p>Deprem bölgelerinde toplam <b>24,392</b> vatandaşımızın konaklama ihtiyacı bulunmaktadır.</p>
+                  </div>
+                  <Button
+                      onClick={() => navigate('donate')}
+                      text="Konaklamaya Uygun Yerim Var"
+                      className="button-con third"
+                    />
+                  <img alt="logo" className="logo-hand" src={Hand} />
+                </div>
+              </div>
+            </div>
+            <div className="home-categories-section">
+              <div className="base-container">
+                <div className="col-3">
+                  <div className="card">
+                    <span className="cardIcon">
+                      Icon
+                    </span>
+                    <h3 className="cardTitle">
+                      Yardım & Destek
+                    </h3>
+                    <p>
+                      Lorem ipsum dolor sit amet mid explanation. lorem ipsum
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {/*<div className="home-container">
               <div className="text1">Birbirimizin Yanındayız</div>
               <div className="text2">
                 Deprem felaketinden etkilenen vatandaşlarımıza yardım
@@ -186,7 +241,7 @@ const HomePage = () => {
               <div>
                 <img alt="logo" className="logo-hand" src={Hand} />
               </div>
-            </div>
+            </div>*/}
             {/* <div className='stats'>
            <div className='stats-cont'>
                 <div className='stats-cont-detail'>

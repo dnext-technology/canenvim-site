@@ -6,6 +6,99 @@
   color: $primary-color;
   border-bottom: 1px solid $header-border-color;
   font-style: $font-style-normal;
+  background-image: url("https://cdn.discordapp.com/attachments/1074356432843047023/1074769961999945938/DALLE_2023-02-13_22.11.44_-_an_impressionist_oil_painting_of_a_candle_in_a_dark_room_with_paintings_of_houses_in_the_background.png");
+  background-position:41% 51%;
+  background-size:cover;
+  min-height:600px;
+  background-attachment: fixed;
+  align-items:flex-start!important;
+  position:relative;
+  flex-direction:column!important;
+  .overlay{
+    z-index: 4;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #00000021;
+    left: 0;
+    top: 0;
+  }
+  .info-card{
+    margin-bottom:100px;
+    width:100%;
+    text-align:right;
+    color:#ffffff;
+    z-index:5;
+    h1{
+      font-size:32px;
+      margin-bottom:20px;
+    }
+    p{
+      margin-bottom:30px;
+    }
+  }
+  .headerOuter{
+    z-index:5;
+    display:flex;
+    align-items: center;
+    width:100%;
+    @include md{
+      justify-content:space-between;
+    }
+    svg{
+      fill:#ffffff!important;
+    }
+    .logo{
+      height:100px!important;
+      @include xl{
+        width:110px;
+      }
+      @include lg{
+        width:70px;
+        font-size:12px;
+      }
+      @include md{
+        width:128px;
+      }
+    }
+    .header-nav{
+      span{
+        font-size:16px;
+        color:#ffffff;
+        font-weight:700;
+        position: relative;
+        padding:8px 10px;
+        @include xxl{
+          font-size:14px;
+        }
+        @include xl{
+          padding:4px 5px;
+        }
+        @include lg{
+          font-size:12px;
+        }
+        &:before{
+          content:'';
+          position:absolute;
+          left:0px;
+          bottom:-2px;
+          background-color:#fc0000;
+          width:30px;
+          height:2px;
+          transition:.5s ease;
+        }
+        &:hover{
+          transition:.5s ease;
+          background:#00000073;
+          &:before{
+            transition:.5s ease;
+            width:100%;
+          }
+        }
+      }
+    }
+  }
+  
   @include flex(flex, center, space-between);
 
   .header-nav {
@@ -15,6 +108,9 @@
     gap: 5%;
     font-size: 18px;
     font-weight: 500;
+    @include lg{
+      gap:2%;
+    }
   }
 
   .logo {
@@ -78,11 +174,18 @@
   display: flex;
   justify-content: space-between;
   gap: 12px;
-
+  @include lg{
+    position:absolute;
+    top:100px;
+  }
   svg {
     fill: #1a2328;
     width: 32px;
     height: 32px;
     cursor: pointer;
+    @include lg{
+      width:24px;
+      height:24px;
+    }
   }
 }

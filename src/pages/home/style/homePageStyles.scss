@@ -1,5 +1,137 @@
 @import "../../../_base"; 
 
+.home-help-section{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  height:100%;
+  position:relative;
+  top:-45px;
+  z-index:9;
+  @include md{
+    top:0px;
+  }
+  .base-container{
+    max-width:1200px;
+    display:flex;
+    align-items:center;
+    @include xxl{
+      max-width:993px;
+    }
+    @include xl{
+      max-width: 768px;
+    }
+    @include md{
+      flex-direction: column;
+    }
+    .left-col{
+      width:60%;
+      height:450px;
+      background:#F5F5F5;
+      padding:100px 90px 40px 90px;
+      position:relative;
+      overflow:hidden;
+      @include md{
+        width:100%;
+        padding:30px 30px!important;
+        height:auto;
+        .logo-hand{
+          display:none;
+        }
+      }
+      @include xl{
+        padding:60px 20px 20px 60px;
+      }
+      .content{
+        position:relative;
+        z-index:9;
+        h2{
+          font-size: 40px;
+          font-weight: 900;
+          margin-bottom: 20px;
+          line-height: 1.1;
+          color:#fc0000;
+          @include md{
+            font-size:28px;
+          }
+        }
+        p{
+          color:#999999;
+          font-weight:600;
+          margin-bottom:20px;
+        }
+      }
+      
+      .logo-hand{
+        position: absolute;
+        top: -40px;
+        left: 0px;
+        max-width: 50%;
+        z-index: 1;
+        transform: rotate(180deg);
+      }
+    }
+    .right-col{
+      width:40%;
+      height:370px;
+      background:#1e1e1e;
+      color:#ffffff;
+      padding:40px 20px 20px 20px;
+      position:relative;
+      overflow:hidden;
+      @include md{
+        width:100%;
+        height:auto;
+        padding:30px 30px!important;
+        .logo-hand{
+          display:none;
+        }
+      }
+      @include xl{
+        padding:20px;
+      }
+      h2{
+        font-size: 28px;
+        font-weight: 900;
+        margin-bottom: 30px;
+        line-height: 1.4;
+        color:#ffffff;
+        @include lg{
+          font-size:24px;
+          .countTitle{
+            font-size:24px!important;
+          }
+          .countText{
+            font-size:24px!important;
+          }
+        }
+        .countOuter{
+          display:block;
+        }
+        .countTitle{
+          color:#fc0000;
+          font-size:28px;
+        }
+        .countText{
+          font-size:28px;
+        }
+      }
+      p{
+        color:#999999;
+        font-weight:600;
+        margin-bottom:20px;
+      }
+      .logo-hand{
+        position: absolute;
+        bottom: -30px;
+        right: 0px;
+        max-width: 70%;
+        z-index: 1;
+      }
+    }
+  }
+}
+
 .home-container {
     @include flex(flex, center, center, column);
     padding-top: 4rem;

@@ -10,7 +10,9 @@ const Button = ({ text, styleProps, ...props }) => {
       // eslint-disable-next-line react/jsx-props-no-spreading
       {...props}
     >
-      {text}
+      <span>
+        {text}
+      </span>
     </button>
   )
 };

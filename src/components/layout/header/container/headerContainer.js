@@ -1,6 +1,6 @@
 import { useState, lazy } from 'react';
 import PropTypes from 'prop-types';
-import Logo from '../../../../assets/images/canevim-logo-dark-landscape.svg';
+import Logo from '../../../../assets/images/canevim-logo-light-landscape.svg';
 import MenuIcon from '../../../../assets/images/menu-icon.svg';
 
 const HeaderContainer = ({ children }) => {

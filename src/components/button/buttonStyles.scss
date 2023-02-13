@@ -2,8 +2,85 @@
 
 .button-con {
    cursor: pointer;
- 
+
+   &.default{
+    position:relative;
+    transition:.5s ease;
+    padding:8px 20px;
+    border-radius:4px;
+    overflow:hidden;
+    margin:0px 10px;
+    border: none;
+    background:white;
+    color:#000000;
+    @include lg{
+      margin:0px 2px;
+    }
+    @include sm{
+      width:100%;
+      margin:10px 0px;
+    }
+    span{
+      z-index:5;
+      position:relative;
+      font-size:16px;
+      font-weight:600;
+      transition:.5s ease;
+    }
+    &:before{
+      content: '';
+      background-color: #fc0000;
+      width: 10px;
+      height: 100%;
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      transition:.5s ease;
+    }
+    &:hover{
+      span{
+        color:#ffffff;
+        transition:.5s ease;
+        font-size:16px;
+      }
+      &:before{
+        width:100%;
+        transition:.5s ease;
+      }
+    }
+    &.green{
+      &:before{
+        background-color:green;
+      }
+    }
+   }
+   &.secondary{
+    background-color:#ffb400;
+    padding:8px 25px;
+    border-radius:3px;
+    span{
+      font-size:18px;
+      color:#ffffff;
+      font-weight:600;
+      line-height:1.5;
+    }
+   }
+   &.third{
+    background-color:#000000;
+    padding:8px 25px;
+    border-radius:3px;
+    span{
+      font-size:18px;
+      color:#ffffff;
+      font-weight:600;
+      line-height:1.5;
+      @include xl{
+        font-size:15px;
+      }
+    }
+   }
 }
+
 
 .button-con:disabled {
   background-color: #848181 !important;
