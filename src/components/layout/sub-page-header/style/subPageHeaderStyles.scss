@@ -1,0 +1,88 @@
+@import "../../../../_base";
+
+.header {
+  padding: $padding;
+  background: $header-bg-color;
+  color: $primary-color;
+  border-bottom: 1px solid $header-border-color;
+  font-style: $font-style-normal;
+  @include flex(flex, center, space-between);
+
+  .header-nav {
+    flex: 1 1 100%;
+    @include flex(flex, center, flex-end);
+    cursor: pointer;
+    gap: 5%;
+    font-size: 18px;
+    font-weight: 500;
+  }
+
+  .logo {
+    @include header-logo;
+    cursor: pointer;
+  }
+
+  .login-button {
+    @include primary-button;
+  }
+
+  .menu-icon {
+    display: none;
+  }
+}
+
+.header-mobile {
+  display: none !important;
+  padding: 12px 0;
+  background: $header-bg-color;
+  color: $primary-color;
+  border-bottom: 1px solid $header-border-color;
+  font-style: $font-style-normal;
+  @include flex(flex, center, flex-start, column);
+  gap: 12px;
+  text-align: center;
+
+  &>* {
+    padding: pad(12px);
+  }
+
+  &>*:hover {
+    color: #fff;
+    background-color: $primary-color;
+  }
+  
+
+  .login-button {
+    @include primary-button;
+  }
+}
+
+@media (max-width: $breakpoint-tablet) {
+  .header {
+    padding: pad(20px);
+
+    .header-nav {
+      display: none;
+    }
+    .menu-icon {
+      display: block;
+    }
+  }
+
+  .header-mobile {
+    display: flex !important;
+  }
+}
+
+.social-logos{
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+
+  svg {
+    fill: #1a2328;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+  }
+}
