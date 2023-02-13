@@ -6,7 +6,7 @@ const Input = ({ type = 'text', text, styleProps, error, ...props }) => {
   let errorStyle = error && { borderColor: '#D42E13' };
   return (
     <>
-      {text && <label className='block text-sm font-medium text-gray-700'>{text}</label>}
+      {text && <span className='block text-sm font-medium text-gray-700'>{text}</span>}
       <input
         type={type}
         {...props}

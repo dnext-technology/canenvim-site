@@ -377,7 +377,7 @@ const HousePage = () => {
                 </div>
               </div>
               <p className='ilan'>İlan Bilgi Formu</p>
-              <form style={{ width: '80%' }}>
+              <form>
                 {/* TCKN */}
                 <div>
                   <Input
@@ -388,7 +388,7 @@ const HousePage = () => {
                     value={tckn}
                     onChange={(e) => checkTCKN(e.target.value)}
                   />
-                  {tcknValidasyonError.error && <p style={{ color: '#525252', marginLeft: 5 }}>{tcknValidasyonError.message}</p>}
+                  {tcknValidasyonError.error && <p>{tcknValidasyonError.message}</p>}
                 </div>
                 {/* Ad soyad */}
                 <div>
@@ -400,7 +400,7 @@ const HousePage = () => {
                       value={name}
                       onChange={(e) => changeName(e.target.value)}
                     />
-                    {nameValidasyonError.error && <p style={{ color: '#525252', marginLeft: 5 }}>{nameValidasyonError.message}</p>}
+                    {nameValidasyonError.error && <p>{nameValidasyonError.message}</p>}
                   </div>
                   <div className='name'>
                     <Input
@@ -410,7 +410,7 @@ const HousePage = () => {
                       value={surname}
                       onChange={(e) => changeSurName(e.target.value)}
                     />
-                    {surnameValidasyonError.error && <p style={{ color: '#525252', marginLeft: 5 }}>{surnameValidasyonError.message}</p>}
+                    {surnameValidasyonError.error && <p>{surnameValidasyonError.message}</p>}
                   </div>
                 </div>
                 {/* Email Telefon */}
@@ -423,7 +423,7 @@ const HousePage = () => {
                       value={email}
                       onChange={(e) => checkEmail(e.target.value)}
                     />
-                    {emailValidasyonError.error && <p style={{ color: '#525252', marginLeft: 5 }}>{emailValidasyonError.message}</p>}
+                    {emailValidasyonError.error && <p>{emailValidasyonError.message}</p>}
                   </div>
                   <div className='name'>
                     <Input
@@ -433,7 +433,7 @@ const HousePage = () => {
                       value={phone}
                       onChange={(e) => checkPhone(e.target.value)}
                     />
-                    {phoneValidasyonError.error && <p style={{ color: '#525252', marginLeft: 5 }}>{phoneValidasyonError.message}</p>}
+                    {phoneValidasyonError.error && <p>{phoneValidasyonError.message}</p>}
                   </div>
                 </div>
                 <div className='guest-list-house'>
@@ -499,7 +499,7 @@ const HousePage = () => {
                 <div className='address-style'>
                   <TextArea text='Özel Not ( Zorunlu Değil )' placeholder='Ör. Engeli birey var...' value={note} onChange={(e) => setNote(e.target.value)} />
                 </div>
-                <div style={{ display: 'flex', fontWeight: 400, width: '100%', margin: 10 }}>
+                <div>
                   {/* <TextArea placeholder="Örnek: Engelli birey var" value={neighborhood} onChange={(e) => setNeighborhood(e.target.value)}/> */}
                   <input
                     value={checkKVKK}
@@ -508,11 +508,11 @@ const HousePage = () => {
                     id='vehicle1'
                     name='vehicle1'
                   ></input>
-                  <a download='KVKK.pdf' href='KVKK.pdf' style={{ marginLeft: 10, color: '#323232' }}>
-                    KVKK Metnini okudum ve kabul ediyorum.<span style={{ color: '#D42E13E5' }}>*</span>
+                  <a download='KVKK.pdf' href='KVKK.pdf'>
+                    KVKK Metnini okudum ve kabul ediyorum.<span>*</span>
                   </a>
                 </div>
-                <div style={{ display: 'flex', flexDirection: 'column', fontWeight: 400, width: 200, margin: '0px 30px 0px 10px' }}>
+                <div>
                   <Button
                     disabled={
                       tckn === '' ||
@@ -548,9 +548,9 @@ const HousePage = () => {
               </form>
             </div>
             <div className='house-list-container'>
-              <div style={{ marginTop: 30 }}>
-                <p style={{ fontSize: 40, color: '#323232' }}>Misafir Kabul Edebilenler</p>
-                <p style={{ fontSize: 18, color: '#323232' }}>
+              <div>
+                <p >Misafir Kabul Edebilenler</p>
+                <p>
                   Aşağıdaki tabloda misafir kabul edebilecek olan kişileri görüntüleyebilirsiniz.
                 </p>
                 <DataTable
