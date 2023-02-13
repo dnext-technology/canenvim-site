@@ -1,19 +1,16 @@
 /* eslint-disable */
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from "react-router-dom";
 import HousePageContainer from '../container/housePageContainer';
 import { Button, Input, TextArea, Select } from '../../../components';
 import axios from 'axios';
-import DataTable from 'react-data-table-component';
 import Banner from '../../../assets/images/bannerzor.png';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../style/housePageStyles.scss'
 
 const HousePage = () => {
-    const [data, setData] = useState([])
-	const [perPage, setPerPage] = useState(10);
-    const [totalRow, setTotalRow] = useState(0);
-    const [page, setPage] = useState(0);
+    const navigate = useNavigate();
     const [note, setNote] = useState("");
     const [tckn, setTckn] = useState("");
     const [name, setName] = useState("");
@@ -34,7 +31,6 @@ const HousePage = () => {
     const [selectedNeighborhoodAddress, setSelectedNeighborhoodAddress] = useState([]);
     const [accommodationType, setAccommodationType] = useState("Ayrı Oda");
     const [accommodationPeriod, setAccommodationPeriod] = useState("1 Haftaya Kadar");
-    const [changed, setChanged] = useState(false);
     const [tcknValidasyonError ,setTCKNValidasyonError] = useState({ error: false, message: ""})
     const [emailValidasyonError ,setEmailValidasyonError] = useState({ error: false, message: ""})
     const [phoneValidasyonError ,setPhoneValidasyonError] = useState({ error: false, message: ""})
@@ -42,67 +38,8 @@ const HousePage = () => {
     const [surnameValidasyonError ,setSurnameValidasyonError] = useState({ error: false, message: ""})
     const [selectedTown, setSelectedTown] = useState("");
 
-    const columns = [
-        {
-            name: 'Tarih',
-            selector: row => row.createdDate,
-        },
-        {
-            name: 'Ad Soyad',
-            selector: row => row.name,
-        },
-        {
-            name: 'Konaklama Süresi',
-            selector: row => row.time,
-        },
-        {
-            name: 'Kişi Sayısı',
-            selector: row => row.person,
-        },
-        {
-            name: 'Durum',
-            selector: row => row.status,
-        },
-        {
-            name: 'İlçe',
-            selector: row => row.district,
-        },
-        {
-            name: 'İl',
-            selector: row => row.city,
-        },
-    ];
-    useEffect(() => {
-        async function fetchData() {
-            await axios({
-              method: 'GET', url: `https://zorgundostu.com/api/mp-booking/v1/bookings/offerers?page=${page}&size=${perPage}`
-            })
-              .then(async response => {
-               setTotalRow(response.data?.totalElements)
-               setData(response.data?.content.map((is,index) => {
-                return (
-                    {
-                        id: is.id,
-                        createdDate: is.createdDate,
-                        name: `${is.firstName} ${is.lastName.substring(0, 1)}.`,
-                        time: is.accommodationPeriod,
-                        person: is.guestCapacity,
-                        address: is.addressDetail,
-                        city: is.city,
-                        district: is.district,
-                        status: is.status === "active" ? "Aktif" : is.status === "completed" ? "Tamamlandı" : "Devam Ediyor"
-                    }
-                )
-            }))
-               
-              })
-              .catch(error => {
-                return error
-              });
-            
-          }
-        fetchData();
-      }, [page, changed]);
+    
+  
 
       useEffect(() => {
         async function fetchData() {
@@ -179,139 +116,81 @@ const HousePage = () => {
         fetchData();
       }, [selectedTown]);
 
-    const customStyles = {
-        rows: {
-            style: {
-                borderBottom: "1px solid #D0D0D0",
-                borderLeft: "1px solid #D0D0D0",
-                borderRight: "1px solid #D0D0D0",
-                minHeight: '72px', // override the row height
-            },
-        },
-        headRow: {
-            style: {
-                backgroundColor: "#F5F5F5",
-                minHeight: '52px',
-                borderRadius: "16px 16px 0px 0px",
-                border: "1px solid #D0D0D0",
-                fontWeight: 900
-            },
-        },
-        headCells: {
-            style: {
-                
-                paddingLeft: '5px', // override the cell padding for head cells
-                paddingRight: '8px',
-            },
-        },
-        cells: {
-            style: {
-                paddingLeft: '8px', // override the cell padding for data cells
-                paddingRight: '8px',
-            },
-        },
-    };
-
-    const handlePageChange = page => {
-		setPage(page - 1 );
-	};
-
-	const handlePerRowsChange = async (newPerPage, page) => {
-		const response = await axios.get(`https://zorgundostu.com/api/mp-booking/v1/bookings/offerers?page=${page -1}&size=${newPerPage}`);
-		setData(response.data?.content.map((is,index) => {
-            return (
-                {
-                    id: is.id,
-                    createdDate: is.createdDate,
-                    name: `${is.firstName} ${is.lastName.substring(0, 1)}.`,
-                    time: is.accommodationPeriod,
-                    person: is.guestCapacity,
-                    address: is.addressDetail,
-                    city: is.city,
-                    district: is.district,
-                    status: is.status === "active" ? "Aktif" : is.status === "completed" ? "Tamamlandı" : "Devam Ediyor"
-
-                }
-            )
-        }))
-		setPerPage(newPerPage);
-	};
-    const paginationOptions = {
-        rowsPerPageText: '',
-        rangeSeparatorText: '',
-        selectAllRowsItem: false,
-        selectAllRowsItemText: null,
-    };
 
     const handleSubmit = async () => {
-        const params = {
-            identityNumber: tckn,
-            firstName: name,
-            lastName: surname,
-            email: email,
-            phone: phone,
-            city: selectedCity,
-            district: selectedDistrict,
-            town: selectedTown,
-            neighborhood: selectedNeighborhoodAddress,
-            addressDetail: addressDetail,
-            guestCapacity: guest,
-            accommodationType,
-            accommodationPeriod
-        };
-       await axios({
-        method: 'POST', url: `https://zorgundostu.com/api/mp-booking/v1/bookings/offerers`,  data: {
-            identityNumber: tckn,
-            firstName: name,
-            lastName: surname,
-            email: email,
-            phone: phone,
-            city: selectedCity,
-            district: selectedDistrict,
-            town: selectedTown,
-            neighborhood: selectedNeighborhoodAddress,
-            addressDetail: addressDetail,
-            guestCapacity: guest,
-            accommodationType: accommodationType,
-            accommodationPeriod: accommodationPeriod,
-            note: note
-        }
-      })
-        .then(async response => {
-          setChanged(!changed)
-          notify();
-          setName("")
-          setTckn("")
-          setSurname("")
-          setEmail("") 
-          setPhone("") 
-          setGuest("") 
-          setNote("")
-          setCheckKVKK(false)
-          setNeighborhood("") 
-          setAddressDetail("") 
-          setAccommodationType("Ayrı Oda") 
-          setAccommodationPeriod("1 Haftaya Kadar") 
-          setTCKNValidasyonError({ error: false, message: ""}) 
-          setEmailValidasyonError({ error: false, message: ""}) 
-          setPhoneValidasyonError({ error: false, message: ""})
-        })
-        .catch(error => {
-          return error
-        });
+    //     const params = {
+    //         identityNumber: tckn,
+    //         firstName: name,
+    //         lastName: surname,
+    //         email: email,
+    //         phone: phone,
+    //         city: selectedCity,
+    //         district: selectedDistrict,
+    //         town: selectedTown,
+    //         neighborhood: selectedNeighborhoodAddress,
+    //         addressDetail: addressDetail,
+    //         guestCapacity: guest,
+    //         accommodationType,
+    //         accommodationPeriod
+    //     };
+    //    await axios({
+    //     method: 'POST', url: `https://zorgundostu.com/api/mp-booking/v1/bookings/offerers`,  data: {
+    //         identityNumber: tckn,
+    //         firstName: name,
+    //         lastName: surname,
+    //         email: email,
+    //         phone: phone,
+    //         city: selectedCity,
+    //         district: selectedDistrict,
+    //         town: selectedTown,
+    //         neighborhood: selectedNeighborhoodAddress,
+    //         addressDetail: addressDetail,
+    //         guestCapacity: guest,
+    //         accommodationType: accommodationType,
+    //         accommodationPeriod: accommodationPeriod,
+    //         note: note
+    //     }
+    //   })
+    //     .then(async response => {
+    //       notify();
+    //       setName("")
+    //       setTckn("")
+    //       setSurname("")
+    //       setEmail("") 
+    //       setPhone("") 
+    //       setGuest("") 
+    //       setNote("")
+    //       setCheckKVKK(false)
+    //       setNeighborhood("") 
+    //       setAddressDetail("") 
+    //       setAccommodationType("Ayrı Oda") 
+    //       setAccommodationPeriod("1 Haftaya Kadar") 
+    //       setTCKNValidasyonError({ error: false, message: ""}) 
+    //       setEmailValidasyonError({ error: false, message: ""}) 
+    //       setPhoneValidasyonError({ error: false, message: ""})
+    //     })
+    //     .catch(error => {
+    //       return error
+    //     });
+        notify();
     };
-    const notify = () => toast("Bilgileriniz alınmıştır. İmkanlarınıza uygun ihtiyaç sahipleri için sizinle iletişime geçilecektir.", {
-        position: "top-center",
-        className: "black-background",
-        autoClose: 10000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        type: "success"
-        });
+    const notify = () => {
+        toast("Bilgileriniz alınmıştır. İmkanlarınıza uygun ihtiyaç sahipleri için sizinle iletişime geçilecektir.", {
+            position: "top-center",
+            className: "black-background",
+            autoClose: 10000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            type: "success"
+            });
+            setTimeout(() => {
+                navigate('/house/table');
+            }, 3000);
+    }
 
     const checkTCKN = (e) => {
         setTckn(e)
@@ -493,26 +372,7 @@ const HousePage = () => {
                 </div>
             </form>
         </div>
-        <div className='house-list-container'>
-            <div style={{ marginTop: 30}}>
-                <p style={{ fontSize: 40, color: "#323232"}}>Misafir Kabul Edebilenler</p>
-                <p style={{ fontSize: 18, color: "#323232"}}>Aşağıdaki tabloda misafir kabul edebilecek olan kişileri görüntüleyebilirsiniz.</p>
-                <DataTable
-                    columns={columns}
-                    data={data}
-                    pagination
-                    paginationRowsPerPageOptions={[10, 25, 50, 100]}
-                    responsive
-                    customStyles={customStyles}
-                    paginationServer
-                    onChangeRowsPerPage={handlePerRowsChange}
-                    paginationTotalRows={totalRow}
-                    onChangePage={handlePageChange}
-                    paginationComponentOptions={paginationOptions}
-                    noDataComponent="Gösterilecek veri bulunmamaktadır" 
-                />
-            </div>
-        </div>
+       
         </>
       )}}
     </HousePageContainer>
