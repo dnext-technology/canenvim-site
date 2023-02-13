@@ -1,6 +1,6 @@
 import React from 'react';
 import { PATHS } from '../../constants/routePaths';
-import { HomePage, NotFoundPage, AboutPage, Guest, HousePage, HouseTablePage } from '../../pages';
+import { HomePage, NotFoundPage, AboutPage, HousePage, GuestPage, GuestListPage, HouseTablePage } from '../../pages';
 import PrivacyPage from '../../pages/privacy/viev/privacyPageView';
 
 const routes = {
@@ -26,7 +26,11 @@ const routes = {
   },
   guestPage: {
     path: PATHS.GUEST_PAGE,
-    element: <Guest />,
+    element: <GuestPage />,
+  },
+  guestListPage: {
+    path: PATHS.GUEST_LIST_PAGE,
+    element: <GuestListPage />,
   },
   notFound: {
     path: '*',
