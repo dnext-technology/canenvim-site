@@ -1,7 +1,7 @@
 /* eslint-disable */
 import React, { useEffect, useState } from 'react';
 import GuestPageContainer from '../container/guestPageContainer';
-import { Button, Input, Select, TextArea } from '../../../components';
+import { Button, Datepicker, Input, Select, TextArea } from '../../../components';
 import axios from 'axios';
 import Banner from '../../../assets/images/banner2.png';
 import { toast, ToastContainer } from 'react-toastify';
@@ -10,6 +10,7 @@ import '../style/guestPageStyles.scss';
 import DataTable from 'react-data-table-component';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPencil, faRemove } from '@fortawesome/free-solid-svg-icons'
+import moment from "moment";
 
 const GuestPage = () => {
   const {REACT_APP_BASE_URL, REACT_APP_BOOKING_API, REACT_APP_LOCATION_API} = process.env;
@@ -17,6 +18,7 @@ const GuestPage = () => {
   const [tckn, setTckn] = useState("");
   const [name, setName] = useState("");
   const [checkKVKK, setCheckKVKK] = useState(false);
+  const [transportationRequired, setTransportationRequired] = useState(false);
   const [surname, setSurname] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -47,6 +49,7 @@ const GuestPage = () => {
   const [surnameValidasyonError, setSurnameValidasyonError] = useState({error: false, message: ""})
   const [selectedTown, setSelectedTown] = useState("");
   const [isEdited, setEdited] = useState(false);
+  const [birthDate, setBirthDate] = useState('');
   const columns = [
     {
       name: "Ad",
@@ -64,12 +67,12 @@ const GuestPage = () => {
             <button
               className="btn btn-outline btn-xs"
               onClick={(e) => handleEditButtonClick(e, row)}>
-              <FontAwesomeIcon icon={faPencil}  style={{color: "#3f51b5"}}/>
+              <FontAwesomeIcon icon={faPencil} style={{color: "#3f51b5"}}/>
             </button>
             <button
               className="btn btn-outline btn-xs"
               onClick={(e) => handleDeleteButtonClick(e, row)}>
-              <FontAwesomeIcon icon={faRemove}  style={{color: "#f44336"}}/>
+              <FontAwesomeIcon icon={faRemove} style={{color: "#f44336"}}/>
             </button>
           </div>
         ]
@@ -217,49 +220,25 @@ const GuestPage = () => {
       city: selectedCity,
       district: selectedDistrict,
       town: selectedTown,
-      neighborhood: selectedNeighborhoodAddress,
       addressDetail: addressDetail,
-      guestCapacity: guest,
-      accommodationType: accommodationType,
-      accommodationPeriod: accommodationPeriod
+      adultNumber: guest,
+      childNumber: childNumber,
+      accommodationPeriod: accommodationPeriod,
+      transporttationRequired: transportationRequired,
+      birthDate: moment(birthDate).format('DD.MM.YYYY'),
+      note: note,
+      guestList: [
+        ...guestList
+      ]
     };
     await axios({
-      method: 'POST', url: `${REACT_APP_BASE_URL}${REACT_APP_BOOKING_API}/bookings/requesters`, data: {
-        identityNumber: tckn,
-        firstName: name,
-        lastName: surname,
-        email: email,
-        phone: phone,
-        city: selectedCity,
-        district: selectedDistrict,
-        town: selectedTown,
-        neighborhood: selectedNeighborhoodAddress,
-        addressDetail: addressDetail,
-        adultNumber: guest,
-        childNumber: childNumber,
-        accommodationPeriod: accommodationPeriod,
-        note: note
-      }
+      method: 'POST', url: `${REACT_APP_BASE_URL}${REACT_APP_BOOKING_API}/bookings/requesters`, data: {...params}
     })
       .then(async response => {
-        setChanged(!changed)
-        notify(messageContent, 'success')
-        setName("")
-        setSurname("")
-        setEmail("")
-        setTckn("")
-        setPhone("")
-        setGuest("")
-        setNeighborhood("")
-        setNote("")
-        setAddressDetail("")
-        setChildNumber("")
-        setCheckKVKK(false)
-        setAccommodationType("Ayrı Oda")
-        setAccommodationPeriod("1 Haftaya Kadar")
-        setTCKNValidasyonError({error: false, message: ""})
-        setEmailValidasyonError({error: false, message: ""})
-        setPhoneValidasyonError({error: false, message: ""})
+        notify(messageContent, 'success');
+        setTimeout(() => {
+          window.location.reload()
+        }, 3000);
       })
       .catch(error => {
         return error
@@ -385,7 +364,17 @@ const GuestPage = () => {
                   {tcknValidasyonError.error && tcknValidasyonError.stateName === 'tckn' &&
                     <p style={{color: "#525252", marginLeft: 5}}>{tcknValidasyonError.message}</p>}
                 </div>
-                <div className="offset-6"></div>
+                {/*Doğum tarihi*/}
+                <div className='d-flex flex-column col-md-6 mb-1'>
+                  <span>Doğum tarihi <span style={{color: "#D42E13"}}>*</span></span>
+                  <Datepicker
+                    selected={birthDate}
+                    onChange={(date) => setBirthDate(date)}
+                    placeholderText='Doğum tarihi'
+                    dateFormat="dd MMMM yyyy"
+                  />
+                </div>
+
                 {/* Ad soyad */}
                 {/*<div className='name-surname'>*/}
                 <div className='d-flex flex-column col-md-6 my-1'>
@@ -453,8 +442,18 @@ const GuestPage = () => {
                   <Select disabled={selectedCity === ""} onChange={(e) => setSelectedDistrict(e.target.value)}
                           data={district} styleProps={{maxWidth: '100%'}}/>
                 </div>
+                <div className='d-flex flex-column col-lg-2 col-md-6 my-1'>
+                  <div>
+                    <input checked={transportationRequired}
+                           onChange={(e) => setTransportationRequired(!transportationRequired)}
+                           type="checkbox">
+                    </input>
+                    <label style={{marginLeft: '8px'}}>Ulaşım ihtiyacı varmı</label>
+                  </div>
+                </div>
 
-                <h2 style={{padding: '10px 0px 10px 10px', fontSize: "x-large"}}>Konaklayacaklar Listesi</h2><br/>
+                <h1 style={{padding: '10px 0px 10px 10px', fontSize: "x-large"}}>Konaklayacaklar Listesi</h1>
+                
                 <div className='d-flex flex-column col-lg-3 col-md-6 my-1'>
                   <span>T.C. Kimlik No<span style={{color: "#D42E13"}}>*</span></span>
                   <Input error={tcknValidasyonError.error && tcknValidasyonError.stateName === 'guestTckNo'}
@@ -502,13 +501,15 @@ const GuestPage = () => {
                     }}
                   />
                 </div>
+                
+                {/*Konaklayacaklar Listesi*/}
                 <div className='d-flex flex-column col-lg-12 col-md-6 my-1'>
                   <DataTable
                     columns={columns}
                     data={guestList}
                     responsive
                     customStyles={customStyles}
-                    noDataComponent="Eklenmiş kişiler"
+                    noDataComponent="Girilen Yetişkin ve Çocuk sayısı kadar ekleme yapabilirsiniz !"
                   />
                 </div>
 
@@ -538,7 +539,7 @@ const GuestPage = () => {
                 </div>
                 <div style={{display: "flex", fontWeight: 400, width: "100%", margin: 10}}>
                   {/* <TextArea placeholder="Örnek: Engelli birey var" value={neighborhood} onChange={(e) => setNeighborhood(e.target.value)}/> */}
-                  <input value={checkKVKK} onChange={(e) => setCheckKVKK(e.target.checked ? true : false)}
+                  <input checked={checkKVKK} onChange={(e) => setCheckKVKK(!checkKVKK)}
                          type="checkbox" id="vehicle1" name="vehicle1"></input>
                   <a
                     download="KVKK.pdf"
@@ -555,7 +556,21 @@ const GuestPage = () => {
                   margin: "0px 30px 0px 10px"
                 }}>
                   <Button
-                    disabled={tckn === "" || name === "" || surname === "" || phone === "" || city === "" || district === "" || guest === "" || nameValidasyonError.error || surnameValidasyonError.error || tcknValidasyonError.error || emailValidasyonError.error || phoneValidasyonError.error || !checkKVKK}
+                    disabled={
+                      tckn === "" ||
+                      name === "" ||
+                      surname === "" ||
+                      phone === "" ||
+                      city === "" ||
+                      district === "" ||
+                      guest === "" ||
+                      nameValidasyonError.error ||
+                      surnameValidasyonError.error ||
+                      tcknValidasyonError.error ||
+                      emailValidasyonError.error ||
+                      phoneValidasyonError.error ||
+                      !checkKVKK ||
+                      birthDate === ""}
                     onClick={(e) => {
                       e.preventDefault()
                       handleSubmit()
