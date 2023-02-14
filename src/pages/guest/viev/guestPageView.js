@@ -6,8 +6,10 @@ import axios from 'axios';
 import Banner from '../../../assets/images/banner2.png';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import '../style/guestPageStyles.scss'
-import { json } from "react-router";
+import '../style/guestPageStyles.scss';
+import DataTable from 'react-data-table-component';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPencil, faRemove } from '@fortawesome/free-solid-svg-icons'
 
 const GuestPage = () => {
   const {REACT_APP_BASE_URL, REACT_APP_BOOKING_API, REACT_APP_LOCATION_API} = process.env;
@@ -34,7 +36,7 @@ const GuestPage = () => {
   const [setNeighborhoodAddress] = useState([]);
   const [selectedNeighborhoodAddress, setSelectedNeighborhoodAddress] = useState([]);
   const [accommodationType, setAccommodationType] = useState("Ayrı Oda");
-  const [accommodationPeriod, setAccommodationPeriod] = useState("1 Haftaya Kadar");
+  const [accommodationPeriod, setAccommodationPeriod] = useState("");
   const [changed, setChanged] = useState(false);
   const [tcknValidasyonError, setTCKNValidasyonError] = useState({error: false, message: "", stateName: ""})
   const [emailValidasyonError, setEmailValidasyonError] = useState({error: false, message: ""})
@@ -44,6 +46,85 @@ const GuestPage = () => {
   const [guestLastNameValidationError, setGuestLastNameValidationError] = useState({error: false, message: ""})
   const [surnameValidasyonError, setSurnameValidasyonError] = useState({error: false, message: ""})
   const [selectedTown, setSelectedTown] = useState("");
+  const [isEdited, setEdited] = useState(false);
+  const columns = [
+    {
+      name: "Ad",
+      selector: (row) => row.firstName,
+    },
+    {
+      name: "Soyad",
+      selector: (row) => row.lastName,
+    },
+    {
+      name: "İşlemler",
+      button: true,
+      cell: (row) => ([
+          <div key="{row.identityNumber}">
+            <button
+              className="btn btn-outline btn-xs"
+              onClick={(e) => handleEditButtonClick(e, row)}>
+              <FontAwesomeIcon icon={faPencil}  style={{color: "#3f51b5"}}/>
+            </button>
+            <button
+              className="btn btn-outline btn-xs"
+              onClick={(e) => handleDeleteButtonClick(e, row)}>
+              <FontAwesomeIcon icon={faRemove}  style={{color: "#f44336"}}/>
+            </button>
+          </div>
+        ]
+      ),
+    }
+  ];
+
+  const handleDeleteButtonClick = (e, item) => {
+    e.preventDefault();
+    if (item) {
+      setGuestList(prev => prev.filter(value => value.identityNumber !== item.identityNumber));
+    }
+  };
+
+  const handleEditButtonClick = (e, item) => {
+    setEdited(true);
+    e.preventDefault();
+    if (item) {
+      setGuestTckNo(item.identityNumber);
+      setGuestFirstName(item.firstName);
+      setGuestLastName(item.lastName);
+    }
+  };
+
+  const customStyles = {
+    rows: {
+      style: {
+        borderBottom: "1px solid #D0D0D0",
+        borderLeft: "1px solid #D0D0D0",
+        borderRight: "1px solid #D0D0D0",
+        minHeight: "72px", // override the row height
+      },
+    },
+    headRow: {
+      style: {
+        backgroundColor: "#F5F5F5",
+        minHeight: "52px",
+        borderRadius: "16px 16px 0px 0px",
+        border: "1px solid #D0D0D0",
+        fontWeight: 900,
+      },
+    },
+    headCells: {
+      style: {
+        paddingLeft: "5px", // override the cell padding for head cells
+        paddingRight: "8px",
+      },
+    },
+    cells: {
+      style: {
+        paddingLeft: "8px", // override the cell padding for data cells
+        paddingRight: "8px",
+      },
+    },
+  };
 
   useEffect(() => {
     async function fetchData() {
@@ -126,6 +207,7 @@ const GuestPage = () => {
   }, [selectedDistrict]);
 
   const handleSubmit = async () => {
+    const messageContent = "Bilgileriniz alınmıştır. Taleplerinize uygun imkan sahipleri için sizinle iletişime geçilecektir.";
     const params = {
       identityNumber: tckn,
       firstName: name,
@@ -161,7 +243,7 @@ const GuestPage = () => {
     })
       .then(async response => {
         setChanged(!changed)
-        notify()
+        notify(messageContent, 'success')
         setName("")
         setSurname("")
         setEmail("")
@@ -230,7 +312,8 @@ const GuestPage = () => {
     setStateName(e);
   }
 
-  const notify = () => toast("Bilgileriniz alınmıştır. Taleplerinize uygun imkan sahipleri için sizinle iletişime geçilecektir.", {
+
+  const notify = (message, typeValue) => toast(message, {
     position: "top-center",
     className: "black-background",
     autoClose: 10000,
@@ -240,18 +323,38 @@ const GuestPage = () => {
     draggable: true,
     progress: undefined,
     theme: "light",
-    type: "success"
+    type: typeValue
   });
 
   const addGuestToList = (e) => {
-    debugger;
     e.preventDefault();
-    const newData = (data) => ([...data, {
-      identityNumber: guestTckNo,
-      firstName: guestFirstName,
-      lastName: guestLastName
-    }])
-    setGuestList(newData);
+    if (!isEdited && guestList.length === (+guest) + (+childNumber)) {
+      const messageContent = "Belirtilen Yetişkin ve Çocuk sayısından fazla kişi eklenemez";
+      notify(messageContent, 'warning');
+      resetGuestForm();
+      return;
+    }
+    const isExisting = guestList.find(value => value.identityNumber === guestTckNo);
+    if (isExisting) {
+      isExisting.identityNumber = guestTckNo;
+      isExisting.firstName = guestFirstName;
+      isExisting.lastName = guestLastName;
+    } else {
+      const newData = (data) => ([...data, {
+        identityNumber: guestTckNo,
+        firstName: guestFirstName,
+        lastName: guestLastName
+      }])
+      setGuestList(newData);
+      setEdited(false);
+    }
+    resetGuestForm();
+  }
+
+  const resetGuestForm = () => {
+    setGuestTckNo('');
+    setGuestFirstName('');
+    setGuestLastName('');
   }
 
   return (
@@ -295,7 +398,8 @@ const GuestPage = () => {
                 <div className='d-flex flex-column col-md-6 my-1'>
                   <span>Soyadınız <span style={{color: "#D42E13"}}>*</span></span>
                   <Input placeholder="Soyadınız" styleProps={{maxWidth: '100%'}} error={surnameValidasyonError.error}
-                         value={surname} onChange={(e) => changeName(e.target.value, setSurname, setSurnameValidasyonError)}/>
+                         value={surname}
+                         onChange={(e) => changeName(e.target.value, setSurname, setSurnameValidasyonError)}/>
                   {surnameValidasyonError.error &&
                     <p style={{color: "#525252", marginLeft: 5}}>{surnameValidasyonError.message}</p>}
                 </div>
@@ -332,13 +436,25 @@ const GuestPage = () => {
                 {/* Misafirlik Süresi Konaklama Türü */}
                 <div className='d-flex flex-column col-lg-4 col-md-6 my-1'>
                   <span> Ne Kadar Süre Konaklanacak</span>
-                  <Select onChange={(e) => setAccommodationPeriod(e.target.value)} styleProps={{maxWidth: '100%'}}
-                          data={[{name: "1 Haftaya Kadar"}, {name: "2 Haftaya Kadar"}, {name: "1 Aya Kadar"}, {name: "Belirsiz"}]}/>
+                  <Input placeholder="Konaklama Süersi" styleProps={{maxWidth: '100%'}}
+                         value={accommodationPeriod} onChange={(e) => setAccommodationPeriod(e.target.value)}/>
                 </div>
 
-                <br/>
-                <br/>
-                <h2>Konaklayacaklar Listesi</h2><br/>
+                {/*</div>*/}
+                {/* İl İlçe */}
+                {/*<div className='name-surname'>*/}
+                <div className='d-flex flex-column col-md-6 my-1'>
+                  <span>İl <span style={{color: "#D42E13"}}>*</span></span>
+                  <Select onChange={(e) => setSelectedCity(e.target.value)} data={city}
+                          styleProps={{maxWidth: '100%'}}/>
+                </div>
+                <div className='d-flex flex-column col-md-6 my-1'>
+                  <span>İlçe <span style={{color: "#D42E13"}}>*</span></span>
+                  <Select disabled={selectedCity === ""} onChange={(e) => setSelectedDistrict(e.target.value)}
+                          data={district} styleProps={{maxWidth: '100%'}}/>
+                </div>
+
+                <h2 style={{padding: '10px 0px 10px 10px', fontSize: "x-large"}}>Konaklayacaklar Listesi</h2><br/>
                 <div className='d-flex flex-column col-lg-3 col-md-6 my-1'>
                   <span>T.C. Kimlik No<span style={{color: "#D42E13"}}>*</span></span>
                   <Input error={tcknValidasyonError.error && tcknValidasyonError.stateName === 'guestTckNo'}
@@ -351,14 +467,16 @@ const GuestPage = () => {
                 <div className='d-flex flex-column col-lg-4 col-md-6 my-1'>
                   <span>Adı<span style={{color: "#D42E13"}}>*</span></span>
                   <Input placeholder="Adı" styleProps={{maxWidth: '100%'}} error={guestFirstNameValidationError.error}
-                         value={guestFirstName} onChange={(e) => changeName(e.target.value, setGuestFirstName, setGuestFirstNameValidationError)}/>
+                         value={guestFirstName}
+                         onChange={(e) => changeName(e.target.value, setGuestFirstName, setGuestFirstNameValidationError)}/>
                   {guestFirstNameValidationError.error &&
                     <p style={{color: "#525252", marginLeft: 5}}>{guestFirstNameValidationError.message}</p>}
                 </div>
                 <div className='d-flex flex-column col-lg-4 col-md-6 my-1'>
                   <span>Soyadı<span style={{color: "#D42E13"}}>*</span></span>
                   <Input placeholder="Soyadı" styleProps={{maxWidth: '100%'}} error={guestLastNameValidationError.error}
-                         value={guestLastName} onChange={(e) => changeName(e.target.value, setGuestLastName, setGuestLastNameValidationError)}/>
+                         value={guestLastName}
+                         onChange={(e) => changeName(e.target.value, setGuestLastName, setGuestLastNameValidationError)}/>
                   {guestLastNameValidationError.error &&
                     <p style={{color: "#525252", marginLeft: 5}}>{guestLastNameValidationError.message}</p>}
                 </div>
@@ -383,25 +501,17 @@ const GuestPage = () => {
                       marginTop: "calc(100% - 67px)"
                     }}
                   />
-                  {guestList.length && guestList.map(value => <p>{value.firstName}</p>)}
+                </div>
+                <div className='d-flex flex-column col-lg-12 col-md-6 my-1'>
+                  <DataTable
+                    columns={columns}
+                    data={guestList}
+                    responsive
+                    customStyles={customStyles}
+                    noDataComponent="Eklenmiş kişiler"
+                  />
                 </div>
 
-                <br/>
-                <br/>
-
-                {/*</div>*/}
-                {/* İl İlçe */}
-                {/*<div className='name-surname'>*/}
-                <div className='d-flex flex-column col-md-6 my-1'>
-                  <span>İl <span style={{color: "#D42E13"}}>*</span></span>
-                  <Select onChange={(e) => setSelectedCity(e.target.value)} data={city}
-                          styleProps={{maxWidth: '100%'}}/>
-                </div>
-                <div className='d-flex flex-column col-md-6 my-1'>
-                  <span>İlçe <span style={{color: "#D42E13"}}>*</span></span>
-                  <Select disabled={selectedCity === ""} onChange={(e) => setSelectedDistrict(e.target.value)}
-                          data={district} styleProps={{maxWidth: '100%'}}/>
-                </div>
                 {/*</div>*/}
                 {/* Semt Mahalle */}
                 {/* <div className='name-surname'>
