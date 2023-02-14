@@ -10,12 +10,70 @@ span {
     width: 420px;
     margin: 0px 30px 0px 0px
 }
+.addButton{
+    align-items: flex-end;
+    justify-content: flex-end;
+    margin-bottom: 20px!important;
+    padding: 0px;
+    button{
+        width:100%;
+        font-size:18px;
+        border-radius:0.375rem!important;
+        padding:8px 20px!important;
+        cursor:pointer;
+        span{
+            font-weight: 700;
+            font-size: 16px;
+        }
+    }
+    @include lg{
+        width:50%;
+        padding:0px 12px!important;
+    }
+    @include md{
+        width:100%;
+    }
+    
+}
+.line-default{
+    position:relative;
+    &:before{
+        content:'';
+        width:25px;
+        height:2px;
+        background-color:#d3d3d3;
+        left:0px;
+        bottom:0px;
+        position:absolute;
+    }
+}
+.line-middle{
+    padding-bottom:15px;
+    margin-bottom:15px;
+    position:relative;
+    &:before{
+        content:'';
+        position:absolute;
+        width:40px;
+        height:2px;
+        background-color:#323232;
+        left:50%;
+        margin-left:-20px;
+        bottom:0px;
+    }
+}
 
 .ilan {
     color: #323232;
     font-weight: 700;
     font-size: 24px;
     margin-top: 20px
+}
+h2{
+    text-align:center;
+    margin:20px 0px!important;
+    font-size:24px!important;
+    font-weight:600!important;
 }
 
 .name {
