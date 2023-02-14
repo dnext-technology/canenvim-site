@@ -1,6 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaTwitter, FaInstagram } from 'react-icons/fa';
 import { useNavigate, Link } from 'react-router-dom';
 import HeaderContainer from '../container/headerContainer';
@@ -8,10 +8,19 @@ import HeaderContainer from '../container/headerContainer';
 import { Button } from '../../../../components';
 
 import '../style/headerStyles.scss';
+import Drawer from '../../../drawer';
+import useWindowSize from '../../../../hooks/useWindowSize';
 
 const Header = () => {
   const navigate = useNavigate();
-  const [isVisibleMobileMenu, setIsVisibleMobileMenu] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const window = useWindowSize();
+
+  useEffect(() => {
+    if (window.width > 768 && open) {
+      setOpen(false);
+    }
+  }, [window.width, open]);
 
   // TODO: Giriş Yap buttons commented, maybe it will be added later.
   return (
@@ -28,11 +37,20 @@ const Header = () => {
                 onClick={() => navigate('/')}
               />
               <div className="header-nav">
-                <span onClick={() => navigate('misafir-kabul-edebilenler')}>Misafir Kabul Edebilenler</span>
-                <span onClick={() => navigate('misafir-etmek-istiyorum')}>Misafir Kabul Et</span>
-                <span onClick={() => navigate('can-evim-hakkinda')}>Hakkımızda</span>
-                <div className='social-logos'>
-                  <Link to="https://twitter.com/zorgundostuyrdm" target="_blank">
+                <span onClick={() => navigate('misafir-kabul-edebilenler')}>
+                  Misafir Kabul Edebilenler
+                </span>
+                <span onClick={() => navigate('misafir-etmek-istiyorum')}>
+                  Misafir Kabul Et
+                </span>
+                <span onClick={() => navigate('can-evim-hakkinda')}>
+                  Hakkımızda
+                </span>
+                <div className="social-logos">
+                  <Link
+                    to="https://twitter.com/zorgundostuyrdm"
+                    target="_blank"
+                  >
                     <FaTwitter />
                   </Link>
                   <Link
@@ -46,13 +64,17 @@ const Header = () => {
               <img
                 alt="menu-icon"
                 className="menu-icon"
+                style={{ cursor: 'pointer' }}
                 src={menuIcon}
-                onClick={() => setIsVisibleMobileMenu(!isVisibleMobileMenu)}
+                onClick={() => setOpen(!open)}
               />
             </div>
             <div className="info-card">
               <h1>Birbirimizin Yanındayız</h1>
-              <p>Deprem felaketinden etkilenen vatandaşlarımıza yardım edebiliriz.</p>
+              <p>
+                Deprem felaketinden etkilenen vatandaşlarımıza yardım
+                edebiliriz.
+              </p>
               <Button
                 onClick={() => navigate('konaklamaya-ihtiyacim-var')}
                 text="Konaklamaya İhtiyacım Var"
@@ -65,11 +87,7 @@ const Header = () => {
               />
             </div>
           </header>
-          {isVisibleMobileMenu && (
-            <div className="header-mobile">
-              <span onClick={() => navigate('can-evim-hakkinda')}>Hakkımızda</span>
-            </div>
-          )}
+          <Drawer open={open} setOpen={setOpen} />
         </>
       )}
     </HeaderContainer>
