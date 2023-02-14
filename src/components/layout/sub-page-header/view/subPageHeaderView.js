@@ -24,9 +24,9 @@ const SubPageHeader = () => {
               onClick={() => navigate('/')}
             />
             <div className="header-nav">
-              <span onClick={() => navigate('house/table')}>Konaklamaya İhtiyacım Var</span>
-              <span onClick={() => navigate('house')}>Konaklamaya Uygun Yerim Var</span>
-              <span onClick={() => navigate('about')}>Hakkımızda</span>
+              <span onClick={() => navigate('misafir-kabul-edebilenler')}>Misafir Kabul Edebilenler</span>
+              <span onClick={() => navigate('misafir-etmek-istiyorum')}>Konaklamaya Uygun Yerim Var</span>
+              <span onClick={() => navigate('can-evim-hakkinda')}>Hakkımızda</span>
               <div className='social-logos'>
                 <Link to="https://twitter.com/canevim_tr" target="_blank">
                   <FaTwitter />
@@ -49,7 +49,7 @@ const SubPageHeader = () => {
           </header>
           {isVisibleMobileMenu && (
             <div className="header-mobile">
-              <span onClick={() => navigate('about')}>Hakkımızda</span>
+              <span onClick={() => navigate('can-evim-hakkinda')}>Hakkımızda</span>
             </div>
           )}
         </>

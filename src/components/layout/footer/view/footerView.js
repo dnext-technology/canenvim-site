@@ -3,7 +3,7 @@ import React from 'react';
 import FooterContainer from '../container/footerContainer';
 import Logo from '../../../../assets/images/canevim-logo-light-landscape.svg';
 import { FiMail } from "react-icons/fi";
-import { FaTwitter, FaInstagram } from "react-icons/fa";
+import { FaTwitter, FaInstagram, FaPhoneAlt, FaLocationArrow } from "react-icons/fa";
 import { useNavigate, Link } from 'react-router-dom';
 
 
@@ -17,44 +17,92 @@ const Footer = () => {
   return (
 
     <FooterContainer>
-      <div className='footer-home'>
-
-        <div className='footer-detail-bottom'>
-          <div>
-
-            <span onClick={() => navigate('/')}><img alt="footer-logo" className="footer-logo" src={Logo} /></span>
-
-            <div className='footer-bottom-left'>
-              Can Evim, felaketlerden etkilenen insanlara yönelik ihtiyaçların karşılanması hedefiyle kurulan projedir. Desteğinizle bize en çok ihtiyacı olan insanların yanlarında olmamıza yardımcı olabilirsiniz.
+      <div className="footer-home">
+        <div className="base-container">
+          <div className="col-3">
+            <div className="content">
+              <span onClick={() => navigate('/')}>
+                <img alt="footerLogo" className="footerLogo" src={Logo} />
+              </span>
+              <div className='footerText'>
+                Can Evim, felaketlerden etkilenen insanlara yönelik ihtiyaçların karşılanması hedefiyle kurulan projedir. Desteğinizle bize en çok ihtiyacı olan insanların yanlarında olmamıza yardımcı olabilirsiniz.
+              </div>
+              <div className='socials'>
+                <div className='social-network'>
+                  <div>
+                    <Link to={'https://www.instagram.com/canevim_tr/'} target='_blank'>
+                      <FaInstagram />
+                    </Link>
+                  </div>
+                  <div>
+                    <Link to={'https://twitter.com/canevim_tr'} target='_blank'>
+                      <FaTwitter />
+                    </Link>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-          <div className='footer-bottom-center'>
-            <div className='gizlilik'><span onClick={() => navigate('privacy')}>Gizlilik</span></div>
-            <div><a download="KVKK.pdf"
-              href="KVKK.pdf" style={{ color: "#FFFF", textDecoration: "none" }}>Kişisel Verilerin Korunması</a></div>
-            <div>Aydınlatma Metni</div>
+          <div className="col-3">
+            <div className="content">
+              <h3 className="footerTitle">Linkler</h3>
+              <ul className="footerMenu">
+                <li>
+                  <a onClick={() => navigate('privacy')}>Gizlilik</a>
+                </li>
+                <li>
+                  <a download="KVKK.pdf" href="KVKK.pdf">KVKK</a>
+                </li>
+                <li>
+                  <a href="#">Aydınlatma Metni</a>
+                </li>
+              </ul>
+            </div>
           </div>
-          <div className='footer-bottom-right'>
-            <div className='iletisim'>İletişim</div>
-            <p><FiMail />iletisim.canevim@gmail.com</p>
+          <div className="col-3">
+            <div className="content">
+              <h3 className="footerTitle">Menü</h3>
+              <ul className="footerMenu">
+                <li>
+                  <a href="/">Anasayfa</a>
+                </li>
+                <li>
+                  <a href="/can-evim-hakkinda">Hakkımızda</a>
+                </li>
+                <li>
+                  <a href="/misafir-etmek-istiyorum">Misafir kabul edebilirim</a>
+                </li>
+                <li>
+                  <a href="/misafir-kabul-edebilenler">Misafir kabul edenler</a>
+                </li>
+                <li>
+                  <a href="/konaklamaya-ihtiyacim-var">Konaklama ihtiyacım var</a>
+                </li>
+                <li>
+                  <a href="/depremzede-konaklama-talepleri">Konaklama ihtiyacı olanlar</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div className="col-3">
+            <div className="content">
+              <h3 className="footerTitle">Sorunuz mu var ?</h3>
+              <ul className="footerMenu contact">
+                <li>
+                  <FiMail />iletisim.canevim@gmail.com
+                </li>
+                {/* <li>
+                  <FaPhoneAlt /> +0 232 225 3411
+                </li>
+                <li>
+                  <FaLocationArrow /> Test Location
+                </li> */}
+              </ul>
+            </div>
           </div>
         </div>
-        <div className='socials'>
-          <div>© 2023 CanEvim.org</div>
-          <div className='social-network'>
-            <div>
-              <Link to={'https://www.instagram.com/canevim_tr/'} target='_blank'>
-                <FaInstagram />
-              </Link>
-            </div>
-
-            <div>
-              <Link to={'https://twitter.com/canevim_tr'} target='_blank'>
-                <FaTwitter />
-              </Link>
-
-            </div>
-          </div>
+        <div className="copyRight">
+          © 2023 CanEvim.org
         </div>
       </div>
     </FooterContainer>

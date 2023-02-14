@@ -28,9 +28,9 @@ const Header = () => {
                 onClick={() => navigate('/')}
               />
               <div className="header-nav">
-                <span onClick={() => navigate('house/table')}>Konaklamaya İhtiyacım Var</span>
-                <span onClick={() => navigate('house')}>Konaklamaya Uygun Yerim Var</span>
-                <span onClick={() => navigate('about')}>Hakkımızda</span>
+                <span onClick={() => navigate('misafir-kabul-edebilenler')}>Misafir Kabul Edebilenler</span>
+                <span onClick={() => navigate('misafir-etmek-istiyorum')}>Misafir Kabul Et</span>
+                <span onClick={() => navigate('can-evim-hakkinda')}>Hakkımızda</span>
                 <div className='social-logos'>
                   <Link to="https://twitter.com/zorgundostuyrdm" target="_blank">
                     <FaTwitter />
@@ -54,12 +54,12 @@ const Header = () => {
               <h1>Birbirimizin Yanındayız</h1>
               <p>Deprem felaketinden etkilenen vatandaşlarımıza yardım edebiliriz.</p>
               <Button
-                onClick={() => navigate('guest')}
+                onClick={() => navigate('konaklamaya-ihtiyacim-var')}
                 text="Konaklamaya İhtiyacım Var"
                 className="button-con default"
               />
               <Button
-                onClick={() => navigate('guest')}
+                onClick={() => navigate('konaklamaya-ihtiyacim-var')}
                 text="Konaklamaya Uygun Yerim Var"
                 className="button-con default"
               />
@@ -67,7 +67,7 @@ const Header = () => {
           </header>
           {isVisibleMobileMenu && (
             <div className="header-mobile">
-              <span onClick={() => navigate('about')}>Hakkımızda</span>
+              <span onClick={() => navigate('can-evim-hakkinda')}>Hakkımızda</span>
             </div>
           )}
         </>
