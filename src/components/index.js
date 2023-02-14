@@ -6,5 +6,6 @@ import Button from './button/buttonView';
 import Input from './input/inputView';
 import TextArea from './textarea/textareaView';
 import Select from './select/selectView';
+import Datepicker from './datepicker/datepickerView';
 
-export { Loader, Header, Footer, Button, Input, TextArea, Select };
+export { Loader, Header, Footer, Button, Input, TextArea, Select, Datepicker };
