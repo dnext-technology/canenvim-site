@@ -1,0 +1,20 @@
+@import "../../_base"; 
+
+.checkbox-con {
+  background-color: #FFF;
+  height: 28px;
+  width: 28px !important;
+  cursor: pointer;
+  &:focus {
+    outline: none !important;
+    border: 2px solid #525252;
+  }
+}
+
+
+@media (max-width: $breakpoint-mobile) {
+  .checkbox-con {
+    margin-top: 20px;
+  }
+
+}

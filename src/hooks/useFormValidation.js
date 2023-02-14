@@ -20,7 +20,7 @@ const useFormValidation = (initalState, validate, onSubmit) => {
       setValues({
         ...values,
         ...onResetValues,
-        [event.target.getAttribute('name')]: !event.target.checked,
+        [event.target.getAttribute('name')]: event.target.checked,
       });
     } else if (event.target.getAttribute('datasecurionpay')) {
       setValues({

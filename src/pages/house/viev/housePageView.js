@@ -18,10 +18,35 @@ import '../style/housePageStyles.scss';
 import moment from 'moment/moment';
 import ValidateHousePage from '../../../validators/ValidateHousePage';
 import useFormValidation from '../../../hooks/useFormValidation';
+import Checkbox from '../../../components/checkbox/checkboxView';
 
 const HousePage = () => {
   const { REACT_APP_BASE_URL, REACT_APP_BOOKING_API, REACT_APP_LOCATION_API } =
     process.env;
+
+  const INITIAL_STATE = {
+    identityNumber: '',
+    firstName: '',
+    lastName: '',
+    birthDate: '',
+    email: '',
+    phone: '',
+    city: '',
+    district: '',
+    town: '',
+    neighborhood: '',
+    addressDetail: '',
+    guestCapacity: '',
+    accommodationType: '',
+    accommodationPeriod: '',
+    accommodationAvailabilityStartDate: '',
+    accommodationAvailabilityEndDate: '',
+    accommodationAvailabilityDay: '',
+    roomType: '',
+    furnished: false,
+    note: '',
+  };
+
   const navigate = useNavigate();
   const [city, setCity] = useState([]);
   const [selectedCity, setSelectedCity] = useState('');
@@ -33,11 +58,14 @@ const HousePage = () => {
   const [selectedNeighborhoodAddress, setSelectedNeighborhoodAddress] =
     useState('');
   const [selectedTown, setSelectedTown] = useState('');
+  const [birthDate, setBirthDate] = useState(new Date());
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState('');
+  const [furnish, setFurnished] = useState(false);
+  const [accommodationAvailabilityStartDate, setAvailabilityStartDate] = useState(new Date());
 
   useEffect(() => {
-    async function fetchData() {
+    async function fetchData () {
       await axios({
         method: 'GET',
         url: `${REACT_APP_BASE_URL}${REACT_APP_LOCATION_API}/locations`,
@@ -54,7 +82,7 @@ const HousePage = () => {
   }, []);
 
   useEffect(() => {
-    async function fetchData() {
+    async function fetchData () {
       if (selectedCity !== '') {
         await axios({
           method: 'GET',
@@ -73,7 +101,7 @@ const HousePage = () => {
   }, [selectedCity]);
 
   useEffect(() => {
-    async function fetchData() {
+    async function fetchData () {
       if (selectedDistrict !== '') {
         await axios({
           method: 'GET',
@@ -92,7 +120,7 @@ const HousePage = () => {
   }, [selectedDistrict]);
 
   useEffect(() => {
-    async function fetchData() {
+    async function fetchData () {
       if (selectedTown !== '') {
         await axios({
           method: 'GET',
@@ -109,6 +137,25 @@ const HousePage = () => {
     }
     fetchData();
   }, [selectedTown]);
+
+  useEffect(() => {
+    INITIAL_STATE.birthDate = moment(birthDate).format('DD.MM.YYYY');
+  }, [birthDate]);
+
+  useEffect(() => {
+    INITIAL_STATE.accommodationAvailabilityStartDate = moment(birthDate).format('DD.MM.YYYY');
+  }, [accommodationAvailabilityStartDate]);
+
+  useEffect(() => {
+    INITIAL_STATE.accommodationAvailabilityEndDate = moment(birthDate).format('DD.MM.YYYY');
+  }, [endDate]);
+  useEffect(() => {
+    INITIAL_STATE.accommodationAvailabilityEndDate = moment(birthDate).format('DD.MM.YYYY');
+  }, [endDate]);
+
+  useEffect(() => {
+    INITIAL_STATE.furnished = furnish
+  }, [furnish]);
 
   const notify = () => {
     toast(
@@ -132,23 +179,6 @@ const HousePage = () => {
   };
 
   const [firstOnReadySetValues, setFirstOnReadySetValues] = useState(true);
-
-  const INITIAL_STATE = {
-    identityNumber: '',
-    firstName: '',
-    lastName: '',
-    email: '',
-    phone: '',
-    city: '',
-    district: '',
-    town: '',
-    neighborhood: '',
-    addressDetail: '',
-    guestCapacity: '',
-    accommodationType: '',
-    accommodationPeriod: '',
-    note: '',
-  };
 
   const onSubmit = async (vls) => {
     await axios({
@@ -188,8 +218,8 @@ const HousePage = () => {
         district: selectedDistrict,
         town: selectedTown,
         neighborhood: selectedNeighborhoodAddress,
-        accommodationType: '1 Haftaya Kadar',
-        accommodationPeriod: 'Ayrı Oda',
+        accommodationType: 'Ayrı Oda',
+        accommodationPeriod: 'Gün',
       });
       setFirstOnReadySetValues(false);
     }
@@ -203,7 +233,7 @@ const HousePage = () => {
 
   return (
     <HousePageContainer>
-      {({}) => {
+      {({ }) => {
         return (
           <>
             <img alt="logo" className="bannerzor" src={Banner} />
@@ -256,6 +286,16 @@ const HousePage = () => {
                       name="lastName"
                     />
                   </div>
+                  <div className="name">
+                    <Datepicker
+                      text="Doğum Tarihi"
+                      selected={birthDate}
+                      onChange={(date) => setBirthDate(date)}
+                      selectsStart
+                      dateFormat="dd MMMM yyyy"
+                      name="birthDate"
+                    />
+                  </div>
                 </div>
                 {/* Email Telefon */}
                 <div className="name-surname">
@@ -298,15 +338,24 @@ const HousePage = () => {
                     </div>
 
                     <div className="guest-list-number">
-                      <Select
+                      <Input
+                        placeholder="Misafirlik Süresi"
                         text="Misafirlik Süresi"
+                        type="number"
+                        error={errors.accommodationAvailabilityDay}
+                        value={values.accommodationAvailabilityDay}
+                        onChange={handleChange}
+                        name="accommodationAvailabilityDay"
+                      />
+                      <Select
+                        text="Period"
                         value={values.accommodationPeriod}
                         onChange={handleChange}
                         name="accommodationPeriod"
                         data={[
-                          { name: '1 Haftaya Kadar' },
-                          { name: '2 Haftaya Kadar' },
-                          { name: '1 Aya Kadar' },
+                          { name: 'Gün' },
+                          { name: 'Hafta' },
+                          { name: 'Ay' },
                           { name: 'Belirsiz' },
                         ]}
                       />
@@ -323,6 +372,13 @@ const HousePage = () => {
                           { name: 'Müstakil Ev' },
                         ]}
                       />
+                      <Checkbox
+                        text="Eşyalı"
+                        type="checkbox"
+                        value={values.furnished}
+                        onChange={(e) => setFurnished(e.target.checked)}
+                        name="furnished"
+                      />
                     </div>
                   </div>
                 </div>
@@ -332,11 +388,12 @@ const HousePage = () => {
                     <Datepicker
                       text="Başlangıç Tarihi"
                       selected={startDate}
-                      onChange={(date) => setStartDate(date)}
+                      onChange={(date) => setAvailabilityStartDate(date)}
                       selectsStart
                       startDate={startDate}
                       endDate={endDate}
                       dateFormat="dd MMMM yyyy"
+                      name="accommodationAvailabilityStartDate"
                     />
                   </div>
                   <div className="name">
@@ -350,6 +407,7 @@ const HousePage = () => {
                       minDate={startDate}
                       placeholderText={`${moment().format('MM/DD/YYYY')}`}
                       dateFormat="dd MMMM yyyy"
+                      name="accommodationAvailabilityEndDate"
                     />
                   </div>
                 </div>
