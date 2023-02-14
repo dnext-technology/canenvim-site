@@ -225,12 +225,12 @@ const HousePage = () => {
                     text="T.C. Kimlik No"
                     placeholder="T.C. Kimlik No"
                     error={errors.identityNumber}
+                    errorText={errors.identityNumber}
                     type="number"
                     value={values.identityNumber}
                     onChange={handleChange}
                     name="identityNumber"
                   />
-                  {errors.identityNumber && <p>{errors.identityNumber}</p>}
                 </div>
                 {/* Ad soyad */}
                 <div>
@@ -239,22 +239,22 @@ const HousePage = () => {
                       text="Adınız"
                       placeholder="Adınız"
                       error={errors.firstName}
+                      errorText={errors.firstName}
                       value={values.firstName}
                       onChange={handleChange}
                       name="firstName"
                     />
-                    {errors.firstName && <p>{errors.firstName}</p>}
                   </div>
                   <div className="name">
                     <Input
                       text="Soyadınız"
                       placeholder="Soyadınız"
                       error={errors.lastName}
+                      errorText={errors.lastName}
                       value={values.lastName}
                       onChange={handleChange}
                       name="lastName"
                     />
-                    {errors.lastName && <p>{errors.lastName}</p>}
                   </div>
                 </div>
                 {/* Email Telefon */}
@@ -264,22 +264,22 @@ const HousePage = () => {
                       text="E-posta"
                       placeholder="E-posta"
                       error={errors.email}
+                      errorText={errors.email}
                       value={values.email}
                       onChange={handleChange}
                       name="email"
                     />
-                    {errors.email && <p>{errors.email}</p>}
                   </div>
                   <div className="name">
                     <Input
                       text="Telefon"
                       placeholder="05xx xxx xx xx"
                       error={errors.phone}
+                      errorText={errors.phone}
                       value={values.phone}
                       onChange={handleChange}
                       name="phone"
                     />
-                    {errors.phone && <p>{errors.phone}</p>}
                   </div>
                 </div>
                 <div className="guest-list-house">
