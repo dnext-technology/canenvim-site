@@ -81,5 +81,18 @@
         transform: translateX(0);
       }
     }
+
+    @media (max-width: 450px) {
+      width: 280px;
+
+      @keyframes animatting {
+        0% {
+          transform: translateX(280px);
+        }
+        100% {
+          transform: translateX(0);
+        }
+      }
+    }
   }
 }
