@@ -306,10 +306,13 @@ const GuestPage = () => {
   });
 
   const addGuestToList = (e) => {
+    const sumOfGuests = (+guest) + (+childNumber);
     e.preventDefault();
-    if (!isEdited && guestList.length === (+guest) + (+childNumber)) {
+    if (!isEdited && (guestList.length === sumOfGuests || guestList.length > sumOfGuests)) {
       const messageContent = "Belirtilen Yetişkin ve Çocuk sayısından fazla kişi eklenemez";
       notify(messageContent, 'warning');
+      setGuest("");
+      setChildNumber("");
       resetGuestForm();
       return;
     }
