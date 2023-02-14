@@ -7,7 +7,7 @@ const TextArea = ({ text, styleProps, ...props }) => {
   shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm`;
   return (
     <>
-      {text && <span name='block text-sm font-medium text-gray-700'>{text}</span>}
+      {text && <span className="line-default label">{text}</span>}
       <textarea
         className={cssClassName}
         style={styleProps}

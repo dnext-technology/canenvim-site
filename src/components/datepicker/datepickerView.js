@@ -8,7 +8,7 @@ const Datepicker = ({ text, styleProps, error, ...props }) => {
   return (
     <>
       {text && (
-        <span className="block text-sm font-medium text-gray-700">{text}</span>
+        <span className="line-default label">{text}</span>
       )}
 
       <DatePicker

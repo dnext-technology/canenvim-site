@@ -366,7 +366,7 @@ const GuestPage = () => {
                 </div>
                 {/*Doğum tarihi*/}
                 <div className='d-flex flex-column col-md-6 mb-1'>
-                  <span>Doğum tarihi <span style={{color: "#D42E13"}}>*</span></span>
+                  <span className="line-default label">Doğum tarihi <span style={{color: "#D42E13"}}>*</span></span>
                   <Datepicker
                     selected={birthDate}
                     onChange={(date) => setBirthDate(date)}

@@ -22,6 +22,7 @@
     line-height:1.1;
     margin-bottom:10px;
     padding-bottom:10px;
+    width:100%;
     &:before{
         content:'';
         width:40px;
@@ -35,14 +36,20 @@
 }
 .ilan{
     text-align:center;
+    width:100%;
+}
+.kvkkText{
+    margin-left:10px;
 }
 .ilan-bilgi-formu{
+
     input{
         margin-top:0px!important;
         margin-bottom:15px!important;
     }
     select{
-        margin:0px !important;
+        margin:0px 0px 15px 0px!important;
+        max-width:100%;
     }
     .label{
         margin-bottom:10px!important;
