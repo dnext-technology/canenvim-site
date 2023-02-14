@@ -423,6 +423,7 @@ const HousePage = () => {
                       selectsStart
                       startDate={startDate}
                       endDate={endDate}
+                      dateFormat="dd MMMM yyyy"
                     />
                   </div>
                   <div className="name">
@@ -435,6 +436,7 @@ const HousePage = () => {
                       endDate={endDate}
                       minDate={startDate}
                       placeholderText={`${moment().format('MM/DD/YYYY')}`}
+                      dateFormat="dd MMMM yyyy"
                     />
                   </div>
                 </div>
