@@ -64,13 +64,22 @@ const Footer = () => {
               <h3 className="footerTitle">Menü</h3>
               <ul className="footerMenu">
                 <li>
-                  <a href="#">Anasayfa</a>
+                  <a href="/">Anasayfa</a>
                 </li>
                 <li>
-                  <a href="#">Hakkımızda</a>
+                  <a href="/can-evim-hakkinda">Hakkımızda</a>
                 </li>
                 <li>
-                  <a href="#">İletişim</a>
+                  <a href="/misafir-etmek-istiyorum">Misafir kabul edebilirim</a>
+                </li>
+                <li>
+                  <a href="/misafir-kabul-edebilenler">Misafir kabul edenler</a>
+                </li>
+                <li>
+                  <a href="/konaklamaya-ihtiyacim-var">Konaklama ihtiyacım var</a>
+                </li>
+                <li>
+                  <a href="/depremzede-konaklama-talepleri">Konaklama ihtiyacı olanlar</a>
                 </li>
               </ul>
             </div>
@@ -80,14 +89,14 @@ const Footer = () => {
               <h3 className="footerTitle">Sorunuz mu var ?</h3>
               <ul className="footerMenu contact">
                 <li>
-                  <FiMail /> testDestek@gmail.com
+                  <FiMail />iletisim.canevim@gmail.com
                 </li>
-                <li>
+                {/* <li>
                   <FaPhoneAlt /> +0 232 225 3411
                 </li>
                 <li>
                   <FaLocationArrow /> Test Location
-                </li>
+                </li> */}
               </ul>
             </div>
           </div>

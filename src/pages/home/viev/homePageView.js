@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import HomePageContainer from "../container/homePageContainer";
 import { Button } from "../../../components";
-import { FaHandsHelping, FaHandHoldingHeart, FaBook, FaChild  } from 'react-icons/fa';
+import { FaHandsHelping, FaHandHoldingHeart, FaBook, FaChild } from 'react-icons/fa';
 import Hand from "../../../assets/images/hand.png";
 import Deprem from "../../../assets/images/deprem.png";
 import Heart from "../../../assets/images/heart.png";
@@ -18,13 +18,13 @@ const HomePage = () => {
 
   return (
     <HomePageContainer>
-      {({}) => {
+      {({ }) => {
         const [data, setData] = useState([]);
         const [offerer, setOfferer] = useState({});
         const [requester, setRequester] = useState({});
 
         useEffect(() => {
-          async function fetchData() {
+          async function fetchData () {
             await axios({
               method: "GET",
               url: `${REACT_APP_BASE_URL}${REACT_APP_BOOKING_API}/bookings/stats`,
@@ -33,11 +33,11 @@ const HomePage = () => {
                 setData(response.data);
                 setOfferer(
                   response.data &&
-                    response.data.find((fil) => fil.type === "offerer")
+                  response.data.find((fil) => fil.type === "offerer")
                 );
                 setRequester(
                   response.data &&
-                    response.data.find((fil) => fil.type === "requester")
+                  response.data.find((fil) => fil.type === "requester")
                 );
               })
               .catch((error) => {
@@ -56,31 +56,27 @@ const HomePage = () => {
                       Deprem bölgelerinde farklı şekillerde destek olabilirsiniz.
                     </h2>
                     <p>
-                      Deprem bölgelerinde yaşanan zarardan dolayı. Depremzedelerimizin ihtiyacı olan Gıda ve Konut ihtiyaçları için bağış yapabilirsiniz. Deprem bölgelerinde yaşanan zarardan dolayı. 
+                      Deprem bölgelerinde yaşanan zarardan dolayı. Depremzedelerimizin ihtiyacı olan Gıda ve Konut ihtiyaçları için bağış yapabilirsiniz. Deprem bölgelerinde yaşanan zarardan dolayı.
                     </p>
-                    <Button
-                      onClick={() => navigate('donate')}
-                      text="Bağış Yap"
-                      className="button-con secondary"
-                    />
+                    <Button onClick={() => navigate('misafir-kabul-edebilenler')} text="Misafir olabileceğin yerler" className="button-con secondary" />
                   </div>
-                  <img alt="logo" className="logo-hand" src={Hand} />          
+                  <img alt="logo" className="logo-hand" src={Hand} />
                 </div>
                 <div className="right-col">
                   <div className="content">
                     <h2>
                       Konaklama İhtiyacı Olan
                       <span className="countOuter">
-                      <span className="countTitle">24,392 </span><span className="countText">Kişi var</span>
+                        <span className="countTitle">24,392 </span><span className="countText">Kişi var</span>
                       </span>
                     </h2>
                     <p>Deprem bölgelerinde toplam <b>24,392</b> vatandaşımızın konaklama ihtiyacı bulunmaktadır.</p>
                   </div>
                   <Button
-                      onClick={() => navigate('donate')}
-                      text="Konaklamaya Uygun Yerim Var"
-                      className="button-con third"
-                    />
+                    onClick={() => navigate('depremzede-konaklama-talepleri')}
+                    text="Konaklama Taleplerine göz at"
+                    className="button-con third"
+                  />
                   <img alt="logo" className="logo-hand" src={Hand} />
                 </div>
               </div>
@@ -93,10 +89,10 @@ const HomePage = () => {
                       <FaHandsHelping />
                     </span>
                     <h3 className="cardTitle">
-                      Yardım & Destek
+                      Yardım et
                     </h3>
                     <p>
-                      Lorem ipsum dolor sit amet mid explanation. lorem ipsum
+                      Deprem sonrasında evsiz kalan vatandaşlarımızın konaklama ihtiyaçlarını karşılamak için ev sahipleri ile evsiz vatandaşlarımızı bir araya getiriyoruz.
                     </p>
                   </div>
                 </div>
@@ -106,10 +102,10 @@ const HomePage = () => {
                       <FaChild />
                     </span>
                     <h3 className="cardTitle">
-                      Çocuk Sahiplenme
+                      Konaklamaya ihtiyacınız mı var?
                     </h3>
                     <p>
-                      Lorem ipsum dolor sit amet mid explanation. lorem ipsum
+                      Sizde evinizde misafir kabul edebiliyorsanız, ev sahipleri ile evsiz vatandaşlarımızı bir araya getiriyoruz.
                     </p>
                   </div>
                 </div>
@@ -119,10 +115,10 @@ const HomePage = () => {
                       <FaHandHoldingHeart />
                     </span>
                     <h3 className="cardTitle">
-                      Gönüllü Çalışma
+                      Misafir edebiliyorsanız
                     </h3>
                     <p>
-                      Lorem ipsum dolor sit amet mid explanation. lorem ipsum
+                      Sizde evinizde misafir kabul edebiliyorsanız, ev sahipleri ile evsiz vatandaşlarımızı bir araya getiriyoruz, formu doldurmanız yeterli.
                     </p>
                   </div>
                 </div>
@@ -132,10 +128,10 @@ const HomePage = () => {
                       <FaBook />
                     </span>
                     <h3 className="cardTitle">
-                      Eğitim
+                      Can Evim
                     </h3>
                     <p>
-                      Lorem ipsum dolor sit amet mid explanation. lorem ipsum
+                      Can Evim platformu, ihtiyaç sahiplerini, destek sağlamak isteyen birey, kurum ve kuruluşlarla eşleştirmek amacıyla kullanıma açılmıştır.
                     </p>
                   </div>
                 </div>

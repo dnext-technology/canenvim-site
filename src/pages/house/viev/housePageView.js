@@ -217,7 +217,7 @@ const HousePage = () => {
       }
     );
     setTimeout(() => {
-      navigate('/house/table');
+      navigate('/misafir-kabul-edebilenler');
     }, 3000);
   };
 
