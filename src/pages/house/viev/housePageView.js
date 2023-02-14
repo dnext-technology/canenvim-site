@@ -2,13 +2,20 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import HousePageContainer from '../container/housePageContainer';
-import { Button, Input, TextArea, Select } from '../../../components';
+import {
+  Button,
+  Input,
+  TextArea,
+  Select,
+  Datepicker,
+} from '../../../components';
 import axios from 'axios';
 import Banner from '../../../assets/images/banner2.png';
 import { ToastContainer, toast } from 'react-toastify';
-import DatePicker from 'react-datepicker';
+
 import 'react-toastify/dist/ReactToastify.css';
 import '../style/housePageStyles.scss';
+import moment from 'moment/moment';
 
 const HousePage = () => {
   const { REACT_APP_BASE_URL, REACT_APP_BOOKING_API, REACT_APP_LOCATION_API } =
@@ -409,7 +416,8 @@ const HousePage = () => {
                 {/* Başlangıç tarihi ve Bitiş tarihi */}
                 <div className="name-surname">
                   <div className="name">
-                    <DatePicker
+                    <Datepicker
+                      text="Başlangıç Tarihi"
                       selected={startDate}
                       onChange={(date) => setStartDate(date)}
                       selectsStart
@@ -418,13 +426,15 @@ const HousePage = () => {
                     />
                   </div>
                   <div className="name">
-                    <DatePicker
+                    <Datepicker
+                      text="Bitiş Tarihi"
                       selected={endDate}
                       onChange={(date) => setEndDate(date)}
                       selectsEnd
                       startDate={startDate}
                       endDate={endDate}
                       minDate={startDate}
+                      placeholderText={`${moment().format('MM/DD/YYYY')}`}
                     />
                   </div>
                 </div>
