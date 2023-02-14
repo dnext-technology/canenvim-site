@@ -6,10 +6,13 @@ import axios from 'axios';
 import Banner from '../../../assets/images/banner2.png';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import '../style/guestPageStyles.scss'
+import '../style/guestPageStyles.scss';
+import DataTable from 'react-data-table-component';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPencil, faRemove } from '@fortawesome/free-solid-svg-icons'
 
 const GuestPage = () => {
-  const { REACT_APP_BASE_URL, REACT_APP_BOOKING_API, REACT_APP_LOCATION_API } = process.env;
+  const {REACT_APP_BASE_URL, REACT_APP_BOOKING_API, REACT_APP_LOCATION_API} = process.env;
   const [note, setNote] = useState("");
   const [tckn, setTckn] = useState("");
   const [name, setName] = useState("");
@@ -18,6 +21,10 @@ const GuestPage = () => {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [guest, setGuest] = useState("");
+  const [guestTckNo, setGuestTckNo] = useState("");
+  const [guestFirstName, setGuestFirstName] = useState("");
+  const [guestLastName, setGuestLastName] = useState("");
+  const [guestList, setGuestList] = useState([]);
   const [setNeighborhood] = useState("");
   const [addressDetail, setAddressDetail] = useState("");
   const [childNumber, setChildNumber] = useState("");
@@ -29,17 +36,98 @@ const GuestPage = () => {
   const [setNeighborhoodAddress] = useState([]);
   const [selectedNeighborhoodAddress, setSelectedNeighborhoodAddress] = useState([]);
   const [accommodationType, setAccommodationType] = useState("Ayrı Oda");
-  const [accommodationPeriod, setAccommodationPeriod] = useState("1 Haftaya Kadar");
+  const [accommodationPeriod, setAccommodationPeriod] = useState("");
   const [changed, setChanged] = useState(false);
-  const [tcknValidasyonError, setTCKNValidasyonError] = useState({ error: false, message: "" })
-  const [emailValidasyonError, setEmailValidasyonError] = useState({ error: false, message: "" })
-  const [phoneValidasyonError, setPhoneValidasyonError] = useState({ error: false, message: "" })
-  const [nameValidasyonError, setNameValidasyonError] = useState({ error: false, message: "" })
-  const [surnameValidasyonError, setSurnameValidasyonError] = useState({ error: false, message: "" })
+  const [tcknValidasyonError, setTCKNValidasyonError] = useState({error: false, message: "", stateName: ""})
+  const [emailValidasyonError, setEmailValidasyonError] = useState({error: false, message: ""})
+  const [phoneValidasyonError, setPhoneValidasyonError] = useState({error: false, message: ""})
+  const [nameValidasyonError, setNameValidasyonError] = useState({error: false, message: ""})
+  const [guestFirstNameValidationError, setGuestFirstNameValidationError] = useState({error: false, message: ""})
+  const [guestLastNameValidationError, setGuestLastNameValidationError] = useState({error: false, message: ""})
+  const [surnameValidasyonError, setSurnameValidasyonError] = useState({error: false, message: ""})
   const [selectedTown, setSelectedTown] = useState("");
+  const [isEdited, setEdited] = useState(false);
+  const columns = [
+    {
+      name: "Ad",
+      selector: (row) => row.firstName,
+    },
+    {
+      name: "Soyad",
+      selector: (row) => row.lastName,
+    },
+    {
+      name: "İşlemler",
+      button: true,
+      cell: (row) => ([
+          <div key="{row.identityNumber}">
+            <button
+              className="btn btn-outline btn-xs"
+              onClick={(e) => handleEditButtonClick(e, row)}>
+              <FontAwesomeIcon icon={faPencil}  style={{color: "#3f51b5"}}/>
+            </button>
+            <button
+              className="btn btn-outline btn-xs"
+              onClick={(e) => handleDeleteButtonClick(e, row)}>
+              <FontAwesomeIcon icon={faRemove}  style={{color: "#f44336"}}/>
+            </button>
+          </div>
+        ]
+      ),
+    }
+  ];
+
+  const handleDeleteButtonClick = (e, item) => {
+    e.preventDefault();
+    if (item) {
+      setGuestList(prev => prev.filter(value => value.identityNumber !== item.identityNumber));
+    }
+  };
+
+  const handleEditButtonClick = (e, item) => {
+    setEdited(true);
+    e.preventDefault();
+    if (item) {
+      setGuestTckNo(item.identityNumber);
+      setGuestFirstName(item.firstName);
+      setGuestLastName(item.lastName);
+    }
+  };
+
+  const customStyles = {
+    rows: {
+      style: {
+        borderBottom: "1px solid #D0D0D0",
+        borderLeft: "1px solid #D0D0D0",
+        borderRight: "1px solid #D0D0D0",
+        minHeight: "72px", // override the row height
+      },
+    },
+    headRow: {
+      style: {
+        backgroundColor: "#F5F5F5",
+        minHeight: "52px",
+        borderRadius: "16px 16px 0px 0px",
+        border: "1px solid #D0D0D0",
+        fontWeight: 900,
+      },
+    },
+    headCells: {
+      style: {
+        paddingLeft: "5px", // override the cell padding for head cells
+        paddingRight: "8px",
+      },
+    },
+    cells: {
+      style: {
+        paddingLeft: "8px", // override the cell padding for data cells
+        paddingRight: "8px",
+      },
+    },
+  };
 
   useEffect(() => {
-    async function fetchData () {
+    async function fetchData() {
       if (selectedTown !== "") {
         await axios({
           method: 'GET',
@@ -60,7 +148,7 @@ const GuestPage = () => {
   }, [selectedTown]);
 
   useEffect(() => {
-    async function fetchData () {
+    async function fetchData() {
       await axios({
         method: 'GET', url: `${REACT_APP_BASE_URL}${REACT_APP_LOCATION_API}/locations`
       })
@@ -78,7 +166,7 @@ const GuestPage = () => {
   }, []);
 
   useEffect(() => {
-    async function fetchData () {
+    async function fetchData() {
       if (selectedCity !== "") {
         await axios({
           method: 'GET', url: `${REACT_APP_BASE_URL}${REACT_APP_LOCATION_API}/locations?city=${selectedCity}`
@@ -98,7 +186,7 @@ const GuestPage = () => {
   }, [selectedCity]);
 
   useEffect(() => {
-    async function fetchData () {
+    async function fetchData() {
       if (selectedDistrict !== "") {
         await axios({
           method: 'GET',
@@ -119,6 +207,7 @@ const GuestPage = () => {
   }, [selectedDistrict]);
 
   const handleSubmit = async () => {
+    const messageContent = "Bilgileriniz alınmıştır. Taleplerinize uygun imkan sahipleri için sizinle iletişime geçilecektir.";
     const params = {
       identityNumber: tckn,
       firstName: name,
@@ -154,7 +243,7 @@ const GuestPage = () => {
     })
       .then(async response => {
         setChanged(!changed)
-        notify()
+        notify(messageContent, 'success')
         setName("")
         setSurname("")
         setEmail("")
@@ -168,34 +257,37 @@ const GuestPage = () => {
         setCheckKVKK(false)
         setAccommodationType("Ayrı Oda")
         setAccommodationPeriod("1 Haftaya Kadar")
-        setTCKNValidasyonError({ error: false, message: "" })
-        setEmailValidasyonError({ error: false, message: "" })
-        setPhoneValidasyonError({ error: false, message: "" })
+        setTCKNValidasyonError({error: false, message: ""})
+        setEmailValidasyonError({error: false, message: ""})
+        setPhoneValidasyonError({error: false, message: ""})
       })
       .catch(error => {
         return error
       });
   };
 
-  const checkTCKN = (e) => {
-    setTckn(e)
+  const checkTCKN = (e, stateName, fcn) => {
     const tcknformat = /^[1-9]{1}[0-9]{9}[02468]{1}$/;
     if (e.length !== 11 || !e.match(tcknformat)) {
-      setTCKNValidasyonError({ error: true, message: "T.C. Kimlik Numarası uygun formatta değildir." })
-
+      setTCKNValidasyonError({
+        error: true,
+        message: "T.C. Kimlik Numarası uygun formatta değildir.",
+        stateName: stateName
+      })
     } else {
-      setTCKNValidasyonError({ error: false, message: "" })
+      setTCKNValidasyonError({error: false, message: "", stateName: stateName})
     }
+    return fcn(e);
   }
 
   const checkEmail = (e) => {
     setEmail(e)
     const emailformat = /^([A-Za-z]|[0-9])+$/;
     if (e.match(emailformat)) {
-      setEmailValidasyonError({ error: true, message: "Eposta adresi uygun formatta değildir." })
+      setEmailValidasyonError({error: true, message: "Eposta adresi uygun formatta değildir."})
 
     } else {
-      setEmailValidasyonError({ error: false, message: "" })
+      setEmailValidasyonError({error: false, message: ""})
     }
   }
 
@@ -203,36 +295,25 @@ const GuestPage = () => {
     setPhone(e)
     const phoneformat = /^(05)([0-9]{2})\s?([0-9]{3})\s?([0-9]{2})\s?([0-9]{2})$/;
     if (!e.match(phoneformat)) {
-      setPhoneValidasyonError({ error: true, message: "Telefon numarası uygun formatta değildir." })
+      setPhoneValidasyonError({error: true, message: "Telefon numarası uygun formatta değildir."})
 
     } else {
-      setPhoneValidasyonError({ error: false, message: "" })
+      setPhoneValidasyonError({error: false, message: ""})
     }
   }
 
-  const changeName = (e) => {
-    setName(e)
+  const changeName = (e, setStateName, setValidationName) => {
     const nameformat = /^[a-zA-Z_ğüşıöçĞÜŞİÖÇ ]*$/;
     if (!e.match(nameformat)) {
-      setNameValidasyonError({ error: true, message: "Adınız uygun formatta değildir." })
-
+      setValidationName({error: true, message: "Girdiğiniz bilgi doğru formatta değildir."})
     } else {
-      setNameValidasyonError({ error: false, message: "" })
+      setValidationName({error: false, message: ""})
     }
+    setStateName(e);
   }
 
-  const changeSurName = (e) => {
-    setSurname(e)
-    const nameformat = /^[a-zA-Z_ğüşıöçĞÜŞİÖÇ ]*$/;
-    if (!e.match(nameformat)) {
-      setSurnameValidasyonError({ error: true, message: "Adınız uygun formatta değildir." })
 
-    } else {
-      setSurnameValidasyonError({ error: false, message: "" })
-    }
-  }
-
-  const notify = () => toast("Bilgileriniz alınmıştır. Taleplerinize uygun imkan sahipleri için sizinle iletişime geçilecektir.", {
+  const notify = (message, typeValue) => toast(message, {
     position: "top-center",
     className: "black-background",
     autoClose: 10000,
@@ -242,20 +323,52 @@ const GuestPage = () => {
     draggable: true,
     progress: undefined,
     theme: "light",
-    type: "success"
+    type: typeValue
   });
+
+  const addGuestToList = (e) => {
+    e.preventDefault();
+    if (!isEdited && guestList.length === (+guest) + (+childNumber)) {
+      const messageContent = "Belirtilen Yetişkin ve Çocuk sayısından fazla kişi eklenemez";
+      notify(messageContent, 'warning');
+      resetGuestForm();
+      return;
+    }
+    const isExisting = guestList.find(value => value.identityNumber === guestTckNo);
+    if (isExisting) {
+      isExisting.identityNumber = guestTckNo;
+      isExisting.firstName = guestFirstName;
+      isExisting.lastName = guestLastName;
+    } else {
+      const newData = (data) => ([...data, {
+        identityNumber: guestTckNo,
+        firstName: guestFirstName,
+        lastName: guestLastName
+      }])
+      setGuestList(newData);
+      setEdited(false);
+    }
+    resetGuestForm();
+  }
+
+  const resetGuestForm = () => {
+    setGuestTckNo('');
+    setGuestFirstName('');
+    setGuestLastName('');
+  }
 
   return (
     <GuestPageContainer>
-      {({ }) => {
+      {({}) => {
         return (
           <>
-            <img alt="logo" className="bannerzor" src={Banner} />
+            <img alt="logo" className="bannerzor" src={Banner}/>
             <div className='row house-container w-100 mx-auto'>
               <p className='guest-text w-75 mx-auto'>Konaklama İhtiyacım Var</p>
               <div className='guest-text-container col-12 w-75 mx-auto'>
                 <div className='guest-text2'>
-                  Doldurduğunuz formdaki bilgiler konaklama ihtiyacı sahipleri için listelenecek ve görüntülenebilecektir. Konaklama ihtiyacı sahipleri sizleri arayabilir ve görüşebilir.
+                  Doldurduğunuz formdaki bilgiler konaklama ihtiyacı sahipleri için listelenecek ve
+                  görüntülenebilecektir. Konaklama ihtiyacı sahipleri sizleri arayabilir ve görüşebilir.
                   Yardımcı olduğunuz için teşekkür ederiz.
                 </div>
               </div>
@@ -264,64 +377,141 @@ const GuestPage = () => {
               <form className="row w-75 mx-auto px-0">
                 {/* TCKN */}
                 <div className='d-flex flex-column col-md-6 mb-1'>
-                  <span>T.C. Kimlik No <span style={{ color: "#D42E13" }}>*</span></span>
-                  <Input error={tcknValidasyonError.error} styleProps={{ maxWidth: '100%' }} placeholder="T.C. Kimlik No" type="number" value={tckn} onChange={(e) => checkTCKN(e.target.value)} />
-                  {tcknValidasyonError.error && <p style={{ color: "#525252", marginLeft: 5 }}>{tcknValidasyonError.message}</p>}
+                  <span>T.C. Kimlik No <span style={{color: "#D42E13"}}>*</span></span>
+                  <Input error={tcknValidasyonError.error && tcknValidasyonError.stateName === 'tckn'}
+                         styleProps={{maxWidth: '100%'}} placeholder="T.C. Kimlik No"
+                         type="number" value={tckn}
+                         onChange={(e) => checkTCKN(e.target.value, 'tckn', (item) => setTckn(item))}/>
+                  {tcknValidasyonError.error && tcknValidasyonError.stateName === 'tckn' &&
+                    <p style={{color: "#525252", marginLeft: 5}}>{tcknValidasyonError.message}</p>}
                 </div>
                 <div className="offset-6"></div>
                 {/* Ad soyad */}
                 {/*<div className='name-surname'>*/}
                 <div className='d-flex flex-column col-md-6 my-1'>
-                  <span>Adınız <span style={{ color: "#D42E13" }}>*</span></span>
-                  <Input placeholder="Adınız" styleProps={{ maxWidth: '100%' }} error={nameValidasyonError.error} value={name} onChange={(e) => changeName(e.target.value)} />
-                  {nameValidasyonError.error && <p style={{ color: "#525252", marginLeft: 5 }}>{nameValidasyonError.message}</p>}
+                  <span>Adınız <span style={{color: "#D42E13"}}>*</span></span>
+                  <Input placeholder="Adınız" styleProps={{maxWidth: '100%'}} error={nameValidasyonError.error}
+                         value={name} onChange={(e) => changeName(e.target.value, setName, setNameValidasyonError)}/>
+                  {nameValidasyonError.error &&
+                    <p style={{color: "#525252", marginLeft: 5}}>{nameValidasyonError.message}</p>}
                 </div>
                 <div className='d-flex flex-column col-md-6 my-1'>
-                  <span>Soyadınız <span style={{ color: "#D42E13" }}>*</span></span>
-                  <Input placeholder="Soyadınız" styleProps={{ maxWidth: '100%' }} error={surnameValidasyonError.error} value={surname} onChange={(e) => changeSurName(e.target.value)} />
-                  {surnameValidasyonError.error && <p style={{ color: "#525252", marginLeft: 5 }}>{surnameValidasyonError.message}</p>}
+                  <span>Soyadınız <span style={{color: "#D42E13"}}>*</span></span>
+                  <Input placeholder="Soyadınız" styleProps={{maxWidth: '100%'}} error={surnameValidasyonError.error}
+                         value={surname}
+                         onChange={(e) => changeName(e.target.value, setSurname, setSurnameValidasyonError)}/>
+                  {surnameValidasyonError.error &&
+                    <p style={{color: "#525252", marginLeft: 5}}>{surnameValidasyonError.message}</p>}
                 </div>
                 {/*</div>*/}
                 {/* Email Telefon */}
                 {/*<div className='name-surname' >*/}
                 <div className='d-flex flex-column col-md-6 my-1'>
                   <span>E-posta</span>
-                  <Input placeholder="E-posta" styleProps={{ maxWidth: '100%' }} error={emailValidasyonError.error} value={email} onChange={(e) => checkEmail(e.target.value)} />
-                  {emailValidasyonError.error && <p style={{ color: "#525252", marginLeft: 5 }}>{emailValidasyonError.message}</p>}
+                  <Input placeholder="E-posta" styleProps={{maxWidth: '100%'}} error={emailValidasyonError.error}
+                         value={email} onChange={(e) => checkEmail(e.target.value)}/>
+                  {emailValidasyonError.error &&
+                    <p style={{color: "#525252", marginLeft: 5}}>{emailValidasyonError.message}</p>}
                 </div>
                 <div className='d-flex flex-column col-md-6 my-1'>
-                  <span>Telefon <span style={{ color: "#D42E13" }}>*</span></span>
-                  <Input error={phoneValidasyonError.error} styleProps={{ maxWidth: '100%' }} placeholder="05xx xxx xx xx" value={phone} onChange={(e) => checkPhone(e.target.value)} />
-                  {phoneValidasyonError.error && <p style={{ color: "#525252", marginLeft: 5 }}>{phoneValidasyonError.message}</p>}
+                  <span>Telefon <span style={{color: "#D42E13"}}>*</span></span>
+                  <Input error={phoneValidasyonError.error} styleProps={{maxWidth: '100%'}} placeholder="05xx xxx xx xx"
+                         value={phone} onChange={(e) => checkPhone(e.target.value)}/>
+                  {phoneValidasyonError.error &&
+                    <p style={{color: "#525252", marginLeft: 5}}>{phoneValidasyonError.message}</p>}
                 </div>
                 {/*</div>*/}
                 {/*<div className='col-12' >*/}
                 {/* Kaç Misafir Kaç Çocuk */}
                 <div className='d-flex flex-column col-lg-4 col-md-6 my-1'>
-                  <span>Yetişkin Sayısı <span style={{ color: "#D42E13" }}>*</span></span>
-                  <Input placeholder="Yetişkin Sayısı" styleProps={{ maxWidth: '100%' }} type="number" value={guest} onChange={(e) => setGuest(e.target.value)} />
+                  <span>Yetişkin Sayısı <span style={{color: "#D42E13"}}>*</span></span>
+                  <Input placeholder="Yetişkin Sayısı" styleProps={{maxWidth: '100%'}} type="number" value={guest}
+                         onChange={(e) => setGuest(e.target.value)}/>
                 </div>
                 <div className='d-flex flex-column col-lg-4 col-md-6 my-1'>
                   <span> Çocuk Sayısı</span>
-                  <Input placeholder="Çocuk Sayısı" type="number" styleProps={{ maxWidth: '100%' }} value={childNumber} onChange={(e) => setChildNumber(e.target.value)} />
+                  <Input placeholder="Çocuk Sayısı" type="number" styleProps={{maxWidth: '100%'}} value={childNumber}
+                         onChange={(e) => setChildNumber(e.target.value)}/>
                 </div>
                 {/* Misafirlik Süresi Konaklama Türü */}
                 <div className='d-flex flex-column col-lg-4 col-md-6 my-1'>
                   <span> Ne Kadar Süre Konaklanacak</span>
-                  <Select onChange={(e) => setAccommodationPeriod(e.target.value)} styleProps={{ maxWidth: '100%' }} data={[{ name: "1 Haftaya Kadar" }, { name: "2 Haftaya Kadar" }, { name: "1 Aya Kadar" }, { name: "Belirsiz" }]} />
+                  <Input placeholder="Konaklama Süersi" styleProps={{maxWidth: '100%'}}
+                         value={accommodationPeriod} onChange={(e) => setAccommodationPeriod(e.target.value)}/>
                 </div>
 
                 {/*</div>*/}
                 {/* İl İlçe */}
                 {/*<div className='name-surname'>*/}
                 <div className='d-flex flex-column col-md-6 my-1'>
-                  <span>İl <span style={{ color: "#D42E13" }}>*</span></span>
-                  <Select onChange={(e) => setSelectedCity(e.target.value)} data={city} styleProps={{ maxWidth: '100%' }} />
+                  <span>İl <span style={{color: "#D42E13"}}>*</span></span>
+                  <Select onChange={(e) => setSelectedCity(e.target.value)} data={city}
+                          styleProps={{maxWidth: '100%'}}/>
                 </div>
                 <div className='d-flex flex-column col-md-6 my-1'>
-                  <span>İlçe <span style={{ color: "#D42E13" }}>*</span></span>
-                  <Select disabled={selectedCity === ""} onChange={(e) => setSelectedDistrict(e.target.value)} data={district} styleProps={{ maxWidth: '100%' }} />
+                  <span>İlçe <span style={{color: "#D42E13"}}>*</span></span>
+                  <Select disabled={selectedCity === ""} onChange={(e) => setSelectedDistrict(e.target.value)}
+                          data={district} styleProps={{maxWidth: '100%'}}/>
                 </div>
+
+                <h2 style={{padding: '10px 0px 10px 10px', fontSize: "x-large"}}>Konaklayacaklar Listesi</h2><br/>
+                <div className='d-flex flex-column col-lg-3 col-md-6 my-1'>
+                  <span>T.C. Kimlik No<span style={{color: "#D42E13"}}>*</span></span>
+                  <Input error={tcknValidasyonError.error && tcknValidasyonError.stateName === 'guestTckNo'}
+                         styleProps={{maxWidth: '100%'}} placeholder="T.C. Kimlik No"
+                         type="number" value={guestTckNo}
+                         onChange={(e) => checkTCKN(e.target.value, 'guestTckNo', (item) => setGuestTckNo(item))}/>
+                  {tcknValidasyonError.error && tcknValidasyonError.stateName === 'guestTckNo' &&
+                    <p style={{color: "#525252", marginLeft: 5}}>{tcknValidasyonError.message}</p>}
+                </div>
+                <div className='d-flex flex-column col-lg-4 col-md-6 my-1'>
+                  <span>Adı<span style={{color: "#D42E13"}}>*</span></span>
+                  <Input placeholder="Adı" styleProps={{maxWidth: '100%'}} error={guestFirstNameValidationError.error}
+                         value={guestFirstName}
+                         onChange={(e) => changeName(e.target.value, setGuestFirstName, setGuestFirstNameValidationError)}/>
+                  {guestFirstNameValidationError.error &&
+                    <p style={{color: "#525252", marginLeft: 5}}>{guestFirstNameValidationError.message}</p>}
+                </div>
+                <div className='d-flex flex-column col-lg-4 col-md-6 my-1'>
+                  <span>Soyadı<span style={{color: "#D42E13"}}>*</span></span>
+                  <Input placeholder="Soyadı" styleProps={{maxWidth: '100%'}} error={guestLastNameValidationError.error}
+                         value={guestLastName}
+                         onChange={(e) => changeName(e.target.value, setGuestLastName, setGuestLastNameValidationError)}/>
+                  {guestLastNameValidationError.error &&
+                    <p style={{color: "#525252", marginLeft: 5}}>{guestLastNameValidationError.message}</p>}
+                </div>
+                <div className='d-flex flex-column col-lg-1 col-md-6 my-1'>
+                  <Button
+                    disabled={guestTckNo === "" ||
+                      guestFirstName === "" ||
+                      guestLastName === "" ||
+                      (tcknValidasyonError.error && tcknValidasyonError.stateName === 'guestTckNo') ||
+                      guestFirstNameValidationError.error ||
+                      guestLastNameValidationError.error}
+                    text="Ekle"
+                    onClick={(e) => {
+                      addGuestToList(e)
+                    }}
+                    styleProps={{
+                      border: "1px solid #323232",
+                      borderRadius: 48,
+                      backgroundColor: "#323232",
+                      color: "#FFFFFF",
+                      padding: "10px 20px",
+                      marginTop: "calc(100% - 67px)"
+                    }}
+                  />
+                </div>
+                <div className='d-flex flex-column col-lg-12 col-md-6 my-1'>
+                  <DataTable
+                    columns={columns}
+                    data={guestList}
+                    responsive
+                    customStyles={customStyles}
+                    noDataComponent="Eklenmiş kişiler"
+                  />
+                </div>
+
                 {/*</div>*/}
                 {/* Semt Mahalle */}
                 {/* <div className='name-surname'>
@@ -337,24 +527,33 @@ const GuestPage = () => {
                 {/* Adres Tarifi */}
                 <div className=' my-1'>
                   <span>Adres Tarifi ( Zorunlu Değil ) </span>
-                  <TextArea placeholder="Adres Tarifi" value={addressDetail} onChange={(e) => setAddressDetail(e.target.value)} styleProps={{ maxWidth: '100%' }} />
+                  <TextArea placeholder="Adres Tarifi" value={addressDetail}
+                            onChange={(e) => setAddressDetail(e.target.value)} styleProps={{maxWidth: '100%'}}/>
                 </div>
                 {/* Ekstra Bilgi */}
                 <div className=' my-1'>
                   <span>Özel Not ( Zorunlu Değil ) </span>
-                  <TextArea placeholder="Ör. Engeli birey var..." value={note} onChange={(e) => setNote(e.target.value)} styleProps={{ maxWidth: '100%' }} />
+                  <TextArea placeholder="Ör. Engeli birey var..." value={note} onChange={(e) => setNote(e.target.value)}
+                            styleProps={{maxWidth: '100%'}}/>
                 </div>
-                <div style={{ display: "flex", fontWeight: 400, width: "100%", margin: 10 }}>
+                <div style={{display: "flex", fontWeight: 400, width: "100%", margin: 10}}>
                   {/* <TextArea placeholder="Örnek: Engelli birey var" value={neighborhood} onChange={(e) => setNeighborhood(e.target.value)}/> */}
-                  <input value={checkKVKK} onChange={(e) => setCheckKVKK(e.target.checked ? true : false)} type="checkbox" id="vehicle1" name="vehicle1"></input>
+                  <input value={checkKVKK} onChange={(e) => setCheckKVKK(e.target.checked ? true : false)}
+                         type="checkbox" id="vehicle1" name="vehicle1"></input>
                   <a
                     download="KVKK.pdf"
                     href="KVKK.pdf"
-                    style={{ marginLeft: 10, color: "#323232" }}>
-                    KVKK Metnini okudum ve kabul ediyorum.<span style={{ color: "#D42E13E5" }}>*</span>
+                    style={{marginLeft: 10, color: "#323232"}}>
+                    KVKK Metnini okudum ve kabul ediyorum.<span style={{color: "#D42E13E5"}}>*</span>
                   </a>
                 </div>
-                <div style={{ display: "flex", flexDirection: "column", fontWeight: 400, width: 200, margin: "0px 30px 0px 10px" }}>
+                <div style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  fontWeight: 400,
+                  width: 200,
+                  margin: "0px 30px 0px 10px"
+                }}>
                   <Button
                     disabled={tckn === "" || name === "" || surname === "" || phone === "" || city === "" || district === "" || guest === "" || nameValidasyonError.error || surnameValidasyonError.error || tcknValidasyonError.error || emailValidasyonError.error || phoneValidasyonError.error || !checkKVKK}
                     onClick={(e) => {
@@ -362,10 +561,16 @@ const GuestPage = () => {
                       handleSubmit()
                     }}
                     text="Gönder"
-                    styleProps={{ border: "1px solid #323232", borderRadius: 48, backgroundColor: "#323232", color: "#FFFFFF", padding: "10px 20px" }}
+                    styleProps={{
+                      border: "1px solid #323232",
+                      borderRadius: 48,
+                      backgroundColor: "#323232",
+                      color: "#FFFFFF",
+                      padding: "10px 20px"
+                    }}
                   />
 
-                  <ToastContainer />
+                  <ToastContainer/>
                 </div>
               </form>
             </div>
