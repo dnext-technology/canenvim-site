@@ -1,7 +1,7 @@
 /* eslint-disable */
 import React, { useEffect, useState } from 'react';
 import GuestPageContainer from '../container/guestPageContainer';
-import { Button, Input, Select, TextArea } from '../../../components';
+import { Button, Datepicker, Input, Select, TextArea } from '../../../components';
 import axios from 'axios';
 import Banner from '../../../assets/images/banner2.png';
 import { toast, ToastContainer } from 'react-toastify';
@@ -10,6 +10,7 @@ import '../style/guestPageStyles.scss';
 import DataTable from 'react-data-table-component';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPencil, faRemove } from '@fortawesome/free-solid-svg-icons'
+import moment from "moment";
 
 const GuestPage = () => {
   const {REACT_APP_BASE_URL, REACT_APP_BOOKING_API, REACT_APP_LOCATION_API} = process.env;
@@ -17,6 +18,7 @@ const GuestPage = () => {
   const [tckn, setTckn] = useState("");
   const [name, setName] = useState("");
   const [checkKVKK, setCheckKVKK] = useState(false);
+  const [transportationRequired, setTransportationRequired] = useState(false);
   const [surname, setSurname] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -47,6 +49,7 @@ const GuestPage = () => {
   const [surnameValidasyonError, setSurnameValidasyonError] = useState({error: false, message: ""})
   const [selectedTown, setSelectedTown] = useState("");
   const [isEdited, setEdited] = useState(false);
+  const [birthDate, setBirthDate] = useState('');
   const columns = [
     {
       name: "Ad",
@@ -64,12 +67,12 @@ const GuestPage = () => {
             <button
               className="btn btn-outline btn-xs"
               onClick={(e) => handleEditButtonClick(e, row)}>
-              <FontAwesomeIcon icon={faPencil}  style={{color: "#3f51b5"}}/>
+              <FontAwesomeIcon icon={faPencil} style={{color: "#3f51b5"}}/>
             </button>
             <button
               className="btn btn-outline btn-xs"
               onClick={(e) => handleDeleteButtonClick(e, row)}>
-              <FontAwesomeIcon icon={faRemove}  style={{color: "#f44336"}}/>
+              <FontAwesomeIcon icon={faRemove} style={{color: "#f44336"}}/>
             </button>
           </div>
         ]
@@ -217,49 +220,25 @@ const GuestPage = () => {
       city: selectedCity,
       district: selectedDistrict,
       town: selectedTown,
-      neighborhood: selectedNeighborhoodAddress,
       addressDetail: addressDetail,
-      guestCapacity: guest,
-      accommodationType: accommodationType,
-      accommodationPeriod: accommodationPeriod
+      adultNumber: guest,
+      childNumber: childNumber,
+      accommodationPeriod: accommodationPeriod,
+      transporttationRequired: transportationRequired,
+      birthDate: moment(birthDate).format('DD.MM.YYYY'),
+      note: note,
+      guestList: [
+        ...guestList
+      ]
     };
     await axios({
-      method: 'POST', url: `${REACT_APP_BASE_URL}${REACT_APP_BOOKING_API}/bookings/requesters`, data: {
-        identityNumber: tckn,
-        firstName: name,
-        lastName: surname,
-        email: email,
-        phone: phone,
-        city: selectedCity,
-        district: selectedDistrict,
-        town: selectedTown,
-        neighborhood: selectedNeighborhoodAddress,
-        addressDetail: addressDetail,
-        adultNumber: guest,
-        childNumber: childNumber,
-        accommodationPeriod: accommodationPeriod,
-        note: note
-      }
+      method: 'POST', url: `${REACT_APP_BASE_URL}${REACT_APP_BOOKING_API}/bookings/requesters`, data: {...params}
     })
       .then(async response => {
-        setChanged(!changed)
-        notify(messageContent, 'success')
-        setName("")
-        setSurname("")
-        setEmail("")
-        setTckn("")
-        setPhone("")
-        setGuest("")
-        setNeighborhood("")
-        setNote("")
-        setAddressDetail("")
-        setChildNumber("")
-        setCheckKVKK(false)
-        setAccommodationType("Ayrı Oda")
-        setAccommodationPeriod("1 Haftaya Kadar")
-        setTCKNValidasyonError({error: false, message: ""})
-        setEmailValidasyonError({error: false, message: ""})
-        setPhoneValidasyonError({error: false, message: ""})
+        notify(messageContent, 'success');
+        setTimeout(() => {
+          window.location.reload()
+        }, 3000);
       })
       .catch(error => {
         return error
@@ -373,11 +352,11 @@ const GuestPage = () => {
                 </div>
               </div>
 
-              <p className='ilan w-75 mx-auto my-2'>İlan Bilgi Formu</p>
-              <form className="row w-75 mx-auto px-0">
+              <p className='ilan w-75 mx-auto my-2 line-middle'>İlan Bilgi Formu</p>
+              <form className="row w-75 mx-auto px-0 ilan-bilgi-formu">
                 {/* TCKN */}
                 <div className='d-flex flex-column col-md-6 mb-1'>
-                  <span>T.C. Kimlik No <span style={{color: "#D42E13"}}>*</span></span>
+                  <span className="line-default label">T.C. Kimlik No <span style={{color: "#D42E13"}}>*</span></span>
                   <Input error={tcknValidasyonError.error && tcknValidasyonError.stateName === 'tckn'}
                          styleProps={{maxWidth: '100%'}} placeholder="T.C. Kimlik No"
                          type="number" value={tckn}
@@ -385,18 +364,28 @@ const GuestPage = () => {
                   {tcknValidasyonError.error && tcknValidasyonError.stateName === 'tckn' &&
                     <p style={{color: "#525252", marginLeft: 5}}>{tcknValidasyonError.message}</p>}
                 </div>
-                <div className="offset-6"></div>
+                {/*Doğum tarihi*/}
+                <div className='d-flex flex-column col-md-6 mb-1'>
+                  <span>Doğum tarihi <span style={{color: "#D42E13"}}>*</span></span>
+                  <Datepicker
+                    selected={birthDate}
+                    onChange={(date) => setBirthDate(date)}
+                    placeholderText='Doğum tarihi'
+                    dateFormat="dd MMMM yyyy"
+                  />
+                </div>
+
                 {/* Ad soyad */}
                 {/*<div className='name-surname'>*/}
                 <div className='d-flex flex-column col-md-6 my-1'>
-                  <span>Adınız <span style={{color: "#D42E13"}}>*</span></span>
+                  <span className="line-default label">Adınız <span style={{color: "#D42E13"}}>*</span></span>
                   <Input placeholder="Adınız" styleProps={{maxWidth: '100%'}} error={nameValidasyonError.error}
                          value={name} onChange={(e) => changeName(e.target.value, setName, setNameValidasyonError)}/>
                   {nameValidasyonError.error &&
                     <p style={{color: "#525252", marginLeft: 5}}>{nameValidasyonError.message}</p>}
                 </div>
                 <div className='d-flex flex-column col-md-6 my-1'>
-                  <span>Soyadınız <span style={{color: "#D42E13"}}>*</span></span>
+                  <span className="line-default label">Soyadınız <span style={{color: "#D42E13"}}>*</span></span>
                   <Input placeholder="Soyadınız" styleProps={{maxWidth: '100%'}} error={surnameValidasyonError.error}
                          value={surname}
                          onChange={(e) => changeName(e.target.value, setSurname, setSurnameValidasyonError)}/>
@@ -407,14 +396,14 @@ const GuestPage = () => {
                 {/* Email Telefon */}
                 {/*<div className='name-surname' >*/}
                 <div className='d-flex flex-column col-md-6 my-1'>
-                  <span>E-posta</span>
+                  <span className="line-default label">E-posta</span>
                   <Input placeholder="E-posta" styleProps={{maxWidth: '100%'}} error={emailValidasyonError.error}
                          value={email} onChange={(e) => checkEmail(e.target.value)}/>
                   {emailValidasyonError.error &&
                     <p style={{color: "#525252", marginLeft: 5}}>{emailValidasyonError.message}</p>}
                 </div>
                 <div className='d-flex flex-column col-md-6 my-1'>
-                  <span>Telefon <span style={{color: "#D42E13"}}>*</span></span>
+                  <span className="line-default label">Telefon <span style={{color: "#D42E13"}}>*</span></span>
                   <Input error={phoneValidasyonError.error} styleProps={{maxWidth: '100%'}} placeholder="05xx xxx xx xx"
                          value={phone} onChange={(e) => checkPhone(e.target.value)}/>
                   {phoneValidasyonError.error &&
@@ -424,18 +413,18 @@ const GuestPage = () => {
                 {/*<div className='col-12' >*/}
                 {/* Kaç Misafir Kaç Çocuk */}
                 <div className='d-flex flex-column col-lg-4 col-md-6 my-1'>
-                  <span>Yetişkin Sayısı <span style={{color: "#D42E13"}}>*</span></span>
+                  <span className="line-default label">Yetişkin Sayısı <span style={{color: "#D42E13"}}>*</span></span>
                   <Input placeholder="Yetişkin Sayısı" styleProps={{maxWidth: '100%'}} type="number" value={guest}
                          onChange={(e) => setGuest(e.target.value)}/>
                 </div>
                 <div className='d-flex flex-column col-lg-4 col-md-6 my-1'>
-                  <span> Çocuk Sayısı</span>
+                  <span className="line-default label"> Çocuk Sayısı</span>
                   <Input placeholder="Çocuk Sayısı" type="number" styleProps={{maxWidth: '100%'}} value={childNumber}
                          onChange={(e) => setChildNumber(e.target.value)}/>
                 </div>
                 {/* Misafirlik Süresi Konaklama Türü */}
                 <div className='d-flex flex-column col-lg-4 col-md-6 my-1'>
-                  <span> Ne Kadar Süre Konaklanacak</span>
+                  <span className="line-default label"> Ne Kadar Süre Konaklanacak</span>
                   <Input placeholder="Konaklama Süersi" styleProps={{maxWidth: '100%'}}
                          value={accommodationPeriod} onChange={(e) => setAccommodationPeriod(e.target.value)}/>
                 </div>
@@ -444,19 +433,27 @@ const GuestPage = () => {
                 {/* İl İlçe */}
                 {/*<div className='name-surname'>*/}
                 <div className='d-flex flex-column col-md-6 my-1'>
-                  <span>İl <span style={{color: "#D42E13"}}>*</span></span>
+                  <span className="line-default label">İl <span style={{color: "#D42E13"}}>*</span></span>
                   <Select onChange={(e) => setSelectedCity(e.target.value)} data={city}
                           styleProps={{maxWidth: '100%'}}/>
                 </div>
                 <div className='d-flex flex-column col-md-6 my-1'>
-                  <span>İlçe <span style={{color: "#D42E13"}}>*</span></span>
+                  <span className="line-default label">İlçe <span style={{color: "#D42E13"}}>*</span></span>
                   <Select disabled={selectedCity === ""} onChange={(e) => setSelectedDistrict(e.target.value)}
                           data={district} styleProps={{maxWidth: '100%'}}/>
                 </div>
-
-                <h2 style={{padding: '10px 0px 10px 10px', fontSize: "x-large"}}>Konaklayacaklar Listesi</h2><br/>
+                <div className='d-flex flex-column col-lg-2 col-md-6 my-1'>
+                  <div>
+                    <input checked={transportationRequired}
+                           onChange={(e) => setTransportationRequired(!transportationRequired)}
+                           type="checkbox">
+                    </input>
+                    <label style={{marginLeft: '8px'}}>Ulaşım ihtiyacı varmı</label>
+                  </div>
+                </div>
+                <h2 className="line-middle">Konaklayacaklar Listesi</h2><br/>
                 <div className='d-flex flex-column col-lg-3 col-md-6 my-1'>
-                  <span>T.C. Kimlik No<span style={{color: "#D42E13"}}>*</span></span>
+                  <span className="line-default label">T.C. Kimlik No<span style={{color: "#D42E13"}}>*</span></span>
                   <Input error={tcknValidasyonError.error && tcknValidasyonError.stateName === 'guestTckNo'}
                          styleProps={{maxWidth: '100%'}} placeholder="T.C. Kimlik No"
                          type="number" value={guestTckNo}
@@ -465,22 +462,22 @@ const GuestPage = () => {
                     <p style={{color: "#525252", marginLeft: 5}}>{tcknValidasyonError.message}</p>}
                 </div>
                 <div className='d-flex flex-column col-lg-4 col-md-6 my-1'>
-                  <span>Adı<span style={{color: "#D42E13"}}>*</span></span>
+                  <span className="line-default label">Adı<span style={{color: "#D42E13"}}>*</span></span>
                   <Input placeholder="Adı" styleProps={{maxWidth: '100%'}} error={guestFirstNameValidationError.error}
                          value={guestFirstName}
                          onChange={(e) => changeName(e.target.value, setGuestFirstName, setGuestFirstNameValidationError)}/>
                   {guestFirstNameValidationError.error &&
                     <p style={{color: "#525252", marginLeft: 5}}>{guestFirstNameValidationError.message}</p>}
                 </div>
-                <div className='d-flex flex-column col-lg-4 col-md-6 my-1'>
-                  <span>Soyadı<span style={{color: "#D42E13"}}>*</span></span>
+                <div className='d-flex flex-column col-lg-3 col-md-6 my-1'>
+                  <span className="line-default label">Soyadı<span style={{color: "#D42E13"}}>*</span></span>
                   <Input placeholder="Soyadı" styleProps={{maxWidth: '100%'}} error={guestLastNameValidationError.error}
                          value={guestLastName}
                          onChange={(e) => changeName(e.target.value, setGuestLastName, setGuestLastNameValidationError)}/>
                   {guestLastNameValidationError.error &&
                     <p style={{color: "#525252", marginLeft: 5}}>{guestLastNameValidationError.message}</p>}
                 </div>
-                <div className='d-flex flex-column col-lg-1 col-md-6 my-1'>
+                <div className='d-flex flex-column col-lg-2 col-md-6 my-1 addButton'>
                   <Button
                     disabled={guestTckNo === "" ||
                       guestFirstName === "" ||
@@ -489,6 +486,7 @@ const GuestPage = () => {
                       guestFirstNameValidationError.error ||
                       guestLastNameValidationError.error}
                     text="Ekle"
+                    className="third"
                     onClick={(e) => {
                       addGuestToList(e)
                     }}
@@ -497,18 +495,19 @@ const GuestPage = () => {
                       borderRadius: 48,
                       backgroundColor: "#323232",
                       color: "#FFFFFF",
-                      padding: "10px 20px",
-                      marginTop: "calc(100% - 67px)"
+                      padding: "10px 20px"
                     }}
                   />
                 </div>
+                
+                {/*Konaklayacaklar Listesi*/}
                 <div className='d-flex flex-column col-lg-12 col-md-6 my-1'>
                   <DataTable
                     columns={columns}
                     data={guestList}
                     responsive
                     customStyles={customStyles}
-                    noDataComponent="Eklenmiş kişiler"
+                    noDataComponent="Girilen Yetişkin ve Çocuk sayısı kadar ekleme yapabilirsiniz !"
                   />
                 </div>
 
@@ -526,19 +525,19 @@ const GuestPage = () => {
                 </div> */}
                 {/* Adres Tarifi */}
                 <div className=' my-1'>
-                  <span>Adres Tarifi ( Zorunlu Değil ) </span>
+                  <span className="line-default label">Adres Tarifi ( Zorunlu Değil ) </span>
                   <TextArea placeholder="Adres Tarifi" value={addressDetail}
                             onChange={(e) => setAddressDetail(e.target.value)} styleProps={{maxWidth: '100%'}}/>
                 </div>
                 {/* Ekstra Bilgi */}
                 <div className=' my-1'>
-                  <span>Özel Not ( Zorunlu Değil ) </span>
+                  <span className="line-default label">Özel Not ( Zorunlu Değil ) </span>
                   <TextArea placeholder="Ör. Engeli birey var..." value={note} onChange={(e) => setNote(e.target.value)}
                             styleProps={{maxWidth: '100%'}}/>
                 </div>
                 <div style={{display: "flex", fontWeight: 400, width: "100%", margin: 10}}>
                   {/* <TextArea placeholder="Örnek: Engelli birey var" value={neighborhood} onChange={(e) => setNeighborhood(e.target.value)}/> */}
-                  <input value={checkKVKK} onChange={(e) => setCheckKVKK(e.target.checked ? true : false)}
+                  <input checked={checkKVKK} onChange={(e) => setCheckKVKK(!checkKVKK)}
                          type="checkbox" id="vehicle1" name="vehicle1"></input>
                   <a
                     download="KVKK.pdf"
@@ -555,7 +554,21 @@ const GuestPage = () => {
                   margin: "0px 30px 0px 10px"
                 }}>
                   <Button
-                    disabled={tckn === "" || name === "" || surname === "" || phone === "" || city === "" || district === "" || guest === "" || nameValidasyonError.error || surnameValidasyonError.error || tcknValidasyonError.error || emailValidasyonError.error || phoneValidasyonError.error || !checkKVKK}
+                    disabled={
+                      tckn === "" ||
+                      name === "" ||
+                      surname === "" ||
+                      phone === "" ||
+                      city === "" ||
+                      district === "" ||
+                      guest === "" ||
+                      nameValidasyonError.error ||
+                      surnameValidasyonError.error ||
+                      tcknValidasyonError.error ||
+                      emailValidasyonError.error ||
+                      phoneValidasyonError.error ||
+                      !checkKVKK ||
+                      birthDate === ""}
                     onClick={(e) => {
                       e.preventDefault()
                       handleSubmit()

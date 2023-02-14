@@ -17,11 +17,61 @@
     color: #D42E13E5;
     font-size: 40px;
     font-weight: 700;
+    text-align:center;
+    position:relative;
+    line-height:1.1;
+    margin-bottom:10px;
+    padding-bottom:10px;
+    &:before{
+        content:'';
+        width:40px;
+        height:2px;
+        background-color:#D42E13E5;
+        left:50%;
+        margin-left:-20px;
+        position:absolute;
+        bottom:-1px;
+    }
+}
+.ilan{
+    text-align:center;
+}
+.ilan-bilgi-formu{
+    input{
+        margin-top:0px!important;
+        margin-bottom:15px!important;
+    }
+    select{
+        margin:0px !important;
+    }
+    .label{
+        margin-bottom:10px!important;
+        padding-bottom:10px!important;
+        font-size:16px;
+        font-weight:600;
+        position:relative;
+        display:block;
+    }
+    @include lg{
+        width:100%!important;
+    }
+        
+        /*&:before{
+            content:'';
+            width:40px;
+            height:2px;
+            background-color:#D42E13E5;
+            left:0px;
+            position:absolute;
+            bottom:0px;
+        }*/
 }
 .guest-text2{
     color: #323232;
     font-size: 18px;
-    font-weight: 400
+    font-weight: 400;
+    text-align:center;
+    margin-bottom:20px;
 }
 .guest-text-container {
     @include flex(flex, center, space-between);
@@ -38,7 +88,7 @@
     padding: 20px 40px;
     position: relative;
     flex-wrap: wrap;
-    background-color: #F5F5F5;
+    background-color: #ffffff;
     .text1 {
         font-size: 70px; 
         color: #D42E13E5;

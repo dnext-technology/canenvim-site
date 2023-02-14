@@ -1,8 +1,8 @@
 /* eslint-disable */
 import React from 'react';
-import './inputStyles.scss';
+import './checkboxStyles.scss';
 
-const Input = ({
+const Checkbox = ({
   type = 'text',
   text,
   styleProps,
@@ -17,10 +17,10 @@ const Input = ({
         <span className="block text-sm font-medium text-gray-700">{text}</span>
       )}
       <input
-        type={type}
+        type="checkbox"
         {...props}
         style={errorStyle || styleProps}
-        className="input-con mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+        className="checkbox-con mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
       />
       {errorText && (
         <p
@@ -37,4 +37,4 @@ const Input = ({
   );
 };
 
-export default Input;
+export default Checkbox;

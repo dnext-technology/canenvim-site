@@ -16,21 +16,38 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../style/housePageStyles.scss';
 import moment from 'moment/moment';
+import ValidateHousePage from '../../../validators/ValidateHousePage';
+import useFormValidation from '../../../hooks/useFormValidation';
+import Checkbox from '../../../components/checkbox/checkboxView';
 
 const HousePage = () => {
   const { REACT_APP_BASE_URL, REACT_APP_BOOKING_API, REACT_APP_LOCATION_API } =
     process.env;
+
+  const INITIAL_STATE = {
+    identityNumber: '',
+    firstName: '',
+    lastName: '',
+    birthDate: '',
+    email: '',
+    phone: '',
+    city: '',
+    district: '',
+    town: '',
+    neighborhood: '',
+    addressDetail: '',
+    guestCapacity: '',
+    accommodationType: '',
+    accommodationPeriod: '',
+    accommodationAvailabilityStartDate: '',
+    accommodationAvailabilityEndDate: '',
+    accommodationAvailabilityDay: '',
+    roomType: '',
+    furnished: false,
+    note: '',
+  };
+
   const navigate = useNavigate();
-  const [note, setNote] = useState('');
-  const [tckn, setTckn] = useState('');
-  const [name, setName] = useState('');
-  const [surname, setSurname] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
-  const [guest, setGuest] = useState('');
-  const [neighborhood, setNeighborhood] = useState('');
-  const [addressDetail, setAddressDetail] = useState('');
-  const [childNumber, setChildNumber] = useState('');
   const [city, setCity] = useState([]);
   const [selectedCity, setSelectedCity] = useState('');
   const [district, setDistrict] = useState([]);
@@ -39,37 +56,16 @@ const HousePage = () => {
   const [town, setTown] = useState([]);
   const [neighborhoodAddress, setNeighborhoodAddress] = useState([]);
   const [selectedNeighborhoodAddress, setSelectedNeighborhoodAddress] =
-    useState([]);
-  const [accommodationType, setAccommodationType] = useState('Ayrı Oda');
-  const [accommodationPeriod, setAccommodationPeriod] =
-    useState('1 Haftaya Kadar');
-  const [tcknValidasyonError, setTCKNValidasyonError] = useState({
-    error: false,
-    message: '',
-  });
-  const [emailValidasyonError, setEmailValidasyonError] = useState({
-    error: false,
-    message: '',
-  });
-  const [phoneValidasyonError, setPhoneValidasyonError] = useState({
-    error: false,
-    message: '',
-  });
-  const [nameValidasyonError, setNameValidasyonError] = useState({
-    error: false,
-    message: '',
-  });
-  const [surnameValidasyonError, setSurnameValidasyonError] = useState({
-    error: false,
-    message: '',
-  });
+    useState('');
   const [selectedTown, setSelectedTown] = useState('');
-
+  const [birthDate, setBirthDate] = useState(new Date());
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState('');
+  const [furnish, setFurnished] = useState(false);
+  const [accommodationAvailabilityStartDate, setAvailabilityStartDate] = useState(new Date());
 
   useEffect(() => {
-    async function fetchData() {
+    async function fetchData () {
       await axios({
         method: 'GET',
         url: `${REACT_APP_BASE_URL}${REACT_APP_LOCATION_API}/locations`,
@@ -86,7 +82,7 @@ const HousePage = () => {
   }, []);
 
   useEffect(() => {
-    async function fetchData() {
+    async function fetchData () {
       if (selectedCity !== '') {
         await axios({
           method: 'GET',
@@ -105,7 +101,7 @@ const HousePage = () => {
   }, [selectedCity]);
 
   useEffect(() => {
-    async function fetchData() {
+    async function fetchData () {
       if (selectedDistrict !== '') {
         await axios({
           method: 'GET',
@@ -124,7 +120,7 @@ const HousePage = () => {
   }, [selectedDistrict]);
 
   useEffect(() => {
-    async function fetchData() {
+    async function fetchData () {
       if (selectedTown !== '') {
         await axios({
           method: 'GET',
@@ -142,64 +138,25 @@ const HousePage = () => {
     fetchData();
   }, [selectedTown]);
 
-  const handleSubmit = async () => {
-    const params = {
-      identityNumber: tckn,
-      firstName: name,
-      lastName: surname,
-      email: email,
-      phone: phone,
-      city: selectedCity,
-      district: selectedDistrict,
-      town: selectedTown,
-      neighborhood: selectedNeighborhoodAddress,
-      addressDetail: addressDetail,
-      guestCapacity: guest,
-      accommodationType,
-      accommodationPeriod,
-    };
-    await axios({
-      method: 'POST',
-      url: `${REACT_APP_BASE_URL}${REACT_APP_BOOKING_API}/bookings/offerers`,
-      data: {
-        identityNumber: tckn,
-        firstName: name,
-        lastName: surname,
-        email: email,
-        phone: phone,
-        city: selectedCity,
-        district: selectedDistrict,
-        town: selectedTown,
-        neighborhood: selectedNeighborhoodAddress,
-        addressDetail: addressDetail,
-        guestCapacity: guest,
-        accommodationType: accommodationType,
-        accommodationPeriod: accommodationPeriod,
-        note: note,
-      },
-    })
-      .then(async (response) => {
-        notify();
-        setName('');
-        setTckn('');
-        setSurname('');
-        setEmail('');
-        setPhone('');
-        setGuest('');
-        setNote('');
-        setCheckKVKK(false);
-        setNeighborhood('');
-        setAddressDetail('');
-        setAccommodationType('Ayrı Oda');
-        setAccommodationPeriod('1 Haftaya Kadar');
-        setTCKNValidasyonError({ error: false, message: '' });
-        setEmailValidasyonError({ error: false, message: '' });
-        setPhoneValidasyonError({ error: false, message: '' });
-      })
-      .catch((error) => {
-        return error;
-      });
-  };
+  useEffect(() => {
+    INITIAL_STATE.birthDate = moment(birthDate).format('DD.MM.YYYY');
+  }, [birthDate]);
+
+  useEffect(() => {
+    INITIAL_STATE.accommodationAvailabilityStartDate = moment(birthDate).format('DD.MM.YYYY');
+  }, [accommodationAvailabilityStartDate]);
+
+  useEffect(() => {
+    INITIAL_STATE.accommodationAvailabilityEndDate = moment(birthDate).format('DD.MM.YYYY');
+  }, [endDate]);
+  useEffect(() => {
+    INITIAL_STATE.accommodationAvailabilityEndDate = moment(birthDate).format('DD.MM.YYYY');
+  }, [endDate]);
+
+  useEffect(() => {
+    INITIAL_STATE.furnished = furnish
+  }, [furnish]);
+
   const notify = () => {
     toast(
       'Bilgileriniz alınmıştır. İmkanlarınıza uygun ihtiyaç sahipleri için sizinle iletişime geçilecektir.',
@@ -221,75 +178,62 @@ const HousePage = () => {
     }, 3000);
   };
 
-  const checkTCKN = (e) => {
-    setTckn(e);
-    const tcknformat = /^[1-9]{1}[0-9]{9}[02468]{1}$/;
-    if (e.length !== 11 || !e.match(tcknformat)) {
-      setTCKNValidasyonError({
-        error: true,
-        message: 'T.C. Kimlik Numarası uygun formatta değildir.',
+  const [firstOnReadySetValues, setFirstOnReadySetValues] = useState(true);
+
+  const onSubmit = async (vls) => {
+    await axios({
+      method: 'POST',
+      url: `${REACT_APP_BASE_URL}${REACT_APP_BOOKING_API}/bookings/offerers`,
+      data: vls,
+    })
+      .then((res) => {
+        console.log(res);
+        notify();
+        reset();
+      })
+      .catch((error) => {
+        return error;
       });
-    } else {
-      setTCKNValidasyonError({ error: false, message: '' });
-    }
   };
 
-  const checkEmail = (e) => {
-    setEmail(e);
-    const emailformat = /^([A-Za-z]|[0-9])+$/;
-    if (e.match(emailformat)) {
-      setEmailValidasyonError({
-        error: true,
-        message: 'Eposta adresi uygun formatta değildir.',
-      });
-    } else {
-      setEmailValidasyonError({ error: false, message: '' });
-    }
-  };
+  const {
+    handleChange,
+    handleSubmit,
+    values,
+    errors,
+    reset,
+    setInitialValues,
+  } = useFormValidation(INITIAL_STATE, ValidateHousePage, onSubmit);
 
-  const checkPhone = (e) => {
-    setPhone(e);
-    const phoneformat =
-      /^(05)([0-9]{2})\s?([0-9]{3})\s?([0-9]{2})\s?([0-9]{2})$/;
-    if (!e.match(phoneformat)) {
-      setPhoneValidasyonError({
-        error: true,
-        message: 'Telefon numarası uygun formatta değildir.',
+  useEffect(() => {
+    if (
+      firstOnReadySetValues &&
+      selectedCity &&
+      selectedDistrict &&
+      selectedTown &&
+      selectedNeighborhoodAddress
+    ) {
+      setInitialValues({
+        city: selectedCity,
+        district: selectedDistrict,
+        town: selectedTown,
+        neighborhood: selectedNeighborhoodAddress,
+        accommodationType: 'Ayrı Oda',
+        accommodationPeriod: 'Gün',
       });
-    } else {
-      setPhoneValidasyonError({ error: false, message: '' });
+      setFirstOnReadySetValues(false);
     }
-  };
-
-  const changeName = (e) => {
-    setName(e);
-    const nameformat = /^[a-zA-Z_ğüşıöçĞÜŞİÖÇ ]*$/;
-    if (!e.match(nameformat)) {
-      setNameValidasyonError({
-        error: true,
-        message: 'Adınız uygun formatta değildir.',
-      });
-    } else {
-      setNameValidasyonError({ error: false, message: '' });
-    }
-  };
-
-  const changeSurName = (e) => {
-    setSurname(e);
-    const nameformat = /^[a-zA-Z_ğüşıöçĞÜŞİÖÇ ]*$/;
-    if (!e.match(nameformat)) {
-      setSurnameValidasyonError({
-        error: true,
-        message: 'Adınız uygun formatta değildir.',
-      });
-    } else {
-      setSurnameValidasyonError({ error: false, message: '' });
-    }
-  };
+  }, [
+    firstOnReadySetValues,
+    selectedCity,
+    selectedDistrict,
+    selectedTown,
+    selectedNeighborhoodAddress,
+  ]);
 
   return (
     <HousePageContainer>
-      {({}) => {
+      {({ }) => {
         return (
           <>
             <img alt="logo" className="bannerzor" src={Banner} />
@@ -304,20 +248,19 @@ const HousePage = () => {
                 </div>
               </div>
               <p className="ilan">İlan Bilgi Formu</p>
-              <form>
+              <form className="ilan-bilgi-formu">
                 {/* TCKN */}
                 <div>
                   <Input
                     text="T.C. Kimlik No"
                     placeholder="T.C. Kimlik No"
-                    error={tcknValidasyonError.error}
+                    error={errors.identityNumber}
+                    errorText={errors.identityNumber}
                     type="number"
-                    value={tckn}
-                    onChange={(e) => checkTCKN(e.target.value)}
+                    value={values.identityNumber}
+                    onChange={handleChange}
+                    name="identityNumber"
                   />
-                  {tcknValidasyonError.error && (
-                    <p>{tcknValidasyonError.message}</p>
-                  )}
                 </div>
                 {/* Ad soyad */}
                 <div>
@@ -325,25 +268,33 @@ const HousePage = () => {
                     <Input
                       text="Adınız"
                       placeholder="Adınız"
-                      error={nameValidasyonError.error}
-                      value={name}
-                      onChange={(e) => changeName(e.target.value)}
+                      error={errors.firstName}
+                      errorText={errors.firstName}
+                      value={values.firstName}
+                      onChange={handleChange}
+                      name="firstName"
                     />
-                    {nameValidasyonError.error && (
-                      <p>{nameValidasyonError.message}</p>
-                    )}
                   </div>
                   <div className="name">
                     <Input
                       text="Soyadınız"
                       placeholder="Soyadınız"
-                      error={surnameValidasyonError.error}
-                      value={surname}
-                      onChange={(e) => changeSurName(e.target.value)}
+                      error={errors.lastName}
+                      errorText={errors.lastName}
+                      value={values.lastName}
+                      onChange={handleChange}
+                      name="lastName"
                     />
-                    {surnameValidasyonError.error && (
-                      <p>{surnameValidasyonError.message}</p>
-                    )}
+                  </div>
+                  <div className="name">
+                    <Datepicker
+                      text="Doğum Tarihi"
+                      selected={birthDate}
+                      onChange={(date) => setBirthDate(date)}
+                      selectsStart
+                      dateFormat="dd MMMM yyyy"
+                      name="birthDate"
+                    />
                   </div>
                 </div>
                 {/* Email Telefon */}
@@ -352,25 +303,23 @@ const HousePage = () => {
                     <Input
                       text="E-posta"
                       placeholder="E-posta"
-                      error={emailValidasyonError.error}
-                      value={email}
-                      onChange={(e) => checkEmail(e.target.value)}
+                      error={errors.email}
+                      errorText={errors.email}
+                      value={values.email}
+                      onChange={handleChange}
+                      name="email"
                     />
-                    {emailValidasyonError.error && (
-                      <p>{emailValidasyonError.message}</p>
-                    )}
                   </div>
                   <div className="name">
                     <Input
                       text="Telefon"
-                      error={phoneValidasyonError.error}
                       placeholder="05xx xxx xx xx"
-                      value={phone}
-                      onChange={(e) => checkPhone(e.target.value)}
+                      error={errors.phone}
+                      errorText={errors.phone}
+                      value={values.phone}
+                      onChange={handleChange}
+                      name="phone"
                     />
-                    {phoneValidasyonError.error && (
-                      <p>{phoneValidasyonError.message}</p>
-                    )}
                   </div>
                 </div>
                 <div className="guest-list-house">
@@ -381,20 +330,32 @@ const HousePage = () => {
                         placeholder="Kaç Kişi Misafir Edebilirsiniz?"
                         text="Kaç Kişi Misafir Edebilirsiniz?"
                         type="number"
-                        value={guest}
-                        onChange={(e) => setGuest(e.target.value)}
+                        error={errors.guestCapacity}
+                        value={values.guestCapacity}
+                        onChange={handleChange}
+                        name="guestCapacity"
                       />
                     </div>
 
                     <div className="guest-list-number">
-                      <Select
+                      <Input
+                        placeholder="Misafirlik Süresi"
                         text="Misafirlik Süresi"
-                        value={accommodationPeriod}
-                        onChange={(e) => setAccommodationPeriod(e.target.value)}
+                        type="number"
+                        error={errors.accommodationAvailabilityDay}
+                        value={values.accommodationAvailabilityDay}
+                        onChange={handleChange}
+                        name="accommodationAvailabilityDay"
+                      />
+                      <Select
+                        text="Period"
+                        value={values.accommodationPeriod}
+                        onChange={handleChange}
+                        name="accommodationPeriod"
                         data={[
-                          { name: '1 Haftaya Kadar' },
-                          { name: '2 Haftaya Kadar' },
-                          { name: '1 Aya Kadar' },
+                          { name: 'Gün' },
+                          { name: 'Hafta' },
+                          { name: 'Ay' },
                           { name: 'Belirsiz' },
                         ]}
                       />
@@ -402,13 +363,21 @@ const HousePage = () => {
                     <div className="guest-list-number">
                       <Select
                         text="Konaklama Türü"
-                        value={accommodationType}
-                        onChange={(e) => setAccommodationType(e.target.value)}
+                        value={values.accommodationType}
+                        onChange={handleChange}
+                        name="accommodationType"
                         data={[
                           { name: 'Ayrı Oda' },
                           { name: 'Otel Odası' },
                           { name: 'Müstakil Ev' },
                         ]}
+                      />
+                      <Checkbox
+                        text="Eşyalı"
+                        type="checkbox"
+                        value={values.furnished}
+                        onChange={(e) => setFurnished(e.target.checked)}
+                        name="furnished"
                       />
                     </div>
                   </div>
@@ -419,11 +388,12 @@ const HousePage = () => {
                     <Datepicker
                       text="Başlangıç Tarihi"
                       selected={startDate}
-                      onChange={(date) => setStartDate(date)}
+                      onChange={(date) => setAvailabilityStartDate(date)}
                       selectsStart
                       startDate={startDate}
                       endDate={endDate}
                       dateFormat="dd MMMM yyyy"
+                      name="accommodationAvailabilityStartDate"
                     />
                   </div>
                   <div className="name">
@@ -437,6 +407,7 @@ const HousePage = () => {
                       minDate={startDate}
                       placeholderText={`${moment().format('MM/DD/YYYY')}`}
                       dateFormat="dd MMMM yyyy"
+                      name="accommodationAvailabilityEndDate"
                     />
                   </div>
                 </div>
@@ -445,15 +416,17 @@ const HousePage = () => {
                   <div className="name">
                     <Select
                       text="İl"
-                      onChange={(e) => setSelectedCity(e.target.value)}
                       data={city}
+                      onChange={handleChange}
+                      name="city"
                     />
                   </div>
                   <div className="name">
                     <Select
                       text="İlçe"
                       disabled={selectedCity === ''}
-                      onChange={(e) => setSelectedDistrict(e.target.value)}
+                      onChange={handleChange}
+                      name="district"
                       data={district}
                     />
                   </div>
@@ -464,7 +437,8 @@ const HousePage = () => {
                     <Select
                       text="Semt"
                       disabled={selectedDistrict === ''}
-                      onChange={(e) => setSelectedTown(e.target.value)}
+                      onChange={handleChange}
+                      name="town"
                       data={town}
                     />
                   </div>
@@ -473,9 +447,8 @@ const HousePage = () => {
                     <Select
                       text="Mahalle"
                       disabled={selectedTown === ''}
-                      onChange={(e) =>
-                        setSelectedNeighborhoodAddress(e.target.value)
-                      }
+                      onChange={handleChange}
+                      name="neighborhood"
                       data={neighborhoodAddress}
                     />
                   </div>
@@ -485,8 +458,9 @@ const HousePage = () => {
                   <TextArea
                     text="Adres Tarifi ( Zorunlu Değil )"
                     placeholder="Adres Tarifi"
-                    value={addressDetail}
-                    onChange={(e) => setAddressDetail(e.target.value)}
+                    value={values.addressDetail}
+                    onChange={handleChange}
+                    name="addressDetail"
                   />
                 </div>
                 {/* Ekstra Bilgi */}
@@ -494,8 +468,9 @@ const HousePage = () => {
                   <TextArea
                     text="Özel Not ( Zorunlu Değil )"
                     placeholder="Ör. Engeli birey var..."
-                    value={note}
-                    onChange={(e) => setNote(e.target.value)}
+                    value={values.note}
+                    onChange={handleChange}
+                    name="note"
                   />
                 </div>
                 <div>
@@ -523,25 +498,9 @@ const HousePage = () => {
                   }}
                 >
                   <Button
-                    disabled={
-                      tckn === '' ||
-                      name === '' ||
-                      surname === '' ||
-                      phone === '' ||
-                      city === '' ||
-                      district === '' ||
-                      guest === '' ||
-                      nameValidasyonError.error ||
-                      surnameValidasyonError.error ||
-                      tcknValidasyonError.error ||
-                      emailValidasyonError.error ||
-                      phoneValidasyonError.error ||
-                      !checkKVKK
-                    }
-                    onClick={(e) => {
-                      e.preventDefault();
-                      handleSubmit();
-                    }}
+                    disabled={!checkKVKK}
+                    onClick={handleSubmit}
+                    type="button"
                     text="Gönder"
                     styleProps={{
                       border: '1px solid #323232',
