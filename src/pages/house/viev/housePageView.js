@@ -8,10 +8,12 @@ import Banner from '../../../assets/images/banner2.png';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../style/housePageStyles.scss';
+import DataTable from "react-data-table-component";
 
 const HousePage = () => {
   const navigate = useNavigate();
   const [note, setNote] = useState('');
+  const [tableData, setTableData] = useState([])
   const [relation, setRelation] = useState('');
   const [tckn, setTckn] = useState('');
   const [name, setName] = useState('');
@@ -33,17 +35,66 @@ const HousePage = () => {
   const [accommodationType, setAccommodationType] = useState('Ayrı Oda');
   const [accommodationPeriod, setAccommodationPeriod] = useState('1 Haftaya Kadar');
   const [formData, setFormData] = useState([
-    {identityNumber:1235678902, firstName: "mehmet", lastName:"yılmaz", relation:"kendisi"}, 
-    {identityNumber:1235678904, firstName: "ahmet", lastName:"yılmaz", relation:"kardeşi"}
+    {identityNumber: 1235678902, firstName: "mehmet", lastName: "yılmaz", relation: "kendisi"},
+    {identityNumber: 1235678904, firstName: "ahmet", lastName: "yılmaz", relation: "kardeşi"}
   ]);
-  const [relationValidasyonError, setRelationValidasyonError] = useState({ error: false, message: '' });
-  const [tcknValidasyonError, setTCKNValidasyonError] = useState({ error: false, message: '' });
-  const [guestValidasyonError, setGuestValidasyonError] = useState({ error: false, message: '' });
-  const [emailValidasyonError, setEmailValidasyonError] = useState({ error: false, message: '' });
-  const [phoneValidasyonError, setPhoneValidasyonError] = useState({ error: false, message: '' });
-  const [nameValidasyonError, setNameValidasyonError] = useState({ error: false, message: '' });
-  const [surnameValidasyonError, setSurnameValidasyonError] = useState({ error: false, message: '' });
+  const [relationValidasyonError, setRelationValidasyonError] = useState({error: false, message: ''});
+  const [tcknValidasyonError, setTCKNValidasyonError] = useState({error: false, message: ''});
+  const [guestValidasyonError, setGuestValidasyonError] = useState({error: false, message: ''});
+  const [emailValidasyonError, setEmailValidasyonError] = useState({error: false, message: ''});
+  const [phoneValidasyonError, setPhoneValidasyonError] = useState({error: false, message: ''});
+  const [nameValidasyonError, setNameValidasyonError] = useState({error: false, message: ''});
+  const [surnameValidasyonError, setSurnameValidasyonError] = useState({error: false, message: ''});
   const [selectedTown, setSelectedTown] = useState('');
+  const columns = [
+    {
+      name: "Tc",
+      selector: (row) => row.identityNumber,
+    },
+    {
+      name: "Ad",
+      selector: (row) => row.firstName,
+    },
+    {
+      name: "Soyad",
+      selector: (row) => row.lastName,
+    },
+    {
+      name: "Yakınlık",
+      selector: (row) => row.relation,
+    },
+  ];
+  const customStyles = {
+    rows: {
+      style: {
+        borderBottom: "1px solid #D0D0D0",
+        borderLeft: "1px solid #D0D0D0",
+        borderRight: "1px solid #D0D0D0",
+        minHeight: "72px", // override the row height
+      },
+    },
+    headRow: {
+      style: {
+        backgroundColor: "#F5F5F5",
+        minHeight: "52px",
+        borderRadius: "16px 16px 0px 0px",
+        border: "1px solid #D0D0D0",
+        fontWeight: 900,
+      },
+    },
+    headCells: {
+      style: {
+        paddingLeft: "5px", // override the cell padding for head cells
+        paddingRight: "8px",
+      },
+    },
+    cells: {
+      style: {
+        paddingLeft: "8px", // override the cell padding for data cells
+        paddingRight: "8px",
+      },
+    },
+  };
 
   useEffect(() => {
     async function fetchData() {
@@ -59,6 +110,7 @@ const HousePage = () => {
           return error;
         });
     }
+
     fetchData();
   }, []);
 
@@ -78,6 +130,7 @@ const HousePage = () => {
           });
       }
     }
+
     fetchData();
   }, [selectedCity]);
 
@@ -97,6 +150,7 @@ const HousePage = () => {
           });
       }
     }
+
     fetchData();
   }, [selectedDistrict]);
 
@@ -116,6 +170,7 @@ const HousePage = () => {
           });
       }
     }
+
     fetchData();
   }, [selectedTown]);
 
@@ -137,6 +192,8 @@ const HousePage = () => {
       accommodationPeriod,
     };
     setFormData(prev => [...prev, {...params}]);
+    const newData = (data) => ([...data, params])
+    setTableData(newData);
     resetForm();
   };
   const resetForm = () => {
@@ -153,9 +210,9 @@ const HousePage = () => {
     setAddressDetail('');
     setAccommodationType('Ayrı Oda');
     setAccommodationPeriod('1 Haftaya Kadar');
-    setTCKNValidasyonError({ error: false, message: '' });
-    setEmailValidasyonError({ error: false, message: '' });
-    setPhoneValidasyonError({ error: false, message: '' });
+    setTCKNValidasyonError({error: false, message: ''});
+    setEmailValidasyonError({error: false, message: ''});
+    setPhoneValidasyonError({error: false, message: ''});
   }
   const sendPost = async () => {
     await axios({
@@ -192,10 +249,10 @@ const HousePage = () => {
   const checkRelation = (e) => {
     setRelation(e);
     const relationFormat = /^[a-zA-Z_ğüşıöçĞÜŞİÖÇ]*$/;
-    if (!e.length|| !e.match(relationFormat)) {
-      setRelationValidasyonError({ error: true, message: 'Yakınlık derecesi uygun formatta değildir.' });
+    if (!e.length || !e.match(relationFormat)) {
+      setRelationValidasyonError({error: true, message: 'Yakınlık derecesi uygun formatta değildir.'});
     } else {
-      setRelationValidasyonError({ error: false, message: '' });
+      setRelationValidasyonError({error: false, message: ''});
     }
   };
 
@@ -203,9 +260,9 @@ const HousePage = () => {
     setTckn(e);
     const tcknformat = /^[1-9]{1}[0-9]{9}[02468]{1}$/;
     if (e.length !== 11 || !e.match(tcknformat)) {
-      setTCKNValidasyonError({ error: true, message: 'T.C. Kimlik Numarası uygun formatta değildir.' });
+      setTCKNValidasyonError({error: true, message: 'T.C. Kimlik Numarası uygun formatta değildir.'});
     } else {
-      setTCKNValidasyonError({ error: false, message: '' });
+      setTCKNValidasyonError({error: false, message: ''});
     }
   };
 
@@ -213,9 +270,9 @@ const HousePage = () => {
     setEmail(e);
     const emailformat = /^([A-Za-z]|[0-9])+$/;
     if (!e.length || e.match(emailformat)) {
-      setEmailValidasyonError({ error: true, message: 'Eposta adresi uygun formatta değildir.' });
+      setEmailValidasyonError({error: true, message: 'Eposta adresi uygun formatta değildir.'});
     } else {
-      setEmailValidasyonError({ error: false, message: '' });
+      setEmailValidasyonError({error: false, message: ''});
     }
   };
 
@@ -223,9 +280,9 @@ const HousePage = () => {
     setPhone(e);
     const phoneformat = /^(05)([0-9]{2})\s?([0-9]{3})\s?([0-9]{2})\s?([0-9]{2})$/;
     if (!e.match(phoneformat)) {
-      setPhoneValidasyonError({ error: true, message: 'Telefon numarası uygun formatta değildir.' });
+      setPhoneValidasyonError({error: true, message: 'Telefon numarası uygun formatta değildir.'});
     } else {
-      setPhoneValidasyonError({ error: false, message: '' });
+      setPhoneValidasyonError({error: false, message: ''});
     }
   };
 
@@ -233,9 +290,9 @@ const HousePage = () => {
     setGuest(e);
     const guestFormat = /^[0-9]+$/;
     if (!e.length || !e.match(guestFormat)) {
-      setGuestValidasyonError({ error: true, message: 'Misafir sayısı uygun formatta değildir.' });
+      setGuestValidasyonError({error: true, message: 'Misafir sayısı uygun formatta değildir.'});
     } else {
-      setGuestValidasyonError({ error: false, message: '' });
+      setGuestValidasyonError({error: false, message: ''});
     }
   };
 
@@ -244,9 +301,9 @@ const HousePage = () => {
     setName(e);
     const nameformat = /^[a-zA-Z_ğüşıöçĞÜŞİÖÇ ]*$/;
     if (!e.length || !e.match(nameformat)) {
-      setNameValidasyonError({ error: true, message: 'Adınız uygun formatta değildir.' });
+      setNameValidasyonError({error: true, message: 'Adınız uygun formatta değildir.'});
     } else {
-      setNameValidasyonError({ error: false, message: '' });
+      setNameValidasyonError({error: false, message: ''});
     }
   };
 
@@ -254,9 +311,9 @@ const HousePage = () => {
     setSurname(e);
     const nameformat = /^[a-zA-Z_ğüşıöçĞÜŞİÖÇ ]*$/;
     if (!e.length || !e.match(nameformat)) {
-      setSurnameValidasyonError({ error: true, message: 'Adınız uygun formatta değildir.' });
+      setSurnameValidasyonError({error: true, message: 'Adınız uygun formatta değildir.'});
     } else {
-      setSurnameValidasyonError({ error: false, message: '' });
+      setSurnameValidasyonError({error: false, message: ''});
     }
   };
 
@@ -265,19 +322,20 @@ const HousePage = () => {
       {({}) => {
         return (
           <>
-            <img alt='logo' className='bannerzor' src={Banner} />
+            <img alt='logo' className='bannerzor' src={Banner}/>
             <div className='house-container'>
               <p className='guest-text'>Misafir Etmek İstiyorum</p>
               <div className='guest-text-container'>
                 <div className='guest-text2'>
-                  Doldurduğunuz formdaki bilgiler konaklama ihtiyacı sahipleri için listelenecek ve görüntülenebilecektir. Konaklama
+                  Doldurduğunuz formdaki bilgiler konaklama ihtiyacı sahipleri için listelenecek ve
+                  görüntülenebilecektir. Konaklama
                   ihtiyacı sahipleri sizleri arayabilir ve görüşebilir. Yardımcı olduğunuz için teşekkür ederiz.
                 </div>
               </div>
               <p className='ilan'>İlan Bilgi Formu</p>
               <div className='grid grid-cols-6 gap-4'>
                 <form className='grid gap-6 col-span-4 w-100 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2'>
-                <div>
+                  <div>
                     <Input
                       text='Yakınlık Derecesi'
                       placeholder='Yakınlık Derecesi'
@@ -360,7 +418,7 @@ const HousePage = () => {
                       text='Misafirlik Süresi'
                       value={accommodationPeriod}
                       onChange={(e) => setAccommodationPeriod(e.target.value)}
-                      data={[{ name: '1 Haftaya Kadar' }, { name: '2 Haftaya Kadar' }, { name: '1 Aya Kadar' }, { name: 'Belirsiz' }]}
+                      data={[{name: '1 Haftaya Kadar'}, {name: '2 Haftaya Kadar'}, {name: '1 Aya Kadar'}, {name: 'Belirsiz'}]}
                     />
                   </div>
                   <div>
@@ -368,11 +426,11 @@ const HousePage = () => {
                       text='Konaklama Türü'
                       value={accommodationType}
                       onChange={(e) => setAccommodationType(e.target.value)}
-                      data={[{ name: 'Ayrı Oda' }, { name: 'Otel Odası' }, { name: 'Müstakil Ev' }]}
+                      data={[{name: 'Ayrı Oda'}, {name: 'Otel Odası'}, {name: 'Müstakil Ev'}]}
                     />
                   </div>
                   <div>
-                    <Select text='İl' onChange={(e) => setSelectedCity(e.target.value)} data={city} />
+                    <Select text='İl' onChange={(e) => setSelectedCity(e.target.value)} data={city}/>
                   </div>
                   <div>
                     <Select
@@ -384,7 +442,8 @@ const HousePage = () => {
                     />
                   </div>
                   <div>
-                    <Select text='Semt' disabled={selectedDistrict === ''} onChange={(e) => setSelectedTown(e.target.value)} data={town} />
+                    <Select text='Semt' disabled={selectedDistrict === ''}
+                            onChange={(e) => setSelectedTown(e.target.value)} data={town}/>
                   </div>
                   <div>
                     <Select
@@ -454,54 +513,87 @@ const HousePage = () => {
                       }}
                     />
 
-                    <ToastContainer />
+                    <ToastContainer/>
                   </div>
                 </form>
 
-                <table className="table-auto col-span-2 guest-table">
-                  <thead>
-                    <tr>
-                      <th>TC</th>  
-                      <th>Ad</th>
-                      <th>Soyad</th>
-                      <th>Yakınlık</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {
-                      formData.map(data => {
-                        return (
-                          <tr key={data.identityNumber}>
-                            <td>{data.identityNumber}</td>
-                            <td>{data.firstName}</td>
-                            <td>{data.lastName}</td>
-                            <td>{data.relation}</td>
-                          </tr>
-                        )
-                      })
-                    }
-                  </tbody>
-                </table>           
-                <Button
-                    disabled={!formData.length}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      sendPost();
-                    }}
-                    text='Gönder'
-                    styleProps={{
-                      border: '1px solid #323232',
-                      borderRadius: 10,
-                      backgroundColor: '#323232',
-                      width: '100px',
-                      color: '#FFFFFF',
-                      padding: '5px 10px',
-                      position: 'absolute',
-                      top: '250px',
-                      right: '35px',
-                      margin: '20px 20px' 
-                    }}
+                {/*<table className="table-auto col-span-2 guest-table">*/}
+                {/*  <thead>*/}
+                {/*    <tr>*/}
+                {/*      <th>TC</th>  */}
+                {/*      <th>Ad</th>*/}
+                {/*      <th>Soyad</th>*/}
+                {/*      <th>Yakınlık</th>*/}
+                {/*    </tr>*/}
+                {/*  </thead>*/}
+                {/*  <tbody>*/}
+                {/*    {*/}
+                {/*      formData.map(data => {*/}
+                {/*        return (*/}
+                {/*          <tr key={data.identityNumber}>*/}
+                {/*            <td>{data.identityNumber}</td>*/}
+                {/*            <td>{data.firstName}</td>*/}
+                {/*            <td>{data.lastName}</td>*/}
+                {/*            <td>{data.relation}</td>*/}
+                {/*          </tr>*/}
+                {/*        )*/}
+                {/*      })*/}
+                {/*    }*/}
+                {/*  </tbody>*/}
+                {/*</table>           */}
+
+                <div className='grid col-span-2'>
+                  <DataTable
+                    columns={columns}
+                    data={tableData}
+                    responsive
+                    customStyles={customStyles}
+                    noDataComponent="Eklenmiş kişiler"
                   />
+
+                  {tableData && tableData.length > 0 &&
+                    <Button
+                      text='Gönder'
+                      onClick={(e) => {
+                        e.preventDefault();
+                        sendPost();
+                      }}
+                      styleProps={{
+                        border: '1px solid #323232',
+                        borderRadius: 48,
+                        backgroundColor: '#323232',
+                        color: '#FFFFFF',
+                        padding: '10px 20px',
+                        height: '50px',
+                        width: '50%',
+                        marginBottom: '130px',
+                        marginLeft: '104px'
+                      }}
+                    />
+                  }
+                  
+                  {/*<Button*/}
+                  {/*  disabled={!formData.length}*/}
+                  {/*  onClick={(e) => {*/}
+                  {/*    e.preventDefault();*/}
+                  {/*    sendPost();*/}
+                  {/*  }}*/}
+                  {/*  text='Gönder'*/}
+                  {/*  styleProps={{*/}
+                  {/*    border: '1px solid #323232',*/}
+                  {/*    borderRadius: 10,*/}
+                  {/*    backgroundColor: '#323232',*/}
+                  {/*    width: '100px',*/}
+                  {/*    color: '#FFFFFF',*/}
+                  {/*    padding: '5px 10px',*/}
+                  {/*    position: 'absolute',*/}
+                  {/*    top: '250px',*/}
+                  {/*    right: '35px',*/}
+                  {/*    margin: '20px 20px'*/}
+                  {/*  }}*/}
+                  {/*/>*/}
+                </div>
+
               </div>
             </div>
           </>
