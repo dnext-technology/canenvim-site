@@ -248,23 +248,23 @@ const HousePage = () => {
                 </div>
               </div>
               <p className="ilan">İlan Bilgi Formu</p>
-              <form className="ilan-bilgi-formu">
-                {/* TCKN */}
-                <div>
-                  <Input
-                    text="T.C. Kimlik No"
-                    placeholder="T.C. Kimlik No"
-                    error={errors.identityNumber}
-                    errorText={errors.identityNumber}
-                    type="number"
-                    value={values.identityNumber}
-                    onChange={handleChange}
-                    name="identityNumber"
-                  />
-                </div>
+              <form className="row w-75 mx-auto px-0 ilan-bilgi-formu">
                 {/* Ad soyad */}
-                <div>
-                  <div>
+                <div className="row">
+                  {/* TCKN */}
+                  <div className="col-lg-6">
+                    <Input
+                      text="T.C. Kimlik No"
+                      placeholder="T.C. Kimlik No"
+                      error={errors.identityNumber}
+                      errorText={errors.identityNumber}
+                      type="number"
+                      value={values.identityNumber}
+                      onChange={handleChange}
+                      name="identityNumber"
+                    />
+                  </div>
+                  <div className="col-lg-6">
                     <Input
                       text="Adınız"
                       placeholder="Adınız"
@@ -275,7 +275,7 @@ const HousePage = () => {
                       name="firstName"
                     />
                   </div>
-                  <div className="name">
+                  <div className="col-lg-6">
                     <Input
                       text="Soyadınız"
                       placeholder="Soyadınız"
@@ -286,7 +286,7 @@ const HousePage = () => {
                       name="lastName"
                     />
                   </div>
-                  <div className="name">
+                  <div className="col-lg-6">
                     <Datepicker
                       text="Doğum Tarihi"
                       selected={birthDate}
@@ -298,8 +298,8 @@ const HousePage = () => {
                   </div>
                 </div>
                 {/* Email Telefon */}
-                <div className="name-surname">
-                  <div className="name">
+                <div className="row">
+                  <div className="col-lg-6">
                     <Input
                       text="E-posta"
                       placeholder="E-posta"
@@ -310,7 +310,7 @@ const HousePage = () => {
                       name="email"
                     />
                   </div>
-                  <div className="name">
+                  <div className="col-lg-6">
                     <Input
                       text="Telefon"
                       placeholder="05xx xxx xx xx"
@@ -324,8 +324,8 @@ const HousePage = () => {
                 </div>
                 <div className="guest-list-house">
                   {/* Kaç Misafir Kaç Çocuk */}
-                  <div className="name-surname">
-                    <div className="guest-list-number">
+                  <div className="row">
+                    <div className="col-lg-4">
                       <Input
                         placeholder="Kaç Kişi Misafir Edebilirsiniz?"
                         text="Kaç Kişi Misafir Edebilirsiniz?"
@@ -337,7 +337,7 @@ const HousePage = () => {
                       />
                     </div>
 
-                    <div className="guest-list-number">
+                    <div className="col-lg-4">
                       <Input
                         placeholder="Misafirlik Süresi"
                         text="Misafirlik Süresi"
@@ -347,6 +347,8 @@ const HousePage = () => {
                         onChange={handleChange}
                         name="accommodationAvailabilityDay"
                       />
+                    </div>
+                    <div className="col-lg-4">
                       <Select
                         text="Period"
                         value={values.accommodationPeriod}
@@ -358,9 +360,9 @@ const HousePage = () => {
                           { name: 'Ay' },
                           { name: 'Belirsiz' },
                         ]}
-                      />
+                        />
                     </div>
-                    <div className="guest-list-number">
+                    <div className="col-lg-6">
                       <Select
                         text="Konaklama Türü"
                         value={values.accommodationType}
@@ -372,6 +374,8 @@ const HousePage = () => {
                           { name: 'Müstakil Ev' },
                         ]}
                       />
+                    </div>
+                    <div className="col-lg-6">
                       <Checkbox
                         text="Eşyalı"
                         type="checkbox"
@@ -383,8 +387,8 @@ const HousePage = () => {
                   </div>
                 </div>
                 {/* Başlangıç tarihi ve Bitiş tarihi */}
-                <div className="name-surname">
-                  <div className="name">
+                <div className="row">
+                  <div className="col-lg-6">
                     <Datepicker
                       text="Başlangıç Tarihi"
                       selected={startDate}
@@ -396,7 +400,7 @@ const HousePage = () => {
                       name="accommodationAvailabilityStartDate"
                     />
                   </div>
-                  <div className="name">
+                  <div className="col-lg-6">
                     <Datepicker
                       text="Bitiş Tarihi"
                       selected={endDate}
@@ -412,8 +416,8 @@ const HousePage = () => {
                   </div>
                 </div>
                 {/* İl İlçe */}
-                <div className="name-surname">
-                  <div className="name">
+                <div className="row">
+                  <div className="col-lg-6">
                     <Select
                       text="İl"
                       data={city}
@@ -421,7 +425,7 @@ const HousePage = () => {
                       name="city"
                     />
                   </div>
-                  <div className="name">
+                  <div className="col-lg-6">
                     <Select
                       text="İlçe"
                       disabled={selectedCity === ''}
@@ -432,8 +436,8 @@ const HousePage = () => {
                   </div>
                 </div>
                 {/* Semt Mahalle */}
-                <div className="name-surname">
-                  <div className="name">
+                <div className="row">
+                  <div className="col-lg-6">
                     <Select
                       text="Semt"
                       disabled={selectedDistrict === ''}
@@ -442,8 +446,7 @@ const HousePage = () => {
                       data={town}
                     />
                   </div>
-                  <div className="name">
-                    <span> </span>
+                  <div className="col-lg-6">
                     <Select
                       text="Mahalle"
                       disabled={selectedTown === ''}
@@ -473,7 +476,7 @@ const HousePage = () => {
                     name="note"
                   />
                 </div>
-                <div>
+                <div className="mt-4 mb-2">
                   {/* <TextArea placeholder="Örnek: Engelli birey var" value={neighborhood} onChange={(e) => setNeighborhood(e.target.value)}/> */}
                   <input
                     value={checkKVKK}
@@ -484,7 +487,7 @@ const HousePage = () => {
                     id="vehicle1"
                     name="vehicle1"
                   ></input>
-                  <a download="KVKK.pdf" href="KVKK.pdf">
+                  <a download="KVKK.pdf" className="kvkkText" href="KVKK.pdf">
                     KVKK Metnini okudum ve kabul ediyorum.<span>*</span>
                   </a>
                 </div>

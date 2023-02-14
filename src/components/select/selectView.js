@@ -8,7 +8,7 @@ const Select = ({ text, data, styleProps, ...props }) => {
   focus:outline-none focus:ring-indigo-500 sm:text-sm`;
   return (
     <>
-      {text && <span name='block text-sm font-medium text-gray-700'>{text}</span>}
+      {text && <span className="line-default label">{text}</span>}
       <select
         className={cssClassName}
         style={styleProps}
