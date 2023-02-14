@@ -25,8 +25,9 @@ const SubPageHeader = () => {
             />
             <div className="header-nav">
               <span onClick={() => navigate('misafir-kabul-edebilenler')}>Misafir Kabul Edebilenler</span>
-              <span onClick={() => navigate('misafir-etmek-istiyorum')}>Konaklamaya Uygun Yerim Var</span>
-              <span onClick={() => navigate('can-evim-hakkinda')}>Hakkımızda</span>
+              <span onClick={() => navigate('misafir-etmek-istiyorum')}>Misafir Kabul Et</span>
+              <span onClick={() => navigate('konaklamaya-ihtiyacim-var')}>Konaklama ihtiyacım var</span>
+              <span onClick={() => navigate('depremzede-konaklama-talepleri')}>Konaklama ihtiyacı olanlar</span>
               <div className='social-logos'>
                 <Link to="https://twitter.com/canevim_tr" target="_blank">
                   <FaTwitter />
