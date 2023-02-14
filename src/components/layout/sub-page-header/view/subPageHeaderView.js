@@ -1,15 +1,24 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaTwitter, FaInstagram } from 'react-icons/fa';
 import { useNavigate, Link } from 'react-router-dom';
+import useWindowSize from '../../../../hooks/useWindowSize';
+import Drawer from '../../../drawer';
 import SubPageHeaderContainer from '../container/subPageHeaderContainer';
 
 import '../style/subPageHeaderStyles.scss';
 
 const SubPageHeader = () => {
   const navigate = useNavigate();
-  const [isVisibleMobileMenu, setIsVisibleMobileMenu] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const window = useWindowSize();
+
+  useEffect(() => {
+    if (window.width > 768 && open) {
+      setOpen(false);
+    }
+  }, [window.width, open]);
 
   // TODO: Giriş Yap buttons commented, maybe it will be added later.
   return (
@@ -44,15 +53,12 @@ const SubPageHeader = () => {
             <img
               alt="menu-icon"
               className="menu-icon"
+              style={{ cursor: 'pointer' }}
               src={menuIcon}
-              onClick={() => setIsVisibleMobileMenu(!isVisibleMobileMenu)}
+              onClick={() => setOpen(!open)}
             />
           </header>
-          {isVisibleMobileMenu && (
-            <div className="header-mobile">
-              <span onClick={() => navigate('can-evim-hakkinda')}>Hakkımızda</span>
-            </div>
-          )}
+          <Drawer open={open} setOpen={setOpen} />
         </>
       )}
     </SubPageHeaderContainer>
