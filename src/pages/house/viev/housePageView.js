@@ -218,7 +218,7 @@ const HousePage = () => {
                 </div>
               </div>
               <p className="ilan">İlan Bilgi Formu</p>
-              <form>
+              <form className="ilan-bilgi-formu">
                 {/* TCKN */}
                 <div>
                   <Input

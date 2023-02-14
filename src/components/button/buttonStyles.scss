@@ -58,11 +58,17 @@
     background-color:#ffb400;
     padding:8px 25px;
     border-radius:3px;
+    transition:all ease .5s;
+    border:1px solid #ffb400;
     span{
       font-size:18px;
       color:#ffffff;
       font-weight:600;
       line-height:1.5;
+    }
+    &:hover{
+      background-color:#ffb400b3;
+      border-color:#ffffff;
     }
    }
    &.third{
