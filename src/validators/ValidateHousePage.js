@@ -1,17 +1,16 @@
+import { regexTcNumber } from '../utils/tcknRegex';
+
 const ValidateHousePage = (values) => {
   const errors = {};
 
-  const tcknRegex = /^[1-9]{1}[0-9]{9}[02468]{1}$/;
+  // const tcknRegex = /^[1-9]{1}[0-9]{9}[02468]{1}$/;
   const nameAndSurnameRegex = /^[a-zA-Z_ğüşıöçĞÜŞİÖÇ ]*$/;
   const emailRegex = /^([A-Za-z]|[0-9])+$/;
   const phoneRegex = /^(05)([0-9]{2})\s?([0-9]{3})\s?([0-9]{2})\s?([0-9]{2})$/;
 
   if (!values.identityNumber) {
     errors.identityNumber = 'Zorunlu Alan!';
-  } else if (
-    values.identityNumber.length !== 11 ||
-    !values.identityNumber.match(tcknRegex)
-  ) {
+  } else if (!regexTcNumber(values.identityNumber)) {
     errors.identityNumber = 'T.C. Kimlik Numarası uygun formatta değildir.';
   }
 
