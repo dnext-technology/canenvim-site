@@ -4,75 +4,126 @@
   
   
   .footer-home{
+        width: 100%;
+        background: #1e1e1e;
+        color: #ffffff;
+        padding:30px 0px;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        flex-direction:column;
+        .base-container{
+          max-width:1200px;
+          display:flex;
+          align-items:start;
+          flex-wrap: wrap;
+          @include xxl{
+            max-width:993px;
+          }
+          @include xl{
+            max-width: 768px;
+          }
+          @include md{
+            flex-direction: column;
+          }
+          
+        }
+        .copyRight{
+          border-top:1px solid #d9d9d9;
+          margin-top:30px;
+          padding-top:30px;
+          text-align:center;
+          width:100%;
+        }
+        .col-3{
+          width:25%;
+          padding:0px 15px;
+          @include xl{
+            width:50%;
+            margin-bottom:30px;
+          }
+          @include md{
+            width:100%;
+            text-align:center;
+          }
+        }
+        .content{
+          .footerLogo{
+            max-width:128px;
+            @include md{
+              margin:auto;
+            }
+          }
+          .footerText{
+            margin:30px 0px;
+            color:#bcbcbc;
+            font-weight:600;
+            line-height:1.6;
+            font-size:14px;
+          }
+          .footerTitle{
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            position:relative;
+            &:before{
+              content:'';
+              position:absolute;
+              left:0px;
+              bottom:0px;
+              width:40px;
+              height:1px;
+              background-color:#d9d9d9;
+              @include md{
+                left:50%;
+                margin-left:-20px;
+              }
+            }
+          }
+          .footerMenu{
+            li{
+              margin-bottom:10px;
+              svg{
+                display:inline-block;
+                font-size:24px;
+                margin-right:8px;
+              }
+              a{
+                color:#bcbcbc;
+                font-size:16px;
+                font-weight:600;
+                transition:all ease .5s;
+                cursor:pointer;
+                &:hover{
+                  color:#ffffff;
+                }
+              }
+            }
+            &.contact{
+              li{
+                margin-bottom:20px;   
+              }
+            }
+          }
+        }
         
-        width: 100%;
-        left: 0px;    
-        border-radius: 0px;
-        background: #323232;
-        color: #ffff;
-        position: relative;
-        bottom: 0px;
-        width: 100%;
-        height: auto; 
-
-
-
-    
-    .footer-detail-bottom{
-      display: flex;
-      justify-content: space-around;
-      align-items: flex-start;
-      margin: 20px;
-      padding: 40px 0;
-      border-bottom: 1px solid #454343;
-
-      .footer-logo {
-        height: 60px;
-        cursor: pointer;
-      }
-      .footer-bottom-left{
-        width: 306px;
-        margin: 10px 0;
-      }
-      .footer-bottom-center{
-        .gizlilik{
-          font-size: 24px;
-          line-height: 27px;
-          margin-bottom: 15px;
-          cursor: pointer;
-
-        }
-        div{
-          margin: 0 0 5px 0;
-        }
-      }
-      .footer-bottom-right{
-        .iletisim{
-          font-size: 24px;
-          line-height: 27px;
-          margin-bottom: 15px;
-
-        }
-      }
-      
-    }
     .socials{
       display: flex;
       justify-content: space-between;
-      padding: 0 9em 2em;
       align-items: center;
+      @include md{
+        justify-content:center;
+      }
       .social-network{
         display: flex;
         justify-content: space-between;
         svg{
-          font-size: xx-large;
+          font-size: 24px;
           color: #ffff;
         }
-        
-        
         div{
           margin: 0 10px;
-          
         }
       }
     }
