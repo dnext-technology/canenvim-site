@@ -2,6 +2,7 @@
 import { bool, func } from 'prop-types';
 import React from 'react';
 import { useNavigate } from 'react-router';
+import logo from '../../assets/images/canevim-logo-dark-landscape.svg';
 import './drawerStyles.scss';
 
 const arrLinks = [
@@ -42,10 +43,18 @@ const Drawer = ({ open = false, setOpen }) => {
           onClick={() => setOpen(false)}
         />
         <ul className="styledDrawer_links">
-          <div
-            className="styledDrawer_links_close"
-            onClick={() => setOpen(false)}
-          />
+          <div>
+            <div
+              className="styledDrawer_links_close"
+              onClick={() => setOpen(false)}
+            />
+            <img
+              alt="logo"
+              className="styledDrawer_links_logo"
+              src={logo}
+              onClick={() => navigate('/')}
+            />
+          </div>
           {arrLinks.map((item, i) => (
             <li
               className="styledDrawer_links_item"
