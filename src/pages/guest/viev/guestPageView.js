@@ -11,7 +11,6 @@ import DataTable from 'react-data-table-component';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPencil, faRemove } from '@fortawesome/free-solid-svg-icons'
 import moment from "moment";
-import data from "bootstrap/js/src/dom/data";
 
 const GuestPage = () => {
   const {REACT_APP_BASE_URL, REACT_APP_BOOKING_API, REACT_APP_LOCATION_API} = process.env;
