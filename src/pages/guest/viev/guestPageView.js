@@ -11,6 +11,7 @@ import DataTable from 'react-data-table-component';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPencil, faRemove } from '@fortawesome/free-solid-svg-icons'
 import moment from "moment";
+import data from "bootstrap/js/src/dom/data";
 
 const GuestPage = () => {
   const {REACT_APP_BASE_URL, REACT_APP_BOOKING_API, REACT_APP_LOCATION_API} = process.env;
@@ -40,13 +41,19 @@ const GuestPage = () => {
   const [accommodationType, setAccommodationType] = useState("Ayrı Oda");
   const [accommodationPeriod, setAccommodationPeriod] = useState("");
   const [changed, setChanged] = useState(false);
-  const [tcknValidasyonError, setTCKNValidasyonError] = useState({error: false, message: "", stateName: ""})
-  const [emailValidasyonError, setEmailValidasyonError] = useState({error: false, message: ""})
-  const [phoneValidasyonError, setPhoneValidasyonError] = useState({error: false, message: ""})
-  const [nameValidasyonError, setNameValidasyonError] = useState({error: false, message: ""})
+  const [tcknValidationError, setTCKNValidationError] = useState({error: false, message: "", stateName: ""})
+  const [birthDateValidationError, setBirthDateValidationError] = useState({error: false, message: "", stateName: ""})
+  const [emailValidationError, setEmailValidationError] = useState({error: false, message: ""})
+  const [phoneValidationError, setPhoneValidationError] = useState({error: false, message: ""})
+  const [nameValidationError, setNameValidationError] = useState({error: false, message: ""})
   const [guestFirstNameValidationError, setGuestFirstNameValidationError] = useState({error: false, message: ""})
   const [guestLastNameValidationError, setGuestLastNameValidationError] = useState({error: false, message: ""})
-  const [surnameValidasyonError, setSurnameValidasyonError] = useState({error: false, message: ""})
+  const [guestTckNoValidationError, setGuestTckNoValidationError] = useState({
+    error: false,
+    message: "",
+    stateName: ""
+  })
+  const [surnameValidationError, setSurnameValidationError] = useState({error: false, message: ""})
   const [selectedTown, setSelectedTown] = useState("");
   const [isEdited, setEdited] = useState(false);
   const [birthDate, setBirthDate] = useState('');
@@ -245,28 +252,27 @@ const GuestPage = () => {
       });
   };
 
-  const checkTCKN = (e, stateName, fcn) => {
+  const checkTCKN = (e, setStateName, setValidationName) => {
     const tcknformat = /^[1-9]{1}[0-9]{9}[02468]{1}$/;
     if (e.length !== 11 || !e.match(tcknformat)) {
-      setTCKNValidasyonError({
+      setValidationName({
         error: true,
-        message: "T.C. Kimlik Numarası uygun formatta değildir.",
-        stateName: stateName
+        message: "T.C. Kimlik Numarası uygun formatta değildir."
       })
     } else {
-      setTCKNValidasyonError({error: false, message: "", stateName: stateName})
+      setValidationName({error: false, message: ""})
     }
-    return fcn(e);
+    setStateName(e)
   }
 
   const checkEmail = (e) => {
     setEmail(e)
     const emailformat = /^([A-Za-z]|[0-9])+$/;
     if (e.match(emailformat)) {
-      setEmailValidasyonError({error: true, message: "Eposta adresi uygun formatta değildir."})
+      setEmailValidationError({error: true, message: "Eposta adresi uygun formatta değildir."})
 
     } else {
-      setEmailValidasyonError({error: false, message: ""})
+      setEmailValidationError({error: false, message: ""})
     }
   }
 
@@ -274,10 +280,10 @@ const GuestPage = () => {
     setPhone(e)
     const phoneformat = /^(05)([0-9]{2})\s?([0-9]{3})\s?([0-9]{2})\s?([0-9]{2})$/;
     if (!e.match(phoneformat)) {
-      setPhoneValidasyonError({error: true, message: "Telefon numarası uygun formatta değildir."})
+      setPhoneValidationError({error: true, message: "Telefon numarası uygun formatta değildir."})
 
     } else {
-      setPhoneValidasyonError({error: false, message: ""})
+      setPhoneValidationError({error: false, message: ""})
     }
   }
 
@@ -285,6 +291,16 @@ const GuestPage = () => {
     const nameformat = /^[a-zA-Z_ğüşıöçĞÜŞİÖÇ ]*$/;
     if (!e.match(nameformat)) {
       setValidationName({error: true, message: "Girdiğiniz bilgi doğru formatta değildir."})
+    } else {
+      setValidationName({error: false, message: ""})
+    }
+    setStateName(e);
+  }
+
+  const changeBirthDate = (e, setStateName, setValidationName) => {
+    const isDate = moment.isDate(e);
+    if (!isDate) {
+      setValidationName({error: true, message: "Geçerli bir tarih giriniz."})
     } else {
       setValidationName({error: false, message: ""})
     }
@@ -360,57 +376,60 @@ const GuestPage = () => {
                 {/* TCKN */}
                 <div className='d-flex flex-column col-md-6 mb-1'>
                   <span className="line-default label">T.C. Kimlik No <span style={{color: "#D42E13"}}>*</span></span>
-                  <Input error={tcknValidasyonError.error && tcknValidasyonError.stateName === 'tckn'}
+                  <Input error={tcknValidationError.error}
                          styleProps={{maxWidth: '100%'}} placeholder="T.C. Kimlik No"
                          type="number" value={tckn}
-                         onChange={(e) => checkTCKN(e.target.value, 'tckn', (item) => setTckn(item))}/>
-                  {tcknValidasyonError.error && tcknValidasyonError.stateName === 'tckn' &&
-                    <p style={{color: "#525252", marginLeft: 5}}>{tcknValidasyonError.message}</p>}
+                         onChange={(e) => checkTCKN(e.target.value, setTckn, setTCKNValidationError)}/>
+                  {tcknValidationError.error &&
+                    <p style={{color: "#525252", marginLeft: 5}}>{tcknValidationError.message}</p>}
                 </div>
                 {/*Doğum tarihi*/}
                 <div className='d-flex flex-column col-md-6 mb-1'>
                   <span className="line-default label">Doğum tarihi <span style={{color: "#D42E13"}}>*</span></span>
                   <Datepicker
                     selected={birthDate}
-                    onChange={(date) => setBirthDate(date)}
+                    onChange={(date) => changeBirthDate(date, setBirthDate, setBirthDateValidationError)}
+                    error={birthDateValidationError.error}
                     placeholderText='Doğum tarihi'
                     dateFormat="dd MMMM yyyy"
                   />
+                  {birthDateValidationError.error &&
+                    <p style={{color: "#525252", marginLeft: 5}}>{birthDateValidationError.message}</p>}
                 </div>
 
                 {/* Ad soyad */}
                 {/*<div className='name-surname'>*/}
                 <div className='d-flex flex-column col-md-6 my-1'>
                   <span className="line-default label">Adınız <span style={{color: "#D42E13"}}>*</span></span>
-                  <Input placeholder="Adınız" styleProps={{maxWidth: '100%'}} error={nameValidasyonError.error}
-                         value={name} onChange={(e) => changeName(e.target.value, setName, setNameValidasyonError)}/>
-                  {nameValidasyonError.error &&
-                    <p style={{color: "#525252", marginLeft: 5}}>{nameValidasyonError.message}</p>}
+                  <Input placeholder="Adınız" styleProps={{maxWidth: '100%'}} error={nameValidationError.error}
+                         value={name} onChange={(e) => changeName(e.target.value, setName, setNameValidationError)}/>
+                  {nameValidationError.error &&
+                    <p style={{color: "#525252", marginLeft: 5}}>{nameValidationError.message}</p>}
                 </div>
                 <div className='d-flex flex-column col-md-6 my-1'>
                   <span className="line-default label">Soyadınız <span style={{color: "#D42E13"}}>*</span></span>
-                  <Input placeholder="Soyadınız" styleProps={{maxWidth: '100%'}} error={surnameValidasyonError.error}
+                  <Input placeholder="Soyadınız" styleProps={{maxWidth: '100%'}} error={surnameValidationError.error}
                          value={surname}
-                         onChange={(e) => changeName(e.target.value, setSurname, setSurnameValidasyonError)}/>
-                  {surnameValidasyonError.error &&
-                    <p style={{color: "#525252", marginLeft: 5}}>{surnameValidasyonError.message}</p>}
+                         onChange={(e) => changeName(e.target.value, setSurname, setSurnameValidationError)}/>
+                  {surnameValidationError.error &&
+                    <p style={{color: "#525252", marginLeft: 5}}>{surnameValidationError.message}</p>}
                 </div>
                 {/*</div>*/}
                 {/* Email Telefon */}
                 {/*<div className='name-surname' >*/}
                 <div className='d-flex flex-column col-md-6 my-1'>
                   <span className="line-default label">E-posta</span>
-                  <Input placeholder="E-posta" styleProps={{maxWidth: '100%'}} error={emailValidasyonError.error}
+                  <Input placeholder="E-posta" styleProps={{maxWidth: '100%'}} error={emailValidationError.error}
                          value={email} onChange={(e) => checkEmail(e.target.value)}/>
-                  {emailValidasyonError.error &&
-                    <p style={{color: "#525252", marginLeft: 5}}>{emailValidasyonError.message}</p>}
+                  {emailValidationError.error &&
+                    <p style={{color: "#525252", marginLeft: 5}}>{emailValidationError.message}</p>}
                 </div>
                 <div className='d-flex flex-column col-md-6 my-1'>
                   <span className="line-default label">Telefon <span style={{color: "#D42E13"}}>*</span></span>
-                  <Input error={phoneValidasyonError.error} styleProps={{maxWidth: '100%'}} placeholder="05xx xxx xx xx"
+                  <Input error={phoneValidationError.error} styleProps={{maxWidth: '100%'}} placeholder="05xx xxx xx xx"
                          value={phone} onChange={(e) => checkPhone(e.target.value)}/>
-                  {phoneValidasyonError.error &&
-                    <p style={{color: "#525252", marginLeft: 5}}>{phoneValidasyonError.message}</p>}
+                  {phoneValidationError.error &&
+                    <p style={{color: "#525252", marginLeft: 5}}>{phoneValidationError.message}</p>}
                 </div>
                 {/*</div>*/}
                 {/*<div className='col-12' >*/}
@@ -457,12 +476,12 @@ const GuestPage = () => {
                 <h2 className="line-middle">Konaklayacaklar Listesi</h2><br/>
                 <div className='d-flex flex-column col-lg-3 col-md-6 my-1'>
                   <span className="line-default label">T.C. Kimlik No<span style={{color: "#D42E13"}}>*</span></span>
-                  <Input error={tcknValidasyonError.error && tcknValidasyonError.stateName === 'guestTckNo'}
+                  <Input error={guestTckNoValidationError.error}
                          styleProps={{maxWidth: '100%'}} placeholder="T.C. Kimlik No"
                          type="number" value={guestTckNo}
-                         onChange={(e) => checkTCKN(e.target.value, 'guestTckNo', (item) => setGuestTckNo(item))}/>
-                  {tcknValidasyonError.error && tcknValidasyonError.stateName === 'guestTckNo' &&
-                    <p style={{color: "#525252", marginLeft: 5}}>{tcknValidasyonError.message}</p>}
+                         onChange={(e) => checkTCKN(e.target.value, setGuestTckNo, setGuestTckNoValidationError)}/>
+                  {guestTckNoValidationError.error &&
+                    <p style={{color: "#525252", marginLeft: 5}}>{guestTckNoValidationError.message}</p>}
                 </div>
                 <div className='d-flex flex-column col-lg-4 col-md-6 my-1'>
                   <span className="line-default label">Adı<span style={{color: "#D42E13"}}>*</span></span>
@@ -485,7 +504,7 @@ const GuestPage = () => {
                     disabled={guestTckNo === "" ||
                       guestFirstName === "" ||
                       guestLastName === "" ||
-                      (tcknValidasyonError.error && tcknValidasyonError.stateName === 'guestTckNo') ||
+                      (tcknValidationError.error && tcknValidationError.stateName === 'guestTckNo') ||
                       guestFirstNameValidationError.error ||
                       guestLastNameValidationError.error}
                     text="Ekle"
@@ -502,7 +521,7 @@ const GuestPage = () => {
                     }}
                   />
                 </div>
-                
+
                 {/*Konaklayacaklar Listesi*/}
                 <div className='d-flex flex-column col-lg-12 col-md-6 my-1'>
                   <DataTable
@@ -565,13 +584,15 @@ const GuestPage = () => {
                       city === "" ||
                       district === "" ||
                       guest === "" ||
-                      nameValidasyonError.error ||
-                      surnameValidasyonError.error ||
-                      tcknValidasyonError.error ||
-                      emailValidasyonError.error ||
-                      phoneValidasyonError.error ||
+                      nameValidationError.error ||
+                      surnameValidationError.error ||
+                      tcknValidationError.error ||
+                      emailValidationError.error ||
+                      phoneValidationError.error ||
                       !checkKVKK ||
-                      birthDate === ""}
+                      birthDate === "" ||
+                      birthDateValidationError.error ||
+                      ((+guest) + (+childNumber) !== guestList.length)}
                     onClick={(e) => {
                       e.preventDefault()
                       handleSubmit()
